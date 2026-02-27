@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Menu, X, Phone, ChevronRight } from 'lucide-react';
+import CanvasLogo from './CanvasLogo';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navigation = [
@@ -62,7 +62,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative h-14 w-auto">
-              <Image
+              <CanvasLogo
                 src="/images/cerbelera_oliveira_logo_cover.webp"
                 alt="Cerbelera & Oliveira Advogados"
                 width={200}
@@ -72,7 +72,6 @@ export default function Header() {
                     ? 'brightness-0 invert drop-shadow-[0_0_8px_rgba(201,168,76,0.3)]'
                     : 'brightness-0 invert drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]'
                 }`}
-                priority
               />
             </div>
           </Link>

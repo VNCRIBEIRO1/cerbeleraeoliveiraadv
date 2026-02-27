@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import CanvasLogo from './CanvasLogo';
 
 const areas = [
   'Direito Civil',
@@ -28,7 +28,7 @@ export default function Footer() {
           {/* Coluna 1 - Sobre */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <Image
+              <CanvasLogo
                 src="/images/cerbelera_oliveira_logo_cover.webp"
                 alt="Cerbelera & Oliveira"
                 width={40}

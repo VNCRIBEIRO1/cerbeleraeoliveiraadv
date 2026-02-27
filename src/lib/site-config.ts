@@ -96,7 +96,7 @@ export const SITE_CONFIG = {
       role: 'Cliente',
     },
     {
-      text: 'Excellence in service, professionalism, quality, and trust. Highly recommended for anyone looking for reliable legal services.',
+      text: 'Excelência no atendimento, profissionalismo, qualidade e confiança. Altamente recomendado para quem procura serviços jurídicos confiáveis.',
       author: 'Raquel Martin Louzada',
       role: 'Cliente',
     },
