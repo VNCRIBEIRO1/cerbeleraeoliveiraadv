@@ -158,12 +158,12 @@ export default function ContactForm() {
             className="input-field"
           >
             <option value="">Selecione uma área</option>
-            <option value="civil">Direito Civil</option>
             <option value="trabalhista">Direito Trabalhista</option>
-            <option value="familia">Direito de Família</option>
-            <option value="previdenciario">Direito Previdenciário</option>
-            <option value="consumidor">Direito do Consumidor</option>
-            <option value="imobiliario">Direito Imobiliário</option>
+            <option value="criminal">Direito Criminal</option>
+            <option value="civil">Direito Civil</option>
+            <option value="empresarial">Direito Empresarial</option>
+            <option value="administrativo">Direito Administrativo</option>
+            <option value="calculos">Cálculos Judiciais</option>
             <option value="outro">Outro</option>
           </select>
           {errors.subject && (
