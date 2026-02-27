@@ -483,16 +483,16 @@ const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP || '5518996101884';
 // ============================================================
 // HELPERS DE URGÊNCIA
 // ============================================================
-const getUrgenciaEmoji = (nivel: string) => {
+const getUrgenciaMarcador = (nivel: string) => {
   switch (nivel) {
     case 'URGENTE':
-      return '🔴';
+      return '[!!!]';
     case 'MODERADO':
-      return '🟡';
+      return '[!!]';
     case 'CONSULTA':
-      return '🟢';
+      return '[!]';
     default:
-      return '⚪';
+      return '[-]';
   }
 };
 
@@ -681,7 +681,7 @@ export default function ChatBot() {
     setDados((prev) => ({ ...prev, nome }));
     setEtapa('telefone');
     await addBotMsg(
-      `Prazer, ${nome.split(' ')[0]}! 😊 Agora me informe seu *telefone* para contato:`
+      `Prazer, ${nome.split(' ')[0]}! Agora me informe seu *telefone* para contato:`
     );
   };
 
@@ -692,7 +692,7 @@ export default function ChatBot() {
     setEtapa('resumo');
 
     await addBotMsg(
-      'Perfeito! Preparei o resumo da sua consulta. Ao clicar no botão abaixo, você será redirecionado(a) ao *WhatsApp* com a mensagem pronta — basta enviar! 📲'
+      'Perfeito! Preparei o resumo da sua consulta. Ao clicar no botão abaixo, voce sera redirecionado(a) ao *WhatsApp* com a mensagem pronta — basta enviar.'
     );
 
     // Mensagem especial de resumo com botão
@@ -716,50 +716,49 @@ export default function ChatBot() {
   // ============================================================
   const gerarMensagemWhatsApp = () => {
     const d = dados;
-    const urgEmoji = getUrgenciaEmoji(d.urgencia);
+    const urgMarcador = getUrgenciaMarcador(d.urgencia);
     const urgTexto = getUrgenciaTexto(d.urgencia);
     const dataHora = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
 
-    // Formatar detalhes como lista organizada
+    // Formatar detalhes como lista limpa
     const detalhesFormatados = d.detalhes
       .map((item, idx) => {
         const parts = item.split('\n→ ');
         if (parts.length === 2) {
-          return `  ${idx + 1}. _${parts[0]}_\n     ▸ *${parts[1]}*`;
+          return `${idx + 1}. _${parts[0]}_\n   > *${parts[1]}*`;
         }
-        return `  ${idx + 1}. ${item}`;
+        return `${idx + 1}. ${item}`;
       })
       .join('\n\n');
 
-    // Linha separadora visual
-    const linha = '━━━━━━━━━━━━━━━━━━━━━━━━';
+    const linha = '________________________________';
 
-    return `${urgEmoji}${urgEmoji}${urgEmoji} *${urgTexto.toUpperCase()}* ${urgEmoji}${urgEmoji}${urgEmoji}
-
-${linha}
-📋 *NOVA CONSULTA — SITE*
+    return `${urgMarcador} *${urgTexto.toUpperCase()}*
 ${linha}
 
-*📌 Área:* ${d.area}
-*📂 Assunto:* ${d.subarea}
-*⚡ Urgência:* ${urgEmoji} ${urgTexto}
-
+*NOVA CONSULTA — Cerbelera & Oliveira*
 ${linha}
-🔍 *DETALHES DA TRIAGEM*
+
+*Area:* ${d.area}
+*Assunto:* ${d.subarea}
+*Urgencia:* ${urgMarcador} ${urgTexto}
+${linha}
+
+*DETALHES DA TRIAGEM*
 ${linha}
 
 ${detalhesFormatados}
-
 ${linha}
-👤 *DADOS DO CLIENTE*
+
+*DADOS DO CLIENTE*
 ${linha}
 
 *Nome:* ${d.nome}
 *Telefone:* ${d.telefone}
-
 ${linha}
-📅 *Data/Hora:* ${dataHora}
-🌐 _Enviado via Assistente Virtual — cerbeleraeoliveiraadv_`.trim();
+
+*Data/Hora:* ${dataHora}
+_Enviado via Assistente Virtual do site_`.trim();
   };
 
   const abrirWhatsApp = () => {
@@ -900,7 +899,7 @@ ${linha}
                           {dados.urgencia === 'URGENTE' && <AlertTriangle className="w-3 h-3" />}
                           {dados.urgencia === 'MODERADO' && <Clock className="w-3 h-3" />}
                           {dados.urgencia === 'CONSULTA' && <CheckCircle className="w-3 h-3" />}
-                          {getUrgenciaEmoji(dados.urgencia)} {getUrgenciaTexto(dados.urgencia)}
+                          {getUrgenciaMarcador(dados.urgencia)} {getUrgenciaTexto(dados.urgencia)}
                         </div>
                       )}
 
