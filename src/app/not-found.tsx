@@ -3,7 +3,7 @@ import { Home, ArrowLeft, Scale } from 'lucide-react';
 
 export default function NotFound() {
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700">
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#050905] via-[#0e1810] to-[#1a2e1f]">
       <div className="container-custom text-center">
         <Scale className="w-16 h-16 text-gold-400 mx-auto mb-6" />
         <h1 className="text-6xl md:text-8xl font-serif font-bold text-white mb-4">

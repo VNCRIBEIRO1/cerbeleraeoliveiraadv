@@ -46,7 +46,7 @@ const areas = [
       'Acidentes de Trabalho',
       'Reclamações Trabalhistas',
     ],
-    color: 'from-emerald-500 to-emerald-700',
+    color: 'from-[#1a2e1f] to-[#2d4a35]',
   },
   {
     iconName: 'ShieldCheck',
@@ -61,7 +61,7 @@ const areas = [
       'Crimes contra a Pessoa',
       'Recursos Criminais',
     ],
-    color: 'from-red-500 to-red-700',
+    color: 'from-[#1a1a1a] to-[#333333]',
   },
   {
     iconName: 'Briefcase',
@@ -76,7 +76,7 @@ const areas = [
       'Cobranças Judiciais',
       'Ações de Reparação',
     ],
-    color: 'from-blue-500 to-blue-700',
+    color: 'from-[#1a2e1f] to-[#3a5a42]',
   },
   {
     iconName: 'Building2',
@@ -91,7 +91,7 @@ const areas = [
       'Compliance Empresarial',
       'Falência',
     ],
-    color: 'from-amber-500 to-amber-700',
+    color: 'from-[#8b7320] to-[#b8942e]',
   },
   {
     iconName: 'Landmark',
@@ -106,7 +106,7 @@ const areas = [
       'Responsabilidade do Estado',
       'Improbidade Administrativa',
     ],
-    color: 'from-purple-500 to-purple-700',
+    color: 'from-[#1a1a1a] to-[#2a2a2a]',
   },
   {
     iconName: 'Scale',
@@ -121,7 +121,7 @@ const areas = [
       'Cálculos Cíveis',
       'Impugnação de Cálculos',
     ],
-    color: 'from-cyan-500 to-cyan-700',
+    color: 'from-[#7c6318] to-[#c9a84c]',
   },
 ];
 
@@ -129,7 +129,7 @@ export default function AreasPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-20 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 relative overflow-hidden">
+      <section className="pt-32 pb-20 bg-gradient-to-br from-[#050905] via-[#0e1810] to-[#1a2e1f] relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-10 right-10 w-72 h-72 bg-gold-500 rounded-full blur-3xl" />
         </div>
@@ -224,7 +224,7 @@ export default function AreasPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-primary-900">
+      <section className="py-20 bg-gradient-to-br from-[#050905] via-[#0e1810] to-[#1a2e1f]">
         <div className="container-custom text-center">
           <AnimatedSection>
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-6">

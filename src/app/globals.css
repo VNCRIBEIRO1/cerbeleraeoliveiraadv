@@ -18,7 +18,7 @@
   }
 
   ::selection {
-    @apply bg-primary-500 text-white;
+    @apply bg-gold-500 text-white;
   }
 }
 

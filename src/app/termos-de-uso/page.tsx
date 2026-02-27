@@ -11,7 +11,7 @@ export default function TermosDeUsoPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700">
+      <section className="pt-32 pb-16 bg-gradient-to-br from-[#050905] via-[#0e1810] to-[#1a2e1f]">
         <div className="container-custom">
           <AnimatedSection>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-white mb-4">

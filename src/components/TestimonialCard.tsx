@@ -53,7 +53,7 @@ export default function TestimonialCard({
         </p>
 
         <div className="flex items-center gap-3">
-          <div className="w-11 h-11 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center shadow-md">
+          <div className="w-11 h-11 bg-gradient-to-br from-[#1a2e1f] to-[#2d4a35] rounded-full flex items-center justify-center shadow-md">
             <span className="text-white font-bold text-sm tracking-wide">
               {initials}
             </span>

@@ -117,13 +117,13 @@ export const SITE_CONFIG = {
 
   // === IMAGENS ===
   imagens: {
-    advogado: '/images/socios-cerbelera-oliveira.png',
+    advogado: '/images/cerbelera_oliveira_team_photo.webp',
     hero: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1920&q=80',
     escritorio:
       'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80',
-    logo: '/images/logo-cerbelera-oliveira.png',
-    logoAlt: '/images/logo-cerbelera-oliveira-alt.png',
-    logoMini: '/images/logo-cerbelera-oliveira-mini.png',
+    logo: '/images/cerbelera_oliveira_logo_cover.webp',
+    logoAlt: '/images/cerbelera_oliveira_profile_photo.webp',
+    logoMini: '/images/cerbelera_oliveira_logo_cover.webp',
   },
 
   // === GOOGLE MAPS ===

@@ -61,7 +61,7 @@ const testimonials = [
     role: 'Cliente',
   },
   {
-    text: 'Excellence in service, professionalism, quality, and trust. Highly recommended for anyone looking for reliable legal services.',
+    text: 'Excelência no atendimento, profissionalismo, qualidade e confiança. Altamente recomendado para quem procura serviços jurídicos confiáveis.',
     author: 'Raquel Martin Louzada',
     role: 'Cliente',
   },
@@ -210,7 +210,7 @@ export default function HomePage() {
       </section>
 
       {/* Estatísticas */}
-      <section className="py-16 bg-primary-500 relative overflow-hidden">
+      <section className="py-16 bg-gradient-to-r from-[#0a110b] via-[#1a2e1f] to-[#0a110b] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
@@ -304,7 +304,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Final */}
-      <section className="py-20 bg-primary-900 relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-[#050905] via-[#0e1810] to-[#1a2e1f] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 right-10 w-72 h-72 bg-gold-500 rounded-full blur-3xl" />
           <div className="absolute bottom-10 left-10 w-96 h-96 bg-primary-400 rounded-full blur-3xl" />

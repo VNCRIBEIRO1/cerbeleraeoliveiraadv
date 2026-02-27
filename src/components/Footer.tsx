@@ -21,7 +21,7 @@ const links = [
 
 export default function Footer() {
   return (
-    <footer className="bg-primary-900 text-primary-100">
+    <footer className="bg-gradient-to-b from-[#0e1810] to-[#050905] text-primary-100">
       {/* Conteúdo principal */}
       <div className="container-custom py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -29,7 +29,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-6">
               <Image
-                src="/images/logo-cerbelera-oliveira-mini.png"
+                src="/images/cerbelera_oliveira_logo_cover.webp"
                 alt="Cerbelera & Oliveira"
                 width={40}
                 height={40}

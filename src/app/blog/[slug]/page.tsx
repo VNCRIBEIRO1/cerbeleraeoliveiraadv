@@ -190,7 +190,7 @@ export default function BlogPostPage({
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 relative overflow-hidden">
+      <section className="pt-32 pb-16 bg-gradient-to-br from-[#050905] via-[#0e1810] to-[#1a2e1f] relative overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src={getCategoryImage(article.category)}

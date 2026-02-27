@@ -8,6 +8,7 @@ import {
   Landmark,
   ShieldCheck,
   Building2,
+  Scale,
   ArrowRight,
   LucideIcon,
 } from 'lucide-react';
@@ -20,15 +21,16 @@ const iconMap: Record<string, LucideIcon> = {
   Landmark,
   ShieldCheck,
   Building2,
+  Scale,
 };
 
 const colorMap: Record<string, string> = {
-  Briefcase: 'from-blue-500 to-blue-600',
-  Users: 'from-emerald-500 to-emerald-600',
-  Heart: 'from-rose-500 to-rose-600',
-  Landmark: 'from-amber-500 to-amber-600',
-  ShieldCheck: 'from-purple-500 to-purple-600',
-  Building2: 'from-cyan-500 to-cyan-600',
+  Users: 'from-[#1a2e1f] to-[#2d4a35]',
+  ShieldCheck: 'from-[#1a1a1a] to-[#333333]',
+  Briefcase: 'from-[#1a2e1f] to-[#3a5a42]',
+  Building2: 'from-[#8b7320] to-[#b8942e]',
+  Landmark: 'from-[#1a1a1a] to-[#2a2a2a]',
+  Scale: 'from-[#7c6318] to-[#c9a84c]',
 };
 
 interface AreaCardProps {

@@ -8,7 +8,7 @@ import { IMAGES } from '@/lib/images';
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 overflow-hidden">
+    <section className="relative min-h-screen flex items-center bg-gradient-to-br from-[#050905] via-[#0e1810] to-[#1a2e1f] overflow-hidden">
       {/* Background Photo - Estátua da Justiça */}
       <div className="absolute inset-0">
         <Image

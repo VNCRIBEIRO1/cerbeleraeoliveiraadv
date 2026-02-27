@@ -22,9 +22,9 @@ export default function LawyerPortrait({
       >
         <defs>
           <linearGradient id="portrait-bg" x1="0" y1="0" x2="0.3" y2="1">
-            <stop offset="0%" stopColor="#1e3a5f" />
-            <stop offset="50%" stopColor="#1a3352" />
-            <stop offset="100%" stopColor="#152a44" />
+            <stop offset="0%" stopColor="#1a2e1f" />
+            <stop offset="50%" stopColor="#0e1810" />
+            <stop offset="100%" stopColor="#0a110b" />
           </linearGradient>
           <linearGradient id="suit-gradient" x1="0.5" y1="0" x2="0.5" y2="1">
             <stop offset="0%" stopColor="#1a1a2e" />
@@ -39,8 +39,8 @@ export default function LawyerPortrait({
             <stop offset="100%" stopColor="#d2a679" />
           </linearGradient>
           <linearGradient id="tie-gradient" x1="0.5" y1="0" x2="0.5" y2="1">
-            <stop offset="0%" stopColor="#1e3a5f" />
-            <stop offset="100%" stopColor="#152a44" />
+            <stop offset="0%" stopColor="#1a2e1f" />
+            <stop offset="100%" stopColor="#0e1810" />
           </linearGradient>
           <linearGradient id="gold-accent" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stopColor="#d4a853" />
