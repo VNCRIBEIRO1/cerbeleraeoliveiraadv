@@ -1,81 +1,80 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { BookOpen, ArrowRight, Calendar, Clock, Search } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import BlogCard from '@/components/BlogCard';
 
 export const metadata: Metadata = {
   title: 'Blog Jurídico',
   description:
-    'Artigos informativos sobre Direito Civil, Trabalhista, Família, Previdenciário e mais. Conteúdo educativo sem caráter de aconselhamento jurídico.',
+    'Artigos informativos sobre Direito Trabalhista, Criminal, Civil, Empresarial e Administrativo. Conteúdo educativo sem caráter de aconselhamento jurídico.',
 };
 
 const blogPosts = [
   {
-    title: 'Seus Direitos Trabalhistas: O que Todo Trabalhador Deve Saber',
+    title: 'Demissão por Justa Causa: Conheça Seus Direitos',
     excerpt:
-      'Entenda quais são os principais direitos garantidos pela CLT e como identificar irregularidades na relação de trabalho. Conheça os prazos e procedimentos para garantir seus direitos.',
+      'Entenda quando a demissão por justa causa pode ser aplicada, quais os direitos do trabalhador e como se defender de uma aplicação indevida.',
     date: '20 Fev 2026',
-    readTime: '5 min',
-    slug: 'direitos-trabalhistas',
+    readTime: '6 min',
+    slug: 'demissao-justa-causa',
     category: 'Direito Trabalhista',
   },
   {
-    title: 'Guarda Compartilhada: Entenda Como Funciona na Prática',
+    title: 'Crimes Contra a Honra: Calúnia, Difamação e Injúria',
     excerpt:
-      'Saiba como funciona a guarda compartilhada, quais são os direitos dos pais e como é feita a definição judicial. Entenda as diferenças entre guarda compartilhada e alternada.',
+      'Saiba as diferenças entre calúnia, difamação e injúria, as penas previstas e como proceder caso seja vítima desses crimes.',
     date: '15 Fev 2026',
-    readTime: '4 min',
-    slug: 'guarda-compartilhada',
-    category: 'Direito de Família',
+    readTime: '5 min',
+    slug: 'crimes-contra-honra',
+    category: 'Direito Criminal',
   },
   {
-    title: 'LGPD e Seus Direitos: Proteção de Dados Pessoais no Brasil',
+    title: 'Contratos Empresariais: Como Proteger Seu Negócio',
     excerpt:
-      'Conheça seus direitos em relação à proteção de dados pessoais conforme a Lei Geral de Proteção de Dados (LGPD) e saiba como exercê-los.',
+      'Descubra os elementos essenciais de um contrato empresarial e como evitar cláusulas abusivas que podem prejudicar sua empresa.',
     date: '10 Fev 2026',
+    readTime: '7 min',
+    slug: 'contratos-empresariais',
+    category: 'Direito Empresarial',
+  },
+  {
+    title: 'Assédio Moral no Trabalho: Como Identificar e Agir',
+    excerpt:
+      'Aprenda a reconhecer o assédio moral no ambiente de trabalho, os direitos da vítima e os caminhos jurídicos disponíveis para buscar reparação.',
+    date: '05 Fev 2026',
     readTime: '6 min',
-    slug: 'lgpd-direitos',
+    slug: 'assedio-moral-trabalho',
+    category: 'Direito Trabalhista',
+  },
+  {
+    title: 'Habeas Corpus: Quando e Como Utilizar Este Instrumento',
+    excerpt:
+      'Entenda o que é habeas corpus, quando pode ser impetrado, quem pode solicitar e como funciona o processo na prática.',
+    date: '01 Fev 2026',
+    readTime: '5 min',
+    slug: 'habeas-corpus',
+    category: 'Direito Criminal',
+  },
+  {
+    title: 'Responsabilidade Civil: Danos Morais e Materiais',
+    excerpt:
+      'Conheça os tipos de danos indenizáveis, como são calculados os valores e quando é possível ingressar com ação de responsabilidade civil.',
+    date: '28 Jan 2026',
+    readTime: '7 min',
+    slug: 'responsabilidade-civil',
     category: 'Direito Civil',
   },
   {
-    title: 'Aposentadoria após a Reforma: O que Mudou para o Trabalhador',
+    title: 'Licitações Públicas: Direitos dos Participantes',
     excerpt:
-      'Entenda as principais mudanças trazidas pela Reforma da Previdência e como elas afetam o planejamento da sua aposentadoria.',
-    date: '05 Fev 2026',
-    readTime: '7 min',
-    slug: 'aposentadoria-reforma',
-    category: 'Direito Previdenciário',
-  },
-  {
-    title: 'Direitos do Consumidor: Como Agir em Cobranças Indevidas',
-    excerpt:
-      'Saiba quais são seus direitos quando você é vítima de cobranças indevidas e como proceder para resolver a situação de forma eficiente.',
-    date: '01 Fev 2026',
-    readTime: '5 min',
-    slug: 'cobrancas-indevidas',
-    category: 'Direito do Consumidor',
-  },
-  {
-    title: 'Usucapião: Quando e Como é Possível Regularizar um Imóvel',
-    excerpt:
-      'Conheça os requisitos legais para o usucapião, os tipos existentes e o passo a passo para regularizar a posse de um imóvel.',
-    date: '28 Jan 2026',
-    readTime: '8 min',
-    slug: 'usucapiao-imovel',
-    category: 'Direito Imobiliário',
-  },
-  {
-    title: 'Divórcio Consensual e Litigioso: Diferenças e Procedimentos',
-    excerpt:
-      'Entenda as diferenças entre o divórcio consensual e litigioso, os documentos necessários e os prazos envolvidos em cada modalidade.',
+      'Informações sobre as modalidades de licitação, requisitos de participação, recursos administrativos e impugnação de editais.',
     date: '25 Jan 2026',
-    readTime: '6 min',
-    slug: 'divorcio-tipos',
-    category: 'Direito de Família',
+    readTime: '8 min',
+    slug: 'licitacoes-publicas',
+    category: 'Direito Administrativo',
   },
   {
-    title: 'Acidente de Trabalho: Direitos e Procedimentos do Trabalhador',
+    title: 'Acidente de Trabalho: Direitos e Procedimentos',
     excerpt:
       'Saiba quais são os direitos do trabalhador em caso de acidente de trabalho, como emitir a CAT e quais benefícios podem ser solicitados.',
     date: '20 Jan 2026',
@@ -84,13 +83,13 @@ const blogPosts = [
     category: 'Direito Trabalhista',
   },
   {
-    title: 'Pensão Alimentícia: Como Funciona e Como é Calculada',
+    title: 'Recuperação Judicial: Salvando Sua Empresa da Falência',
     excerpt:
-      'Informações sobre como funciona a pensão alimentícia no Brasil, critérios de cálculo, revisão e consequências do não pagamento.',
+      'Entenda o processo de recuperação judicial, quem pode solicitar, os prazos envolvidos e como é elaborado o plano de recuperação.',
     date: '15 Jan 2026',
     readTime: '6 min',
-    slug: 'pensao-alimenticia',
-    category: 'Direito de Família',
+    slug: 'recuperacao-judicial',
+    category: 'Direito Empresarial',
   },
 ];
 

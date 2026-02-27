@@ -1,32 +1,29 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, Scale, Shield, Users } from 'lucide-react';
-import ScaleIllustration from './illustrations/ScaleIllustration';
+import { IMAGES } from '@/lib/images';
 
 export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-          }}
+      {/* Background Photo - Estátua da Justiça */}
+      <div className="absolute inset-0">
+        <Image
+          src={IMAGES.hero}
+          alt="Justiça"
+          fill
+          className="object-cover opacity-[0.12]"
+          priority
+          sizes="100vw"
         />
       </div>
 
       {/* Decorative elements */}
       <div className="absolute top-20 right-10 w-72 h-72 bg-gold-500/10 rounded-full blur-3xl" />
       <div className="absolute bottom-20 left-10 w-96 h-96 bg-primary-400/10 rounded-full blur-3xl" />
-
-      {/* Scale illustration background */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] opacity-[0.07] hidden xl:block pointer-events-none">
-        <ScaleIllustration />
-      </div>
 
       <div className="container-custom relative z-10 pt-32 pb-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -38,19 +35,20 @@ export default function HeroSection() {
           >
             <div className="inline-flex items-center gap-2 bg-gold-500/20 text-gold-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
               <Scale className="w-4 h-4" />
-              Advocacia Ética e Informativa
+              Advocacia Estratégica e Humanizada
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white leading-tight mb-6">
-              Orientação Jurídica com{' '}
-              <span className="text-gold-400">Excelência</span> e{' '}
-              <span className="text-gold-400">Compromisso</span>
+              Atuação Estratégica na{' '}
+              <span className="text-gold-400">Defesa</span> dos Seus{' '}
+              <span className="text-gold-400">Direitos</span>
             </h1>
 
             <p className="text-lg text-primary-200 leading-relaxed mb-8 max-w-lg">
-              Roberto Sartoro — Advogado em Presidente Prudente, SP. Atuação
-              informativa e ética nas áreas de Direito Civil, Trabalhista,
-              Família e Previdenciário.
+              Cerbelera & Oliveira Advogados Associados — Escritório em
+              Presidente Prudente, SP. Atuação ética e humanizada nas áreas de
+              Direito Trabalhista, Criminal, Civil, Empresarial e
+              Administrativo.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -67,7 +65,7 @@ export default function HeroSection() {
             </div>
 
             <p className="text-primary-400 text-xs mt-6">
-              OAB/SP 000.000 • Este site tem caráter meramente informativo.
+              OAB/SP • Este site tem caráter meramente informativo.
             </p>
           </motion.div>
 
@@ -86,13 +84,13 @@ export default function HeroSection() {
               },
               {
                 icon: Users,
-                title: 'Atendimento Personalizado',
+                title: 'Atendimento Humanizado',
                 desc: 'Cada caso é tratado com dedicação, atenção e respeito à individualidade do cliente.',
               },
               {
                 icon: Scale,
                 title: 'Experiência Comprovada',
-                desc: 'Anos de experiência em diversas áreas do Direito, com foco em soluções informativas.',
+                desc: 'Mais de 5 anos de atuação em diversas áreas do Direito, com 5.0 de avaliação no Google.',
               },
             ].map((item, index) => (
               <motion.div

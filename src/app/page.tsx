@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Scale,
   ArrowRight,
@@ -12,92 +13,92 @@ import AreaCard from '@/components/AreaCard';
 import TestimonialCard from '@/components/TestimonialCard';
 import BlogCard from '@/components/BlogCard';
 import AnimatedSection from '@/components/AnimatedSection';
-import LawyerPortrait from '@/components/illustrations/LawyerPortrait';
+import { IMAGES } from '@/lib/images';
 
 const areas = [
-  {
-    iconName: 'Briefcase',
-    title: 'Direito Civil',
-    description:
-      'Orientação informativa em contratos, responsabilidade civil, direito das obrigações e questões patrimoniais.',
-  },
   {
     iconName: 'Users',
     title: 'Direito Trabalhista',
     description:
-      'Informações sobre relações de trabalho, direitos do trabalhador, rescisões e processos trabalhistas.',
-  },
-  {
-    iconName: 'Heart',
-    title: 'Direito de Família',
-    description:
-      'Orientação em divórcios, guarda de filhos, pensão alimentícia, inventários e planejamento familiar.',
-  },
-  {
-    iconName: 'Landmark',
-    title: 'Direito Previdenciário',
-    description:
-      'Informações sobre aposentadorias, benefícios do INSS, revisões e planejamento previdenciário.',
+      'Defesa estratégica em reclamações trabalhistas, rescisões, assédio moral, horas extras, acidentes de trabalho e demais questões laborais.',
   },
   {
     iconName: 'ShieldCheck',
-    title: 'Direito do Consumidor',
+    title: 'Direito Criminal',
     description:
-      'Orientação sobre direitos do consumidor, relações de consumo, cobranças indevidas e danos morais.',
+      'Atuação em defesas criminais, habeas corpus, audiências de custódia, recursos e acompanhamento processual completo.',
+  },
+  {
+    iconName: 'Briefcase',
+    title: 'Direito Civil',
+    description:
+      'Orientação em contratos, responsabilidade civil, indenizações, cobranças, ações de reparação e direito das obrigações.',
   },
   {
     iconName: 'Building2',
-    title: 'Direito Imobiliário',
+    title: 'Direito Empresarial',
     description:
-      'Informações sobre compra e venda de imóveis, contratos de locação, usucapião e regularização.',
+      'Assessoria jurídica para empresas, contratos comerciais, recuperação judicial, falência e questões societárias.',
+  },
+  {
+    iconName: 'Landmark',
+    title: 'Direito Administrativo',
+    description:
+      'Atuação em licitações, contratos administrativos, concursos públicos, mandados de segurança e processos disciplinares.',
+  },
+  {
+    iconName: 'Scale',
+    title: 'Cálculos Judiciais',
+    description:
+      'Elaboração e conferência de cálculos judiciais, liquidação de sentenças, atualização de débitos e perícias contábeis.',
   },
 ];
 
 const testimonials = [
   {
-    text: 'Profissional extremamente competente e atencioso. Esclareceu todas as minhas dúvidas de forma clara e objetiva.',
-    author: 'Maria S.',
-    role: 'Cliente – Direito de Família',
+    text: 'Atendimento excelente, super bem localizado e com estacionamento próprio. Esclareceram todas as minhas dúvidas com muita paciência e profissionalismo.',
+    author: 'Andresa Louzada',
+    role: 'Cliente',
   },
   {
-    text: 'Atendimento humanizado e transparente. Senti confiança durante todo o processo de orientação.',
-    author: 'João P.',
-    role: 'Cliente – Direito Trabalhista',
+    text: 'Excellence in service, professionalism, quality, and trust. Highly recommended for anyone looking for reliable legal services.',
+    author: 'Raquel Martin Louzada',
+    role: 'Cliente',
   },
   {
-    text: 'Excelente profissional. Resolveu minha questão com eficiência e sempre manteve a ética profissional.',
-    author: 'Ana L.',
-    role: 'Cliente – Direito Civil',
+    text: 'Muito esclarecedor. Prestaram um excelente atendimento e resolveram meu problema por um preço justo. Recomendo a todos.',
+    author: 'Julio Prestes',
+    role: 'Cliente',
   },
 ];
 
 const blogPosts = [
   {
-    title: 'Seus Direitos Trabalhistas: O que Todo Trabalhador Deve Saber',
+    title: 'Demissão por Justa Causa: Conheça Seus Direitos',
     excerpt:
-      'Entenda quais são os principais direitos garantidos pela CLT e como identificar irregularidades na relação de trabalho.',
+      'Entenda quando a demissão por justa causa pode ser aplicada, quais os direitos do trabalhador e como se defender de uma aplicação indevida.',
     date: '20 Fev 2026',
-    readTime: '5 min',
-    slug: 'direitos-trabalhistas',
+    readTime: '6 min',
+    slug: 'demissao-justa-causa',
     category: 'Direito Trabalhista',
   },
   {
-    title: 'Guarda Compartilhada: Entenda Como Funciona',
+    title: 'Crimes Contra a Honra: Calúnia, Difamação e Injúria',
     excerpt:
-      'Saiba como funciona a guarda compartilhada, quais são os direitos dos pais e como é feita a definição.',
+      'Saiba as diferenças entre calúnia, difamação e injúria, as penas previstas e como proceder caso seja vítima.',
     date: '15 Fev 2026',
-    readTime: '4 min',
-    slug: 'guarda-compartilhada',
-    category: 'Direito de Família',
+    readTime: '5 min',
+    slug: 'crimes-contra-honra',
+    category: 'Direito Criminal',
   },
   {
-    title: 'LGPD e Seus Direitos: Proteção de Dados Pessoais',
+    title: 'Contratos Empresariais: Como Proteger Seu Negócio',
     excerpt:
-      'Conheça seus direitos em relação à proteção de dados pessoais conforme a Lei Geral de Proteção de Dados.',
+      'Descubra os elementos essenciais de um contrato empresarial e como evitar cláusulas abusivas que podem prejudicar sua empresa.',
     date: '10 Fev 2026',
-    readTime: '6 min',
-    slug: 'lgpd-direitos',
-    category: 'Direito Civil',
+    readTime: '7 min',
+    slug: 'contratos-empresariais',
+    category: 'Direito Empresarial',
   },
 ];
 
@@ -114,7 +115,7 @@ export default function HomePage() {
             <SectionHeader
               badge="Áreas de Atuação"
               title="Como Podemos Ajudar"
-              subtitle="Oferecemos orientação informativa e ética em diversas áreas do Direito, sempre em conformidade com as normas da OAB."
+              subtitle="Oferecemos atuação estratégica e humanizada em diversas áreas do Direito, sempre com ética e compromisso com resultados."
             />
           </AnimatedSection>
 
@@ -148,7 +149,15 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection>
               <div className="relative">
-                <LawyerPortrait className="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl" />
+                <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl relative">
+                  <Image
+                    src={IMAGES.lawyer}
+                    alt="Sócios Cerbelera & Oliveira Advogados"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </div>
                 {/* Decorative badge */}
                 <div className="absolute -bottom-6 -right-6 bg-gold-500 text-white p-6 rounded-xl shadow-xl">
                   <div className="flex items-center gap-1 mb-1">
@@ -157,6 +166,7 @@ export default function HomePage() {
                     ))}
                   </div>
                   <p className="text-sm font-medium">5.0 no Google</p>
+                  <p className="text-xs opacity-80">12+ avaliações</p>
                 </div>
               </div>
             </AnimatedSection>
@@ -166,22 +176,22 @@ export default function HomePage() {
                 Sobre o Escritório
               </span>
               <h2 className="section-title">
-                Advocacia com Ética, Transparência e Dedicação
+                Advocacia Estratégica, Ética e Humanizada
               </h2>
               <p className="text-secondary-600 leading-relaxed mb-6">
-                O escritório Roberto Sartoro Advogado atua em Presidente
-                Prudente e região, oferecendo orientação jurídica informativa e
-                personalizada. Nossa missão é esclarecer dúvidas e oferecer
-                caminhos dentro da legalidade, sempre com respeito às normas
-                éticas da OAB.
+                O escritório Cerbelera & Oliveira Advogados Associados atua em
+                Presidente Prudente e região, oferecendo uma advocacia
+                estratégica e humanizada. Nossos sócios, Diogo Ramos Cerbelera
+                Neto e Luã Carlos de Oliveira, unem competência técnica e
+                sensibilidade humana para defender os direitos de cada cliente.
               </p>
 
               <ul className="space-y-4 mb-8">
                 {[
                   'Atendimento humanizado e personalizado',
-                  'Conformidade com o Código de Ética da OAB',
+                  'Estacionamento próprio para clientes',
                   'Transparência em todas as orientações',
-                  'Compromisso com a excelência profissional',
+                  'Compromisso com resultados e excelência',
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-gold-500 flex-shrink-0" />
@@ -201,7 +211,6 @@ export default function HomePage() {
 
       {/* Estatísticas */}
       <section className="py-16 bg-primary-500 relative overflow-hidden">
-        {/* Decorative background */}
         <div className="absolute inset-0 opacity-10">
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
@@ -216,7 +225,7 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { number: '5.0', label: 'Avaliação Google', hasStar: true },
-              { number: '58+', label: 'Avaliações de Clientes', hasStar: false },
+              { number: '12+', label: 'Avaliações de Clientes', hasStar: false },
               { number: '6', label: 'Áreas de Atuação', hasStar: false },
               { number: '100%', label: 'Compromisso Ético', hasStar: false },
             ].map((stat, index) => (
@@ -307,8 +316,8 @@ export default function HomePage() {
               Precisa de Orientação Jurídica?
             </h2>
             <p className="text-primary-200 text-lg max-w-2xl mx-auto mb-8">
-              Entre em contato conosco para uma consulta informativa. Estamos
-              prontos para esclarecer suas dúvidas com ética e
+              Entre em contato com o escritório Cerbelera & Oliveira para uma
+              consulta. Estamos prontos para defender seus direitos com ética e
               profissionalismo.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -317,7 +326,7 @@ export default function HomePage() {
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
               <a
-                href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP || '5518988116944'}`}
+                href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP || '5518996101884'}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-outline border-primary-300 text-primary-100 hover:bg-primary-100/10 hover:text-white text-base"
@@ -327,7 +336,7 @@ export default function HomePage() {
             </div>
             <div className="flex items-center justify-center gap-2 mt-8 text-primary-400 text-sm">
               <MapPin className="w-4 h-4" />
-              Presidente Prudente, SP • OAB/SP 000.000
+              Presidente Prudente, SP • OAB/SP
             </div>
           </AnimatedSection>
         </div>

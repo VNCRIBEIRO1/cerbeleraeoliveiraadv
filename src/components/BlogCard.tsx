@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Calendar, ArrowRight, Clock } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
-import BlogIllustration from './illustrations/BlogIllustration';
+import { getCategoryImage } from '@/lib/images';
 
 interface BlogCardProps {
   title: string;
@@ -28,8 +29,17 @@ export default function BlogCard({
     <AnimatedSection delay={delay}>
       <Link href={`/blog/${slug}`} className="block group">
         <article className="card h-full border border-secondary-100 hover:border-gold-400/50 group-hover:-translate-y-1">
-          {/* Illustration */}
-          <BlogIllustration category={category} className="h-48" />
+          {/* Photo */}
+          <div className="relative h-48 overflow-hidden rounded-t-xl">
+            <Image
+              src={getCategoryImage(category)}
+              alt={category}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+          </div>
 
           <div className="p-6">
             <span className="inline-block text-xs font-medium text-gold-500 bg-gold-500/10 px-3 py-1 rounded-full mb-3">

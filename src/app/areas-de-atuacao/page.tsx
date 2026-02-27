@@ -1,125 +1,125 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Briefcase,
   Users,
-  Heart,
-  Landmark,
   ShieldCheck,
   Building2,
+  Landmark,
   Scale,
   ArrowRight,
   CheckCircle2,
   FileText,
-  Gavel,
   Handshake,
+  Gavel,
   LucideIcon,
 } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import SectionHeader from '@/components/SectionHeader';
-import AreaIllustration from '@/components/illustrations/AreaIllustration';
+import { AREA_IMAGES, DEFAULT_IMAGE } from '@/lib/images';
 
 const iconMap: Record<string, LucideIcon> = {
   Briefcase,
   Users,
-  Heart,
-  Landmark,
   ShieldCheck,
   Building2,
+  Landmark,
+  Scale,
   FileText,
   Handshake,
-  Scale,
+  Gavel,
 };
 
 const areas = [
   {
-    iconName: 'Briefcase',
-    title: 'Direito Civil',
-    description:
-      'Orientação informativa em questões civis como contratos, responsabilidade civil, indenizações e direitos das obrigações.',
-    topics: [
-      'Contratos e Obrigações',
-      'Responsabilidade Civil',
-      'Indenizações por Danos',
-      'Direito das Sucessões',
-      'Cobranças e Execuções',
-      'Ações de Reparação',
-    ],
-    color: 'from-blue-500 to-blue-700',
-  },
-  {
     iconName: 'Users',
     title: 'Direito Trabalhista',
     description:
-      'Informações sobre relações de trabalho, direitos do trabalhador e empregador, rescisões contratuais e processos trabalhistas.',
+      'Atuação estratégica na defesa dos direitos do trabalhador e do empregador. Assessoria completa em todas as fases do processo trabalhista, desde a negociação até o julgamento final.',
     topics: [
       'Rescisão Contratual',
       'Verbas Rescisórias',
       'Assédio Moral e Sexual',
       'Horas Extras e Adicionais',
       'Acidentes de Trabalho',
-      'Direitos do Empregado',
+      'Reclamações Trabalhistas',
     ],
     color: 'from-emerald-500 to-emerald-700',
   },
   {
-    iconName: 'Heart',
-    title: 'Direito de Família',
+    iconName: 'ShieldCheck',
+    title: 'Direito Criminal',
     description:
-      'Orientação em questões familiares como divórcio, guarda de filhos, pensão alimentícia, inventários e planejamento familiar.',
+      'Defesa criminal robusta e estratégica em todas as instâncias. Atuação em inquéritos policiais, audiências de custódia, habeas corpus, recursos e acompanhamento processual completo.',
     topics: [
-      'Divórcio e Separação',
-      'Guarda de Filhos',
-      'Pensão Alimentícia',
-      'Inventários e Partilha',
-      'União Estável',
-      'Adoção',
+      'Defesa Criminal',
+      'Habeas Corpus',
+      'Audiência de Custódia',
+      'Crimes contra o Patrimônio',
+      'Crimes contra a Pessoa',
+      'Recursos Criminais',
     ],
-    color: 'from-rose-500 to-rose-700',
+    color: 'from-red-500 to-red-700',
   },
   {
-    iconName: 'Landmark',
-    title: 'Direito Previdenciário',
+    iconName: 'Briefcase',
+    title: 'Direito Civil',
     description:
-      'Informações sobre aposentadorias, benefícios do INSS, revisões de benefícios e planejamento previdenciário.',
+      'Orientação e representação em questões civis como contratos, responsabilidade civil, indenizações, cobranças judiciais e direito das obrigações.',
     topics: [
-      'Aposentadoria por Idade',
-      'Aposentadoria por Tempo',
-      'Auxílio-Doença',
-      'BPC/LOAS',
-      'Revisão de Benefícios',
-      'Pensão por Morte',
+      'Contratos e Obrigações',
+      'Responsabilidade Civil',
+      'Indenizações por Danos',
+      'Direito das Sucessões',
+      'Cobranças Judiciais',
+      'Ações de Reparação',
+    ],
+    color: 'from-blue-500 to-blue-700',
+  },
+  {
+    iconName: 'Building2',
+    title: 'Direito Empresarial',
+    description:
+      'Assessoria jurídica completa para empresas de todos os portes. Desde a constituição da empresa até a resolução de conflitos societários, contratos comerciais e recuperação judicial.',
+    topics: [
+      'Constituição de Empresas',
+      'Contratos Comerciais',
+      'Recuperação Judicial',
+      'Questões Societárias',
+      'Compliance Empresarial',
+      'Falência',
     ],
     color: 'from-amber-500 to-amber-700',
   },
   {
-    iconName: 'ShieldCheck',
-    title: 'Direito do Consumidor',
+    iconName: 'Landmark',
+    title: 'Direito Administrativo',
     description:
-      'Orientação sobre direitos do consumidor, relações de consumo, cobranças indevidas, negativação e danos morais.',
+      'Atuação em questões envolvendo a Administração Pública, licitações, contratos administrativos, concursos públicos, mandados de segurança e processos disciplinares.',
     topics: [
-      'Cobranças Indevidas',
-      'Negativação Indevida',
-      'Vícios de Produto',
-      'Propaganda Enganosa',
-      'Danos Morais',
-      'Direito de Arrependimento',
+      'Licitações e Contratos',
+      'Mandado de Segurança',
+      'Concursos Públicos',
+      'Processos Disciplinares',
+      'Responsabilidade do Estado',
+      'Improbidade Administrativa',
     ],
     color: 'from-purple-500 to-purple-700',
   },
   {
-    iconName: 'Building2',
-    title: 'Direito Imobiliário',
+    iconName: 'Scale',
+    title: 'Cálculos Judiciais',
     description:
-      'Informações sobre compra e venda de imóveis, contratos de locação, usucapião, regularização fundiária e disputas possessórias.',
+      'Elaboração e conferência de cálculos judiciais com precisão e rigor técnico. Liquidação de sentenças, atualização de débitos judiciais e perícias contábeis para diversas áreas do Direito.',
     topics: [
-      'Compra e Venda',
-      'Contratos de Locação',
-      'Usucapião',
-      'Regularização Fundiária',
-      'Disputas Possessórias',
-      'Condomínios',
+      'Liquidação de Sentenças',
+      'Atualização de Débitos',
+      'Perícias Contábeis',
+      'Cálculos Trabalhistas',
+      'Cálculos Cíveis',
+      'Impugnação de Cálculos',
     ],
     color: 'from-cyan-500 to-cyan-700',
   },
@@ -143,8 +143,8 @@ export default function AreasPage() {
               Nossas <span className="text-gold-400">Áreas de Atuação</span>
             </h1>
             <p className="text-primary-200 text-lg max-w-2xl">
-              Oferecemos orientação informativa e ética em diversas áreas do
-              Direito, sempre em conformidade com as normas da OAB.
+              Atuação estratégica e humanizada em diversas áreas do Direito,
+              sempre com ética e compromisso com resultados.
             </p>
           </AnimatedSection>
         </div>
@@ -157,110 +157,66 @@ export default function AreasPage() {
             {areas.map((area, index) => {
               const AreaIcon = iconMap[area.iconName] || Briefcase;
               return (
-              <AnimatedSection key={area.title}>
-                <div
-                  className={`grid lg:grid-cols-2 gap-12 items-center ${
-                    index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-                  }`}
-                >
-                  <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                    <div className="flex items-center gap-4 mb-6">
-                      <div
-                        className={`w-14 h-14 bg-gradient-to-br ${area.color} rounded-xl flex items-center justify-center`}
-                      >
-                        <AreaIcon className="w-7 h-7 text-white" />
-                      </div>
-                      <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary-500">
-                        {area.title}
-                      </h2>
-                    </div>
-
-                    <p className="text-secondary-600 leading-relaxed mb-8">
-                      {area.description}
-                    </p>
-
-                    <div className="grid grid-cols-2 gap-3 mb-8">
-                      {area.topics.map((topic) => (
-                        <div key={topic} className="flex items-center gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-gold-500 flex-shrink-0" />
-                          <span className="text-secondary-700 text-sm">
-                            {topic}
-                          </span>
+                <AnimatedSection key={area.title}>
+                  <div
+                    className={`grid lg:grid-cols-2 gap-12 items-center ${
+                      index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                    }`}
+                  >
+                    <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
+                      <div className="flex items-center gap-4 mb-6">
+                        <div
+                          className={`w-14 h-14 bg-gradient-to-br ${area.color} rounded-xl flex items-center justify-center`}
+                        >
+                          <AreaIcon className="w-7 h-7 text-white" />
                         </div>
-                      ))}
+                        <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary-500">
+                          {area.title}
+                        </h2>
+                      </div>
+
+                      <p className="text-secondary-600 leading-relaxed mb-8">
+                        {area.description}
+                      </p>
+
+                      <div className="grid grid-cols-2 gap-3 mb-8">
+                        {area.topics.map((topic) => (
+                          <div key={topic} className="flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4 text-gold-500 flex-shrink-0" />
+                            <span className="text-secondary-700 text-sm">
+                              {topic}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <Link
+                        href="/contato"
+                        className="btn-primary inline-flex items-center text-sm"
+                      >
+                        Saiba Mais
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Link>
                     </div>
 
-                    <Link
-                      href="/contato"
-                      className="btn-primary inline-flex items-center text-sm"
-                    >
-                      Saiba Mais
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </Link>
+                    <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
+                      <div className="aspect-[4/3] rounded-2xl shadow-lg overflow-hidden relative">
+                        <Image
+                          src={AREA_IMAGES[area.title] || DEFAULT_IMAGE}
+                          alt={area.title}
+                          fill
+                          className="object-cover hover:scale-105 transition-transform duration-500"
+                          sizes="(max-width: 1024px) 100vw, 50vw"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                      </div>
+                    </div>
                   </div>
 
-                  <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                    <AreaIllustration
-                      areaName={area.title}
-                      colorFrom={area.color.split(' ')[0]}
-                      colorTo={area.color.split(' ')[1]}
-                      className="aspect-[4/3] rounded-2xl shadow-lg"
-                    />
-                  </div>
-                </div>
-
-                {index < areas.length - 1 && (
-                  <div className="border-b border-secondary-200 mt-20" />
-                )}
-              </AnimatedSection>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Visual Law Section */}
-      <section className="py-20 bg-secondary-50">
-        <div className="container-custom">
-          <AnimatedSection>
-            <SectionHeader
-              badge="Visual Law"
-              title="Direito de Forma Acessível"
-              subtitle="Utilizamos recursos visuais para tornar conceitos jurídicos mais claros e acessíveis a todos."
-            />
-          </AnimatedSection>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {[
-              {
-                iconName: 'FileText',
-                title: 'Documentos Visuais',
-                desc: 'Contratos e petições com recursos gráficos para melhor compreensão.',
-              },
-              {
-                iconName: 'Handshake',
-                title: 'Fluxogramas',
-                desc: 'Visualização clara dos processos e procedimentos jurídicos.',
-              },
-              {
-                iconName: 'Scale',
-                title: 'Infográficos',
-                desc: 'Informações jurídicas apresentadas de forma visual e didática.',
-              },
-            ].map((item, index) => {
-              const Icon = iconMap[item.iconName] || Briefcase;
-              return (
-              <AnimatedSection key={item.title} delay={index * 0.1}>
-                <div className="card p-8 text-center h-full border border-secondary-100">
-                  <div className="w-14 h-14 bg-primary-50 rounded-xl flex items-center justify-center mx-auto mb-5">
-                    <Icon className="w-7 h-7 text-primary-500" />
-                  </div>
-                  <h3 className="text-lg font-serif font-bold text-primary-500 mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-secondary-600 text-sm">{item.desc}</p>
-                </div>
-              </AnimatedSection>
+                  {index < areas.length - 1 && (
+                    <div className="border-b border-secondary-200 mt-20" />
+                  )}
+                </AnimatedSection>
               );
             })}
           </div>
@@ -276,10 +232,10 @@ export default function AreasPage() {
             </h2>
             <p className="text-primary-200 text-lg max-w-2xl mx-auto mb-8">
               Entre em contato para esclarecer suas dúvidas. Nosso atendimento é
-              informativo e segue as normas éticas da OAB.
+              estratégico, humanizado e segue as normas éticas da OAB.
             </p>
             <Link href="/contato" className="btn-gold text-base">
-              Agende uma Consulta Informativa
+              Agende uma Consulta
               <ArrowRight className="w-5 h-5 ml-2" />
             </Link>
           </AnimatedSection>

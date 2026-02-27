@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import {
   Scale,
   GraduationCap,
@@ -15,7 +16,7 @@ import AnimatedSection from '@/components/AnimatedSection';
 import SectionHeader from '@/components/SectionHeader';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import LawyerPortrait from '@/components/illustrations/LawyerPortrait';
+import { IMAGES } from '@/lib/images';
 
 const valores: { icon: LucideIcon; title: string; desc: string }[] = [
   {
@@ -30,36 +31,36 @@ const valores: { icon: LucideIcon; title: string; desc: string }[] = [
   },
   {
     icon: Target,
-    title: 'Transparência',
-    desc: 'Comunicação clara e honesta em todas as etapas da orientação jurídica.',
+    title: 'Estratégia',
+    desc: 'Análise detalhada de cada caso para traçar a melhor estratégia de defesa dos seus direitos.',
   },
   {
     icon: Award,
     title: 'Excelência',
-    desc: 'Busca constante por atualização e aprimoramento profissional.',
+    desc: 'Busca constante por atualização e aprimoramento profissional. 5.0 de avaliação no Google.',
   },
 ];
 
 const formacao = [
   {
-    year: '2016',
+    year: '2019',
     title: 'Graduação em Direito',
-    institution: 'Universidade Exemplo',
-  },
-  {
-    year: '2018',
-    title: 'Pós-Graduação em Direito Civil',
-    institution: 'Instituto Jurídico',
+    institution: 'Universidade do Oeste Paulista - UNOESTE',
   },
   {
     year: '2020',
-    title: 'Especialização em Direito do Trabalho',
-    institution: 'Faculdade de Direito',
+    title: 'Aprovação na OAB',
+    institution: 'Ordem dos Advogados do Brasil - Seccional SP',
   },
   {
-    year: '2022',
-    title: 'Mestrado em Direito Processual',
-    institution: 'Universidade Estadual',
+    year: '2021',
+    title: 'Fundação do Escritório',
+    institution: 'Cerbelera & Oliveira Advogados Associados',
+  },
+  {
+    year: '2023',
+    title: 'Especialização Continuada',
+    institution: 'Direito Trabalhista e Criminal',
   },
 ];
 
@@ -79,11 +80,11 @@ export default function SobrePage() {
             </span>
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6">
               Conheça o Escritório <br />
-              <span className="text-gold-400">Roberto Sartoro</span>
+              <span className="text-gold-400">Cerbelera & Oliveira</span>
             </h1>
             <p className="text-primary-200 text-lg max-w-2xl">
-              Mais de uma década dedicada à advocacia ética e informativa em
-              Presidente Prudente e região.
+              Mais de 5 anos de atuação estratégica e humanizada na defesa dos
+              seus direitos em Presidente Prudente e região.
             </p>
           </AnimatedSection>
         </div>
@@ -95,7 +96,15 @@ export default function SobrePage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection>
               <div className="relative">
-                <LawyerPortrait className="aspect-square rounded-2xl overflow-hidden shadow-2xl" />
+                <div className="aspect-square rounded-2xl overflow-hidden shadow-2xl relative">
+                  <Image
+                    src={IMAGES.lawyer}
+                    alt="Sócios Diogo Cerbelera e Luã Oliveira - Advogados"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </div>
                 <div className="absolute -bottom-6 -right-6 bg-gold-500 text-white p-6 rounded-xl shadow-xl">
                   <div className="flex items-center gap-1 mb-1">
                     {Array.from({ length: 5 }).map((_, i) => (
@@ -103,6 +112,7 @@ export default function SobrePage() {
                     ))}
                   </div>
                   <p className="text-sm font-medium">5.0 no Google</p>
+                  <p className="text-xs opacity-80">12+ avaliações</p>
                 </div>
               </div>
             </AnimatedSection>
@@ -111,15 +121,16 @@ export default function SobrePage() {
               <h2 className="section-title">Nossa História</h2>
               <div className="space-y-4 text-secondary-600 leading-relaxed">
                 <p>
-                  O escritório Roberto Sartoro Advogado nasceu da paixão pelo
-                  Direito e do desejo de oferecer orientação jurídica acessível
-                  e de qualidade em Presidente Prudente e região.
+                  O escritório Cerbelera & Oliveira Advogados Associados nasceu
+                  da união de dois profissionais apaixonados pelo Direito —
+                  <strong> Diogo Ramos Cerbelera Neto</strong> e
+                  <strong> Luã Carlos de Oliveira</strong> — comprometidos com a
+                  justiça e a defesa dos direitos dos cidadãos.
                 </p>
                 <p>
-                  Ao longo de mais de 10 anos de atuação, construímos uma
-                  trajetória baseada na ética, transparência e no compromisso
-                  com cada pessoa que nos procura em busca de informação e
-                  orientação.
+                  Ao longo de mais de 5 anos de atuação, construímos uma
+                  trajetória sólida baseada na ética, transparência e no
+                  compromisso inabalável com cada pessoa que nos procura.
                 </p>
                 <p>
                   Nossa atuação é pautada pelo Código de Ética e Disciplina da
@@ -127,9 +138,11 @@ export default function SobrePage() {
                   à informação jurídica é um direito de todos.
                 </p>
                 <p>
-                  Acreditamos que um advogado deve ser, antes de tudo, um
-                  orientador — alguém que esclarece, informa e aponta caminhos
-                  dentro da legalidade.
+                  Contamos com estacionamento próprio e um ambiente acolhedor
+                  para que nossos clientes se sintam confortáveis durante todo o
+                  processo de atendimento. Nosso escritório está localizado na
+                  R. Francisco Machado de Campos, 393 - Vila Nova, Presidente
+                  Prudente/SP.
                 </p>
               </div>
             </AnimatedSection>
@@ -152,17 +165,17 @@ export default function SobrePage() {
             {valores.map((valor, index) => {
               const Icon = valor.icon;
               return (
-              <AnimatedSection key={valor.title} delay={index * 0.1}>
-                <div className="card p-8 text-center h-full border border-secondary-100">
-                  <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                    <Icon className="w-8 h-8 text-primary-500" />
+                <AnimatedSection key={valor.title} delay={index * 0.1}>
+                  <div className="card p-8 text-center h-full border border-secondary-100">
+                    <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-5">
+                      <Icon className="w-8 h-8 text-primary-500" />
+                    </div>
+                    <h3 className="text-xl font-serif font-bold text-primary-500 mb-3">
+                      {valor.title}
+                    </h3>
+                    <p className="text-secondary-600 text-sm">{valor.desc}</p>
                   </div>
-                  <h3 className="text-xl font-serif font-bold text-primary-500 mb-3">
-                    {valor.title}
-                  </h3>
-                  <p className="text-secondary-600 text-sm">{valor.desc}</p>
-                </div>
-              </AnimatedSection>
+                </AnimatedSection>
               );
             })}
           </div>
@@ -174,9 +187,9 @@ export default function SobrePage() {
         <div className="container-custom">
           <AnimatedSection>
             <SectionHeader
-              badge="Formação Acadêmica"
-              title="Trajetória Profissional"
-              subtitle="Formação sólida e atualização constante para oferecer a melhor orientação."
+              badge="Trajetória"
+              title="Nossa Caminhada"
+              subtitle="Uma trajetória construída com dedicação, estudo e compromisso com a justiça."
             />
           </AnimatedSection>
 
@@ -249,8 +262,8 @@ export default function SobrePage() {
             <BookOpen className="w-12 h-12 text-primary-300 mx-auto mb-6" />
             <h2 className="section-title">Quer Saber Mais?</h2>
             <p className="section-subtitle mx-auto mb-8">
-              Entre em contato para uma consulta informativa ou visite nosso blog
-              para conteúdo jurídico educativo.
+              Entre em contato para uma consulta ou visite nosso blog para
+              conteúdo jurídico educativo.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contato" className="btn-primary">

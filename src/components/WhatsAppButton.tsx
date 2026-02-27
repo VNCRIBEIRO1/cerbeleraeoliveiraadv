@@ -5,9 +5,9 @@ import { motion } from 'framer-motion';
 
 export default function WhatsAppButton() {
   const whatsappNumber =
-    process.env.NEXT_PUBLIC_WHATSAPP || '5518988116944';
+    process.env.NEXT_PUBLIC_WHATSAPP || '5518996101884';
   const message = encodeURIComponent(
-    'Olá! Gostaria de informações sobre os serviços do escritório Roberto Sartoro Advogado.'
+    'Olá! Gostaria de informações sobre os serviços do escritório Cerbelera & Oliveira Advogados.'
   );
 
   return (

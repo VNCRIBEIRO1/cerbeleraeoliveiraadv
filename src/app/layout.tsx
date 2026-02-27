@@ -9,31 +9,35 @@ import CookieBanner from '@/components/CookieBanner';
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://robertosartoro.adv.br'),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://cerbeleraeoliveiraadv.vercel.app'
+  ),
   title: {
-    default: 'Roberto Sartoro | Advogado em Presidente Prudente - SP',
-    template: '%s | Roberto Sartoro Advogado',
+    default:
+      'Cerbelera & Oliveira | Advogados em Presidente Prudente - SP',
+    template: '%s | Cerbelera & Oliveira Advogados',
   },
   description:
-    'Roberto Sartoro Advogado – Escritório de Advocacia em Presidente Prudente, SP. Especialista em Direito Civil, Trabalhista, Família e Previdenciário. Consulta informativa e atendimento ético.',
+    'Cerbelera & Oliveira Advogados Associados – Escritório de Advocacia em Presidente Prudente, SP. Atuação estratégica e humanizada em Direito Trabalhista, Criminal, Civil, Empresarial e Administrativo.',
   keywords: [
     'advogado Presidente Prudente',
     'escritório de advocacia',
-    'direito civil',
     'direito trabalhista',
-    'direito de família',
-    'consultoria jurídica',
-    'Roberto Sartoro',
+    'direito criminal',
+    'direito civil',
+    'direito empresarial',
+    'direito administrativo',
+    'Cerbelera Oliveira',
     'advogado SP',
   ],
-  authors: [{ name: 'Roberto Sartoro Advogado' }],
+  authors: [{ name: 'Cerbelera & Oliveira Advogados Associados' }],
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
-    siteName: 'Roberto Sartoro Advogado',
-    title: 'Roberto Sartoro | Advogado em Presidente Prudente - SP',
+    siteName: 'Cerbelera & Oliveira Advogados',
+    title: 'Cerbelera & Oliveira | Advogados em Presidente Prudente - SP',
     description:
-      'Escritório de Advocacia em Presidente Prudente. Atuação ética e informativa em Direito Civil, Trabalhista, Família e Previdenciário.',
+      'Escritório de Advocacia em Presidente Prudente. Atuação estratégica e humanizada em Direito Trabalhista, Criminal, Civil, Empresarial e Administrativo.',
   },
   robots: {
     index: true,
@@ -57,7 +61,7 @@ export default function RootLayout({
     <html lang="pt-BR" className={inter.className}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <meta name="theme-color" content="#1e3a5f" />
+        <meta name="theme-color" content="#1a1a1a" />
       </head>
       <body className="min-h-screen flex flex-col">
         <Header />

@@ -14,31 +14,36 @@ import ContactForm from '@/components/ContactForm';
 export const metadata: Metadata = {
   title: 'Contato',
   description:
-    'Entre em contato com o escritório Roberto Sartoro Advogado em Presidente Prudente. Agende uma consulta informativa.',
+    'Entre em contato com Cerbelera & Oliveira Advogados Associados em Presidente Prudente. Agende uma consulta.',
 };
 
 const contactInfo = [
   {
     icon: MapPin,
     title: 'Endereço',
-    lines: ['R. Francisco Gomes, 75 - Jardim Paulistano', 'Edifício Plaza 14 de Setembro', 'Presidente Prudente - SP', 'CEP 19013-780'],
+    lines: [
+      'R. Francisco Machado de Campos, 393',
+      'Vila Nova',
+      'Presidente Prudente - SP',
+      'CEP 19010-300',
+    ],
   },
   {
     icon: Phone,
     title: 'Telefone / WhatsApp',
-    lines: ['(18) 98811-6944'],
-    href: 'tel:+5518988116944',
+    lines: ['(18) 99610-1884'],
+    href: 'tel:+5518996101884',
   },
   {
     icon: Mail,
     title: 'E-mail',
-    lines: ['contato@robertosartoro.adv.br'],
-    href: 'mailto:contato@robertosartoro.adv.br',
+    lines: ['contato@cerbeleraoliveira.adv.br'],
+    href: 'mailto:contato@cerbeleraoliveira.adv.br',
   },
   {
     icon: Clock,
     title: 'Horário',
-    lines: ['Atendimento 24 horas', 'Consulte disponibilidade'],
+    lines: ['Segunda a Sexta', '08:00 às 18:00'],
   },
 ];
 
@@ -61,7 +66,8 @@ export default function ContatoPage() {
             </h1>
             <p className="text-primary-200 text-lg max-w-2xl">
               Estamos prontos para esclarecer suas dúvidas com ética e
-              profissionalismo. O contato inicial é meramente informativo.
+              profissionalismo. Contamos com estacionamento próprio para sua
+              comodidade.
             </p>
           </AnimatedSection>
         </div>
@@ -125,21 +131,23 @@ export default function ContatoPage() {
             <AnimatedSection delay={0.2}>
               <div className="card border border-secondary-100 overflow-hidden h-full">
                 <div className="h-full min-h-[500px] bg-secondary-100 flex items-center justify-center">
-                  {/* Placeholder para Google Maps */}
                   <div className="text-center p-8">
                     <MapPin className="w-16 h-16 text-primary-300 mx-auto mb-4" />
                     <h3 className="text-lg font-serif font-bold text-primary-500 mb-2">
                       Nossa Localização
                     </h3>
-                    <p className="text-secondary-500 text-sm mb-4">
-                      R. Francisco Gomes, 75 - Jardim Paulistano
+                    <p className="text-secondary-500 text-sm mb-2">
+                      R. Francisco Machado de Campos, 393
                       <br />
-                      Edifício Plaza 14 de Setembro
+                      Vila Nova
                       <br />
                       Presidente Prudente - SP
                     </p>
+                    <p className="text-gold-500 text-sm font-medium mb-4">
+                      🅿️ Estacionamento Próprio
+                    </p>
                     <a
-                      href="https://maps.google.com/?q=R.+Francisco+Gomes,+75+-+Jardim+Paulistano,+Presidente+Prudente+-+SP,+19013-780"
+                      href="https://maps.google.com/?q=R.+Francisco+Machado+de+Campos,+393+-+Vila+Nova,+Presidente+Prudente+-+SP,+19010-300"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn-primary text-sm"

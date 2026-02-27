@@ -8,8 +8,8 @@ interface LawyerPortraitProps {
 
 export default function LawyerPortrait({
   className = '',
-  name = 'Roberto Sartoro',
-  subtitle = 'Advogado',
+  name = 'Cerbelera & Oliveira',
+  subtitle = 'Advogados Associados',
 }: LawyerPortraitProps) {
   return (
     <div className={`relative overflow-hidden ${className}`}>
