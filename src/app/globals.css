@@ -61,6 +61,12 @@
            transition-all duration-300 overflow-hidden;
   }
 
+  .card-elevated {
+    @apply bg-white rounded-xl shadow-lg hover:shadow-2xl
+           transition-all duration-300 overflow-hidden
+           border border-secondary-100;
+  }
+
   .input-field {
     @apply w-full px-4 py-3 border border-secondary-300 rounded-md
            focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-500

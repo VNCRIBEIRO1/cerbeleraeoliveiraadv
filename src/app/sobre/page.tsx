@@ -8,12 +8,14 @@ import {
   Heart,
   CheckCircle2,
   BookOpen,
+  Star,
   LucideIcon,
 } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import SectionHeader from '@/components/SectionHeader';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import LawyerPortrait from '@/components/illustrations/LawyerPortrait';
 
 const valores: { icon: LucideIcon; title: string; desc: string }[] = [
   {
@@ -93,18 +95,14 @@ export default function SobrePage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection>
               <div className="relative">
-                <div className="aspect-square bg-gradient-to-br from-primary-100 to-primary-200 rounded-2xl overflow-hidden flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <Scale className="w-24 h-24 text-primary-300 mx-auto mb-6" />
-                    <p className="text-primary-500 font-serif text-3xl font-bold">
-                      Roberto Sartoro
-                    </p>
-                    <p className="text-primary-400 mt-2">OAB/SP 000.000</p>
-                  </div>
-                </div>
+                <LawyerPortrait className="aspect-square rounded-2xl overflow-hidden shadow-2xl" />
                 <div className="absolute -bottom-6 -right-6 bg-gold-500 text-white p-6 rounded-xl shadow-xl">
-                  <p className="text-3xl font-bold">10+</p>
-                  <p className="text-sm">Anos de Experiência</p>
+                  <div className="flex items-center gap-1 mb-1">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-white text-white" />
+                    ))}
+                  </div>
+                  <p className="text-sm font-medium">5.0 no Google</p>
                 </div>
               </div>
             </AnimatedSection>

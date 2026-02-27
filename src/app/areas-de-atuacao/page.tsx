@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import SectionHeader from '@/components/SectionHeader';
+import AreaIllustration from '@/components/illustrations/AreaIllustration';
 
 const iconMap: Record<string, LucideIcon> = {
   Briefcase,
@@ -199,20 +200,12 @@ export default function AreasPage() {
                   </div>
 
                   <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                    <div
-                      className={`aspect-[4/3] bg-gradient-to-br ${area.color} rounded-2xl p-10 flex items-center justify-center relative overflow-hidden`}
-                    >
-                      <div className="absolute inset-0 opacity-10">
-                        <div className="absolute -top-10 -right-10 w-40 h-40 bg-white rounded-full" />
-                        <div className="absolute -bottom-10 -left-10 w-60 h-60 bg-white rounded-full" />
-                      </div>
-                      <div className="text-center relative z-10">
-                        <AreaIcon className="w-20 h-20 text-white/80 mx-auto mb-4" />
-                        <p className="text-white font-serif text-2xl font-bold">
-                          {area.title}
-                        </p>
-                      </div>
-                    </div>
+                    <AreaIllustration
+                      areaName={area.title}
+                      colorFrom={area.color.split(' ')[0]}
+                      colorTo={area.color.split(' ')[1]}
+                      className="aspect-[4/3] rounded-2xl shadow-lg"
+                    />
                   </div>
                 </div>
 

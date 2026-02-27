@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Scale, Shield, Users } from 'lucide-react';
+import ScaleIllustration from './illustrations/ScaleIllustration';
 
 export default function HeroSection() {
   return (
@@ -21,6 +22,11 @@ export default function HeroSection() {
       {/* Decorative elements */}
       <div className="absolute top-20 right-10 w-72 h-72 bg-gold-500/10 rounded-full blur-3xl" />
       <div className="absolute bottom-20 left-10 w-96 h-96 bg-primary-400/10 rounded-full blur-3xl" />
+
+      {/* Scale illustration background */}
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] opacity-[0.07] hidden xl:block pointer-events-none">
+        <ScaleIllustration />
+      </div>
 
       <div className="container-custom relative z-10 pt-32 pb-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Calendar, ArrowRight, Clock } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
+import BlogIllustration from './illustrations/BlogIllustration';
 
 interface BlogCardProps {
   title: string;
@@ -27,12 +28,8 @@ export default function BlogCard({
     <AnimatedSection delay={delay}>
       <Link href={`/blog/${slug}`} className="block group">
         <article className="card h-full border border-secondary-100 hover:border-gold-400/50 group-hover:-translate-y-1">
-          {/* Image placeholder */}
-          <div className="h-48 bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-            <span className="text-primary-400 font-serif text-4xl font-bold opacity-30">
-              RS
-            </span>
-          </div>
+          {/* Illustration */}
+          <BlogIllustration category={category} className="h-48" />
 
           <div className="p-6">
             <span className="inline-block text-xs font-medium text-gold-500 bg-gold-500/10 px-3 py-1 rounded-full mb-3">

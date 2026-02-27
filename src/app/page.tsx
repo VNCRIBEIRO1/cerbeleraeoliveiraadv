@@ -4,6 +4,7 @@ import {
   ArrowRight,
   CheckCircle2,
   MapPin,
+  Star,
 } from 'lucide-react';
 import HeroSection from '@/components/HeroSection';
 import SectionHeader from '@/components/SectionHeader';
@@ -11,6 +12,7 @@ import AreaCard from '@/components/AreaCard';
 import TestimonialCard from '@/components/TestimonialCard';
 import BlogCard from '@/components/BlogCard';
 import AnimatedSection from '@/components/AnimatedSection';
+import LawyerPortrait from '@/components/illustrations/LawyerPortrait';
 
 const areas = [
   {
@@ -146,19 +148,15 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <AnimatedSection>
               <div className="relative">
-                <div className="aspect-[4/5] bg-gradient-to-br from-primary-200 to-primary-300 rounded-2xl overflow-hidden flex items-center justify-center">
-                  <div className="text-center">
-                    <Scale className="w-20 h-20 text-primary-400 mx-auto mb-4" />
-                    <p className="text-primary-500 font-serif text-2xl font-bold">
-                      Roberto Sartoro
-                    </p>
-                    <p className="text-primary-400 text-sm">Advogado</p>
-                  </div>
-                </div>
+                <LawyerPortrait className="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl" />
                 {/* Decorative badge */}
                 <div className="absolute -bottom-6 -right-6 bg-gold-500 text-white p-6 rounded-xl shadow-xl">
-                  <p className="text-3xl font-bold">10+</p>
-                  <p className="text-sm">Anos de Experiência</p>
+                  <div className="flex items-center gap-1 mb-1">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-white text-white" />
+                    ))}
+                  </div>
+                  <p className="text-sm font-medium">5.0 no Google</p>
                 </div>
               </div>
             </AnimatedSection>
@@ -202,23 +200,39 @@ export default function HomePage() {
       </section>
 
       {/* Estatísticas */}
-      <section className="py-16 bg-primary-500">
-        <div className="container-custom">
+      <section className="py-16 bg-primary-500 relative overflow-hidden">
+        {/* Decorative background */}
+        <div className="absolute inset-0 opacity-10">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <pattern id="stats-grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M40 0H0v40" fill="none" stroke="white" strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#stats-grid)" />
+          </svg>
+        </div>
+        <div className="container-custom relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { number: '10+', label: 'Anos de Experiência' },
-              { number: '500+', label: 'Clientes Atendidos' },
-              { number: '6', label: 'Áreas de Atuação' },
-              { number: '100%', label: 'Compromisso Ético' },
+              { number: '5.0', label: 'Avaliação Google', hasStar: true },
+              { number: '58+', label: 'Avaliações de Clientes', hasStar: false },
+              { number: '6', label: 'Áreas de Atuação', hasStar: false },
+              { number: '100%', label: 'Compromisso Ético', hasStar: false },
             ].map((stat, index) => (
               <AnimatedSection
                 key={stat.label}
                 delay={index * 0.1}
                 className="text-center"
               >
-                <p className="text-3xl md:text-4xl font-bold text-gold-400 mb-2">
-                  {stat.number}
-                </p>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <p className="text-3xl md:text-4xl font-bold text-gold-400">
+                    {stat.number}
+                  </p>
+                  {stat.hasStar && (
+                    <Star className="w-6 h-6 fill-gold-400 text-gold-400" />
+                  )}
+                </div>
                 <p className="text-primary-200 text-sm">{stat.label}</p>
               </AnimatedSection>
             ))}
