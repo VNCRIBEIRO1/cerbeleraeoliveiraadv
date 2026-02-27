@@ -8,10 +8,12 @@ import {
   Send,
   Scale,
   Bot,
-  User,
   ArrowLeft,
   ExternalLink,
   ShieldCheck,
+  AlertTriangle,
+  Clock,
+  CheckCircle,
 } from 'lucide-react';
 
 // ============================================================
@@ -28,27 +30,27 @@ type Mensagem = {
 type Opcao = {
   label: string;
   valor: string;
-  icone?: string;
 };
 
 type DadosTriagem = {
   area: string;
   subarea: string;
+  urgencia: string;
   detalhes: string[];
   nome: string;
   telefone: string;
 };
 
 // ============================================================
-// FLUXOS POR ÁREA — PERGUNTAS CONVERSACIONAIS
+// FLUXOS POR ÁREA — PERGUNTAS CONVERSACIONAIS COMPLETAS
 // ============================================================
 type Pergunta = {
   id: string;
   texto: string;
   opcoes?: Opcao[];
-  livre?: boolean; // aceita texto livre
-  campo?: keyof DadosTriagem; // campo a preencher
-  campoArray?: boolean; // push em array
+  livre?: boolean;
+  campo?: keyof DadosTriagem;
+  campoArray?: boolean;
 };
 
 type Fluxo = {
@@ -56,10 +58,27 @@ type Fluxo = {
   perguntas: Pergunta[];
 };
 
+// ============================================================
+// PERGUNTA DE URGÊNCIA (reutilizada em todos os fluxos)
+// ============================================================
+const PERGUNTA_URGENCIA: Pergunta = {
+  id: 'urgencia',
+  texto: 'Qual o nível de urgência da sua situação?',
+  opcoes: [
+    { label: '🔴 Urgente — preciso de atendimento imediato', valor: 'URGENTE' },
+    { label: '🟡 Moderado — preciso resolver em breve', valor: 'MODERADO' },
+    { label: '🟢 Consulta — quero entender meus direitos', valor: 'CONSULTA' },
+  ],
+  campo: 'urgencia',
+};
+
 const FLUXOS: Record<string, Fluxo> = {
+  // ============================================================
+  // TRABALHISTA
+  // ============================================================
   trabalhista: {
     saudacao:
-      'Entendi! Vamos conversar sobre sua questão *trabalhista*. Vou fazer algumas perguntas para entender melhor sua situação.',
+      'Entendi! Vamos conversar sobre sua questão *trabalhista*. Vou fazer algumas perguntas para entender melhor sua situação e direcionar seu atendimento.',
     perguntas: [
       {
         id: 'sub',
@@ -68,30 +87,50 @@ const FLUXOS: Record<string, Fluxo> = {
           { label: '🔴 Fui demitido(a) por justa causa', valor: 'Demissão por justa causa' },
           { label: '💰 Não recebi verbas rescisórias', valor: 'Verbas rescisórias não pagas' },
           { label: '⏰ Horas extras não pagas', valor: 'Horas extras não pagas' },
-          { label: '😰 Assédio moral no trabalho', valor: 'Assédio moral no trabalho' },
-          { label: '🤕 Acidente de trabalho', valor: 'Acidente de trabalho' },
+          { label: '😰 Assédio moral ou sexual no trabalho', valor: 'Assédio moral/sexual no trabalho' },
+          { label: '🤕 Acidente de trabalho / doença ocupacional', valor: 'Acidente de trabalho / doença ocupacional' },
+          { label: '📋 Desvio ou acúmulo de função', valor: 'Desvio ou acúmulo de função' },
+          { label: '🚫 Trabalho sem registro (CLT)', valor: 'Trabalho sem registro em carteira' },
+          { label: '⚖️ Rescisão indireta (quero sair com direitos)', valor: 'Rescisão indireta' },
+          { label: '🔒 Estabilidade (gestante, CIPA, acidente)', valor: 'Estabilidade provisória' },
           { label: '📋 Outro assunto trabalhista', valor: 'Outro assunto trabalhista' },
         ],
         campo: 'subarea',
       },
+      PERGUNTA_URGENCIA,
       {
         id: 'tempo',
         texto: 'Há quanto tempo ocorreu ou está ocorrendo essa situação?',
         opcoes: [
-          { label: 'Menos de 6 meses', valor: 'Menos de 6 meses' },
-          { label: 'Entre 6 meses e 1 ano', valor: 'Entre 6 meses e 1 ano' },
-          { label: 'Entre 1 e 2 anos', valor: 'Entre 1 e 2 anos' },
-          { label: 'Mais de 2 anos', valor: 'Mais de 2 anos' },
+          { label: '📅 Menos de 30 dias', valor: 'Menos de 30 dias' },
+          { label: '📅 Entre 1 e 6 meses', valor: 'Entre 1 e 6 meses' },
+          { label: '📅 Entre 6 meses e 1 ano', valor: 'Entre 6 meses e 1 ano' },
+          { label: '📅 Entre 1 e 2 anos', valor: 'Entre 1 e 2 anos' },
+          { label: '⚠️ Mais de 2 anos (atenção ao prazo prescricional)', valor: 'Mais de 2 anos' },
         ],
         campoArray: true,
       },
       {
         id: 'vinculo',
-        texto: 'Você tinha carteira assinada (registro CLT)?',
+        texto: 'Qual era/é o vínculo empregatício?',
         opcoes: [
-          { label: '✅ Sim, carteira assinada', valor: 'Carteira assinada (CLT)' },
-          { label: '❌ Não, sem registro', valor: 'Sem registro em carteira' },
-          { label: '📄 Era contrato temporário/terceirizado', valor: 'Contrato temporário/terceirizado' },
+          { label: '✅ Carteira assinada (CLT)', valor: 'CLT — carteira assinada' },
+          { label: '❌ Sem registro em carteira', valor: 'Sem registro em carteira' },
+          { label: '📄 Contrato temporário / terceirizado', valor: 'Contrato temporário / terceirizado' },
+          { label: '🏠 Trabalho doméstico', valor: 'Empregado(a) doméstico(a)' },
+          { label: '🚗 Motorista de aplicativo / PJ', valor: 'Motorista de app / PJ' },
+          { label: '📋 Outro tipo de vínculo', valor: 'Outro tipo de vínculo' },
+        ],
+        campoArray: true,
+      },
+      {
+        id: 'documentos',
+        texto: 'Você tem documentos ou provas da situação?',
+        opcoes: [
+          { label: '✅ Sim, tenho documentos e comprovantes', valor: 'Possui documentos/comprovantes' },
+          { label: '📱 Tenho conversas (WhatsApp, e-mail)', valor: 'Possui conversas digitais como prova' },
+          { label: '👥 Tenho testemunhas', valor: 'Possui testemunhas' },
+          { label: '❌ Não tenho provas no momento', valor: 'Sem provas no momento' },
         ],
         campoArray: true,
       },
@@ -104,9 +143,12 @@ const FLUXOS: Record<string, Fluxo> = {
     ],
   },
 
+  // ============================================================
+  // CRIMINAL
+  // ============================================================
   criminal: {
     saudacao:
-      'Compreendo. Vamos tratar da sua questão na área *criminal* com total sigilo. Preciso de algumas informações.',
+      'Compreendo. Vamos tratar da sua questão na área *criminal* com total sigilo e seriedade. Preciso de algumas informações para direcionar o atendimento.',
     perguntas: [
       {
         id: 'sub',
@@ -114,9 +156,14 @@ const FLUXOS: Record<string, Fluxo> = {
         opcoes: [
           { label: '🔒 Fui preso(a) ou alguém próximo foi preso', valor: 'Prisão / flagrante' },
           { label: '📋 Estou respondendo a processo criminal', valor: 'Processo criminal em andamento' },
+          { label: '🔍 Estou sendo investigado(a) (inquérito policial)', valor: 'Investigação / inquérito policial' },
           { label: '🗣️ Sofri calúnia, difamação ou injúria', valor: 'Crimes contra a honra' },
           { label: '⚖️ Preciso de habeas corpus', valor: 'Habeas corpus' },
           { label: '🛡️ Fui vítima de crime', valor: 'Vítima de crime' },
+          { label: '💊 Questão envolvendo drogas', valor: 'Questão envolvendo drogas / Lei de Drogas' },
+          { label: '🚗 Crime de trânsito', valor: 'Crime de trânsito' },
+          { label: '👨‍👩‍👧 Violência doméstica (Lei Maria da Penha)', valor: 'Violência doméstica / Maria da Penha' },
+          { label: '💻 Crime cibernético / estelionato digital', valor: 'Crime cibernético / estelionato digital' },
           { label: '📋 Outro assunto criminal', valor: 'Outro assunto criminal' },
         ],
         campo: 'subarea',
@@ -125,34 +172,60 @@ const FLUXOS: Record<string, Fluxo> = {
         id: 'urgencia',
         texto: 'Qual o nível de urgência?',
         opcoes: [
-          { label: '🔴 Urgente — pessoa presa agora', valor: 'URGENTE — pessoa presa' },
-          { label: '🟡 Preciso de orientação em breve', valor: 'Orientação em breve' },
-          { label: '🟢 Quero entender meus direitos', valor: 'Consulta informativa' },
+          { label: '🔴 Urgente — pessoa presa ou em risco imediato', valor: 'URGENTE' },
+          { label: '🟡 Moderado — preciso de orientação em breve', valor: 'MODERADO' },
+          { label: '🟢 Consulta — quero entender meus direitos', valor: 'CONSULTA' },
+        ],
+        campo: 'urgencia',
+      },
+      {
+        id: 'posicao',
+        texto: 'Qual sua posição na situação?',
+        opcoes: [
+          { label: '🛡️ Sou a vítima / ofendido(a)', valor: 'Vítima / ofendido(a)' },
+          { label: '⚖️ Sou o(a) acusado(a) / investigado(a)', valor: 'Acusado(a) / investigado(a)' },
+          { label: '👨‍👩‍👧 Familiar de envolvido(a)', valor: 'Familiar de envolvido(a)' },
+          { label: '📋 Outro', valor: 'Outra posição' },
         ],
         campoArray: true,
       },
       {
         id: 'inquerito',
-        texto: 'Já existe boletim de ocorrência ou inquérito policial?',
+        texto: 'Já existe boletim de ocorrência, inquérito policial ou processo?',
         opcoes: [
-          { label: 'Sim, já foi registrado', valor: 'B.O. / inquérito já registrado' },
-          { label: 'Não, ainda não', valor: 'Sem B.O. / inquérito' },
-          { label: 'Não sei informar', valor: 'Não sabe informar sobre B.O.' },
+          { label: '📄 Sim, já tem B.O. registrado', valor: 'B.O. já registrado' },
+          { label: '🔍 Sim, inquérito policial em andamento', valor: 'Inquérito policial em andamento' },
+          { label: '⚖️ Sim, processo criminal em curso', valor: 'Processo criminal em curso' },
+          { label: '❌ Não, nenhum registro ainda', valor: 'Sem registro / B.O.' },
+          { label: '❓ Não sei informar', valor: 'Não sabe informar' },
+        ],
+        campoArray: true,
+      },
+      {
+        id: 'advogado',
+        texto: 'Já teve ou tem advogado(a) atuando no caso?',
+        opcoes: [
+          { label: '✅ Sim, mas quero trocar', valor: 'Já tem advogado, deseja trocar' },
+          { label: '⚖️ Estou com defensor público', valor: 'Com defensor público' },
+          { label: '❌ Não, ainda não consultei ninguém', valor: 'Sem advogado' },
         ],
         campoArray: true,
       },
       {
         id: 'detalhe',
-        texto: 'Descreva brevemente a situação (todas as informações são tratadas com sigilo):',
+        texto: 'Descreva brevemente a situação (todas as informações são tratadas com *total sigilo*):',
         livre: true,
         campoArray: true,
       },
     ],
   },
 
+  // ============================================================
+  // CIVIL
+  // ============================================================
   civil: {
     saudacao:
-      'Certo! Vamos conversar sobre sua questão de *Direito Civil*. Me conte um pouco mais.',
+      'Certo! Vamos conversar sobre sua questão de *Direito Civil*. Me conte um pouco mais para que possamos direcionar o melhor atendimento.',
     perguntas: [
       {
         id: 'sub',
@@ -160,21 +233,49 @@ const FLUXOS: Record<string, Fluxo> = {
         opcoes: [
           { label: '💔 Danos morais ou materiais', valor: 'Responsabilidade civil / danos' },
           { label: '📝 Problemas com contratos', valor: 'Questões contratuais' },
-          { label: '🏠 Questão imobiliária', valor: 'Direito imobiliário' },
-          { label: '👨‍👩‍👧 Família (divórcio, pensão, guarda)', valor: 'Direito de Família' },
-          { label: '📜 Inventário / herança', valor: 'Sucessões / inventário' },
+          { label: '🏠 Questão imobiliária (compra, venda, locação)', valor: 'Direito imobiliário' },
+          { label: '👨‍👩‍👧 Divórcio / separação', valor: 'Divórcio / separação' },
+          { label: '👶 Guarda de filhos / regulamentação de visitas', valor: 'Guarda / regulamentação de visitas' },
+          { label: '💰 Pensão alimentícia', valor: 'Pensão alimentícia' },
+          { label: '📜 Inventário / herança / testamento', valor: 'Sucessões / inventário / testamento' },
           { label: '🛒 Direito do consumidor', valor: 'Direito do consumidor' },
+          { label: '🏥 Erro médico / hospitalar', valor: 'Responsabilidade médica / hospitalar' },
+          { label: '🚗 Acidente de trânsito (indenização)', valor: 'Acidente de trânsito (indenização)' },
           { label: '📋 Outro assunto cível', valor: 'Outro assunto cível' },
         ],
         campo: 'subarea',
       },
+      PERGUNTA_URGENCIA,
       {
-        id: 'tentativa',
-        texto: 'Você já tentou resolver de forma amigável (extrajudicial)?',
+        id: 'situacao_atual',
+        texto: 'Qual a situação atual do caso?',
         opcoes: [
-          { label: 'Sim, mas não resolveu', valor: 'Tentou resolver amigavelmente sem sucesso' },
-          { label: 'Não, quero orientação antes', valor: 'Busca orientação antes de tomar medidas' },
-          { label: 'Já tenho processo judicial', valor: 'Já possui processo judicial em andamento' },
+          { label: '🆕 Ainda não tomei nenhuma medida', valor: 'Nenhuma medida tomada ainda' },
+          { label: '🤝 Tentei resolver amigavelmente sem sucesso', valor: 'Tentou resolver amigavelmente sem sucesso' },
+          { label: '📨 Recebi notificação / intimação', valor: 'Recebeu notificação ou intimação' },
+          { label: '⚖️ Já tenho processo judicial em andamento', valor: 'Processo judicial já em andamento' },
+          { label: '📋 Preciso apenas de orientação / consulta', valor: 'Busca orientação / consulta' },
+        ],
+        campoArray: true,
+      },
+      {
+        id: 'valor',
+        texto: 'Existe valor financeiro envolvido na questão?',
+        opcoes: [
+          { label: '💲 Até R$ 10.000', valor: 'Valor até R$ 10.000' },
+          { label: '💲💲 De R$ 10.000 a R$ 50.000', valor: 'Valor entre R$ 10.000 e R$ 50.000' },
+          { label: '💲💲💲 Acima de R$ 50.000', valor: 'Valor acima de R$ 50.000' },
+          { label: '❓ Não sei estimar / não se aplica', valor: 'Valor não estimado / não se aplica' },
+        ],
+        campoArray: true,
+      },
+      {
+        id: 'documentos',
+        texto: 'Você tem documentos relacionados ao caso?',
+        opcoes: [
+          { label: '✅ Sim, tenho documentos e contratos', valor: 'Possui documentos/contratos' },
+          { label: '📱 Tenho conversas e registros digitais', valor: 'Possui conversas/registros digitais' },
+          { label: '❌ Não tenho documentos no momento', valor: 'Sem documentos no momento' },
         ],
         campoArray: true,
       },
@@ -187,68 +288,118 @@ const FLUXOS: Record<string, Fluxo> = {
     ],
   },
 
+  // ============================================================
+  // EMPRESARIAL
+  // ============================================================
   empresarial: {
     saudacao:
-      'Perfeito! Vamos tratar da sua questão de *Direito Empresarial*. Me ajude a entender o cenário.',
+      'Perfeito! Vamos tratar da sua questão de *Direito Empresarial*. Me ajude a entender o cenário para direcionarmos o atendimento.',
     perguntas: [
       {
         id: 'sub',
         texto: 'Qual é a principal necessidade?',
         opcoes: [
           { label: '📝 Elaboração ou revisão de contrato', valor: 'Contratos empresariais' },
-          { label: '🏢 Abertura ou alteração de empresa', valor: 'Constituição/alteração societária' },
-          { label: '⚠️ Recuperação judicial', valor: 'Recuperação judicial' },
+          { label: '🏢 Abertura de empresa (constituição societária)', valor: 'Abertura de empresa' },
+          { label: '🔄 Alteração contratual / societária', valor: 'Alteração contratual / societária' },
+          { label: '⚠️ Recuperação judicial / extrajudicial', valor: 'Recuperação judicial / extrajudicial' },
+          { label: '❌ Encerramento / dissolução de empresa', valor: 'Encerramento / dissolução' },
           { label: '🤝 Disputa entre sócios', valor: 'Conflitos societários' },
-          { label: '📊 Compliance e governança', valor: 'Compliance empresarial' },
+          { label: '📊 Compliance e governança corporativa', valor: 'Compliance e governança' },
+          { label: '🔒 LGPD / proteção de dados', valor: 'LGPD / proteção de dados' },
+          { label: '📋 Cobranças / execução de títulos', valor: 'Cobranças / execução de títulos' },
+          { label: '⚖️ Ação judicial contra ou da empresa', valor: 'Ação judicial empresarial' },
           { label: '📋 Outro assunto empresarial', valor: 'Outro assunto empresarial' },
         ],
         campo: 'subarea',
       },
+      PERGUNTA_URGENCIA,
       {
         id: 'porte',
         texto: 'Qual o porte da empresa?',
         opcoes: [
-          { label: 'MEI / Microempresa', valor: 'MEI/ME' },
-          { label: 'Empresa de Pequeno Porte', valor: 'EPP' },
-          { label: 'Média ou Grande Empresa', valor: 'Média/Grande empresa' },
-          { label: 'Ainda não tenho empresa', valor: 'Sem empresa constituída' },
+          { label: '🏪 MEI (Microempreendedor Individual)', valor: 'MEI' },
+          { label: '🏬 ME (Microempresa)', valor: 'ME — Microempresa' },
+          { label: '🏢 EPP (Empresa de Pequeno Porte)', valor: 'EPP' },
+          { label: '🏗️ Média ou Grande Empresa', valor: 'Média/Grande empresa' },
+          { label: '🆕 Ainda não tenho empresa', valor: 'Empresa ainda não constituída' },
+        ],
+        campoArray: true,
+      },
+      {
+        id: 'funcionarios',
+        texto: 'A empresa possui funcionários registrados?',
+        opcoes: [
+          { label: '👤 Não, sou só eu', valor: 'Sem funcionários' },
+          { label: '👥 1 a 5 funcionários', valor: '1 a 5 funcionários' },
+          { label: '👥👥 6 a 20 funcionários', valor: '6 a 20 funcionários' },
+          { label: '🏢 Mais de 20 funcionários', valor: 'Mais de 20 funcionários' },
+          { label: '❓ Não se aplica', valor: 'Não se aplica' },
         ],
         campoArray: true,
       },
       {
         id: 'detalhe',
-        texto: 'Descreva brevemente sua necessidade ou situação:',
+        texto: 'Descreva brevemente sua necessidade ou situação empresarial:',
         livre: true,
         campoArray: true,
       },
     ],
   },
 
+  // ============================================================
+  // ADMINISTRATIVO
+  // ============================================================
   administrativo: {
     saudacao:
-      'Entendido! Vamos conversar sobre *Direito Administrativo*. Me conte mais sobre sua demanda.',
+      'Entendido! Vamos conversar sobre *Direito Administrativo*. Me conte mais sobre sua demanda para direcionarmos o atendimento adequado.',
     perguntas: [
       {
         id: 'sub',
         texto: 'Qual tema se aplica ao seu caso?',
         opcoes: [
           { label: '📋 Licitações e contratos públicos', valor: 'Licitações e contratos públicos' },
-          { label: '👨‍💼 Concurso público', valor: 'Concurso público' },
-          { label: '⚖️ Processo administrativo disciplinar', valor: 'Processo administrativo disciplinar' },
+          { label: '👨‍💼 Concurso público (nomeação, recurso)', valor: 'Concurso público' },
+          { label: '⚖️ Processo administrativo disciplinar (PAD)', valor: 'Processo administrativo disciplinar' },
           { label: '🏛️ Ação contra órgão público', valor: 'Ação contra a Administração Pública' },
           { label: '📑 Mandado de segurança', valor: 'Mandado de segurança' },
+          { label: '💼 Servidor público (direitos e vantagens)', valor: 'Direitos do servidor público' },
+          { label: '🏗️ Desapropriação', valor: 'Desapropriação' },
+          { label: '🔒 Improbidade administrativa', valor: 'Improbidade administrativa' },
           { label: '📋 Outro assunto administrativo', valor: 'Outro assunto administrativo' },
         ],
         campo: 'subarea',
       },
       {
-        id: 'prazo',
-        texto: 'Existe algum prazo correndo (recurso, defesa, impugnação)?',
+        id: 'urgencia',
+        texto: 'Existe prazo correndo (recurso, defesa, impugnação)?',
         opcoes: [
-          { label: '🔴 Sim, prazo urgente', valor: 'Prazo urgente correndo' },
-          { label: '🟡 Sim, mas ainda tenho tempo', valor: 'Prazo correndo com tempo' },
-          { label: '🟢 Não tenho prazo imediato', valor: 'Sem prazo imediato' },
-          { label: 'Não sei informar', valor: 'Não sabe sobre prazos' },
+          { label: '🔴 Sim, prazo urgente (menos de 5 dias)', valor: 'URGENTE' },
+          { label: '🟡 Sim, mas ainda tenho alguns dias/semanas', valor: 'MODERADO' },
+          { label: '🟢 Não tenho prazo imediato', valor: 'CONSULTA' },
+          { label: '❓ Não sei informar sobre prazos', valor: 'CONSULTA' },
+        ],
+        campo: 'urgencia',
+      },
+      {
+        id: 'esfera',
+        texto: 'Em qual esfera da Administração Pública está o caso?',
+        opcoes: [
+          { label: '🏛️ Federal', valor: 'Esfera Federal' },
+          { label: '🏢 Estadual', valor: 'Esfera Estadual' },
+          { label: '🏠 Municipal', valor: 'Esfera Municipal' },
+          { label: '❓ Não tenho certeza', valor: 'Esfera não identificada' },
+        ],
+        campoArray: true,
+      },
+      {
+        id: 'posicao',
+        texto: 'Qual a sua posição na situação?',
+        opcoes: [
+          { label: '👨‍💼 Sou servidor público', valor: 'Servidor público' },
+          { label: '🏢 Sou empresário / licitante', valor: 'Empresário / licitante' },
+          { label: '👤 Sou cidadão afetado', valor: 'Cidadão afetado' },
+          { label: '📋 Outro', valor: 'Outra posição' },
         ],
         campoArray: true,
       },
@@ -261,6 +412,9 @@ const FLUXOS: Record<string, Fluxo> = {
     ],
   },
 
+  // ============================================================
+  // CÁLCULOS JUDICIAIS
+  // ============================================================
   calculos: {
     saudacao:
       'Entendi! Vamos falar sobre *Cálculos Judiciais*. Esse serviço é essencial para garantir que seus direitos sejam corretamente quantificados.',
@@ -269,20 +423,36 @@ const FLUXOS: Record<string, Fluxo> = {
         id: 'sub',
         texto: 'Que tipo de cálculo você precisa?',
         opcoes: [
-          { label: '💰 Cálculos trabalhistas', valor: 'Cálculos trabalhistas' },
+          { label: '💰 Cálculos trabalhistas (rescisão, horas extras, etc.)', valor: 'Cálculos trabalhistas' },
           { label: '📊 Liquidação de sentença', valor: 'Liquidação de sentença' },
-          { label: '🔄 Atualização de valores', valor: 'Atualização monetária de valores' },
+          { label: '🔄 Atualização monetária de valores', valor: 'Atualização monetária de valores' },
+          { label: '📈 Cálculos previdenciários', valor: 'Cálculos previdenciários' },
+          { label: '🏠 Cálculos imobiliários / locatícios', valor: 'Cálculos imobiliários / locatícios' },
+          { label: '📋 Conferência / impugnação de cálculos', valor: 'Conferência / impugnação de cálculos' },
           { label: '📋 Outro tipo de cálculo', valor: 'Outro tipo de cálculo judicial' },
         ],
         campo: 'subarea',
       },
+      PERGUNTA_URGENCIA,
       {
         id: 'processo',
         texto: 'Já existe processo judicial em andamento?',
         opcoes: [
-          { label: 'Sim, com número de processo', valor: 'Processo judicial em andamento' },
-          { label: 'Não, é para ação futura', valor: 'Cálculo para ação futura' },
-          { label: 'É para conferência de valores', valor: 'Conferência de cálculos' },
+          { label: '✅ Sim, com número de processo', valor: 'Processo judicial em andamento' },
+          { label: '📋 Não, é para ajuizar ação futura', valor: 'Cálculo para ação futura' },
+          { label: '🔍 É para conferência / impugnação', valor: 'Conferência / impugnação de cálculos' },
+          { label: '📊 É para negociação extrajudicial', valor: 'Para negociação extrajudicial' },
+        ],
+        campoArray: true,
+      },
+      {
+        id: 'periodo',
+        texto: 'Qual o período que precisa ser calculado?',
+        opcoes: [
+          { label: '📅 Até 1 ano', valor: 'Período de até 1 ano' },
+          { label: '📅 De 1 a 5 anos', valor: 'Período de 1 a 5 anos' },
+          { label: '📅 Mais de 5 anos', valor: 'Período superior a 5 anos' },
+          { label: '❓ Não sei precisar', valor: 'Período não identificado' },
         ],
         campoArray: true,
       },
@@ -311,6 +481,48 @@ const AREAS: Opcao[] = [
 const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP || '5518996101884';
 
 // ============================================================
+// HELPERS DE URGÊNCIA
+// ============================================================
+const getUrgenciaEmoji = (nivel: string) => {
+  switch (nivel) {
+    case 'URGENTE':
+      return '🔴';
+    case 'MODERADO':
+      return '🟡';
+    case 'CONSULTA':
+      return '🟢';
+    default:
+      return '⚪';
+  }
+};
+
+const getUrgenciaTexto = (nivel: string) => {
+  switch (nivel) {
+    case 'URGENTE':
+      return 'URGENTE — Atendimento imediato';
+    case 'MODERADO':
+      return 'MODERADO — Resolver em breve';
+    case 'CONSULTA':
+      return 'CONSULTA — Orientação';
+    default:
+      return 'Não informado';
+  }
+};
+
+const getUrgenciaCor = (nivel: string) => {
+  switch (nivel) {
+    case 'URGENTE':
+      return 'text-red-600 bg-red-50 border-red-200';
+    case 'MODERADO':
+      return 'text-yellow-700 bg-yellow-50 border-yellow-200';
+    case 'CONSULTA':
+      return 'text-green-700 bg-green-50 border-green-200';
+    default:
+      return 'text-secondary-600 bg-secondary-50 border-secondary-200';
+  }
+};
+
+// ============================================================
 // COMPONENTE PRINCIPAL
 // ============================================================
 export default function ChatBot() {
@@ -323,6 +535,7 @@ export default function ChatBot() {
   const [dados, setDados] = useState<DadosTriagem>({
     area: '',
     subarea: '',
+    urgencia: '',
     detalhes: [],
     nome: '',
     telefone: '',
@@ -356,7 +569,7 @@ export default function ChatBot() {
     setEtapa('inicio');
     setAreaAtual('');
     setPerguntaIdx(0);
-    setDados({ area: '', subarea: '', detalhes: [], nome: '', telefone: '' });
+    setDados({ area: '', subarea: '', urgencia: '', detalhes: [], nome: '', telefone: '' });
 
     setTimeout(() => {
       setDigitando(true);
@@ -367,7 +580,7 @@ export default function ChatBot() {
             id: nextId(),
             tipo: 'bot',
             texto:
-              'Olá! 👋 Sou o assistente virtual do escritório *Cerbelera & Oliveira Advogados*. Estou aqui para ajudar a direcionar sua consulta.\n\nEm qual área do Direito posso ajudá-lo(a)?',
+              'Olá! 👋 Sou o assistente virtual do escritório *Cerbelera & Oliveira Advogados*.\n\nEstou aqui para entender sua situação e direcionar seu atendimento. Em qual área do Direito posso ajudá-lo(a)?',
             opcoes: AREAS,
             timestamp: new Date(),
           },
@@ -498,32 +711,55 @@ export default function ChatBot() {
     }, 500);
   };
 
-  // Gerar texto WhatsApp formatado
+  // ============================================================
+  // GERAR MENSAGEM WHATSAPP — FORMATAÇÃO PROFISSIONAL
+  // ============================================================
   const gerarMensagemWhatsApp = () => {
     const d = dados;
+    const urgEmoji = getUrgenciaEmoji(d.urgencia);
+    const urgTexto = getUrgenciaTexto(d.urgencia);
+    const dataHora = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+
+    // Formatar detalhes como lista organizada
     const detalhesFormatados = d.detalhes
-      .map((item) => {
+      .map((item, idx) => {
         const parts = item.split('\n→ ');
         if (parts.length === 2) {
-          return `_${parts[0]}_\n*→* ${parts[1]}`;
+          return `  ${idx + 1}. _${parts[0]}_\n     ▸ *${parts[1]}*`;
         }
-        return item;
+        return `  ${idx + 1}. ${item}`;
       })
       .join('\n\n');
 
-    return `*📋 Nova Consulta — Site Cerbelera & Oliveira*
+    // Linha separadora visual
+    const linha = '━━━━━━━━━━━━━━━━━━━━━━━━';
 
-*Área:* ${d.area}
-*Assunto:* ${d.subarea}
+    return `${urgEmoji}${urgEmoji}${urgEmoji} *${urgTexto.toUpperCase()}* ${urgEmoji}${urgEmoji}${urgEmoji}
 
-*Informações da triagem:*
+${linha}
+📋 *NOVA CONSULTA — SITE*
+${linha}
+
+*📌 Área:* ${d.area}
+*📂 Assunto:* ${d.subarea}
+*⚡ Urgência:* ${urgEmoji} ${urgTexto}
+
+${linha}
+🔍 *DETALHES DA TRIAGEM*
+${linha}
+
 ${detalhesFormatados}
 
-*Cliente:* ${d.nome}
-*Telefone:* ${d.telefone}
-*Data:* ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
+${linha}
+👤 *DADOS DO CLIENTE*
+${linha}
 
-_Enviado via assistente virtual do site_`.trim();
+*Nome:* ${d.nome}
+*Telefone:* ${d.telefone}
+
+${linha}
+📅 *Data/Hora:* ${dataHora}
+🌐 _Enviado via Assistente Virtual — cerbeleraeoliveiraadv_`.trim();
   };
 
   const abrirWhatsApp = () => {
@@ -655,6 +891,19 @@ _Enviado via assistente virtual do site_`.trim();
                         <Scale className="w-4 h-4 text-gold-600" />
                         Resumo da Consulta
                       </p>
+
+                      {/* Badge de urgência */}
+                      {dados.urgencia && (
+                        <div
+                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border ${getUrgenciaCor(dados.urgencia)}`}
+                        >
+                          {dados.urgencia === 'URGENTE' && <AlertTriangle className="w-3 h-3" />}
+                          {dados.urgencia === 'MODERADO' && <Clock className="w-3 h-3" />}
+                          {dados.urgencia === 'CONSULTA' && <CheckCircle className="w-3 h-3" />}
+                          {getUrgenciaEmoji(dados.urgencia)} {getUrgenciaTexto(dados.urgencia)}
+                        </div>
+                      )}
+
                       <div className="text-xs text-secondary-600 space-y-1">
                         <p>
                           <strong>Área:</strong> {dados.area}
