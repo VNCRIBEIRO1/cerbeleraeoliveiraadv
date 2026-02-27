@@ -9,9 +9,10 @@ import { articles, defaultArticle } from '@/lib/articles';
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const article = articles[params.slug] || defaultArticle;
+  const { slug } = await params;
+  const article = articles[slug] || defaultArticle;
   return {
     title: article.title,
     description: article.content[0],
@@ -22,12 +23,13 @@ export function generateStaticParams() {
   return Object.keys(articles).map((slug) => ({ slug }));
 }
 
-export default function BlogPostPage({
+export default async function BlogPostPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const article = articles[params.slug] || defaultArticle;
+  const { slug } = await params;
+  const article = articles[slug] || defaultArticle;
 
   return (
     <>
