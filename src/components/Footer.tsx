@@ -94,20 +94,22 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-gold-400 flex-shrink-0 mt-0.5" />
                 <span className="text-primary-300 text-sm">
-                  Rua Exemplo, 123 - Centro
+                  R. Francisco Gomes, 75 - Jardim Paulistano
+                  <br />
+                  Edifício Plaza 14 de Setembro
                   <br />
                   Presidente Prudente - SP
                   <br />
-                  CEP 19010-000
+                  CEP 19013-780
                 </span>
               </li>
               <li>
                 <a
-                  href="tel:+5518999999999"
+                  href="tel:+5518988116944"
                   className="flex items-center gap-3 text-primary-300 hover:text-gold-400 transition-colors text-sm"
                 >
                   <Phone className="w-5 h-5 text-gold-400 flex-shrink-0" />
-                  (18) 99999-9999
+                  (18) 98811-6944
                 </a>
               </li>
               <li>
@@ -122,9 +124,9 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-gold-400 flex-shrink-0 mt-0.5" />
                 <span className="text-primary-300 text-sm">
-                  Seg - Sex: 8h às 18h
+                  Atendimento 24 horas
                   <br />
-                  Sáb: 8h às 12h
+                  Consulte disponibilidade
                 </span>
               </li>
             </ul>

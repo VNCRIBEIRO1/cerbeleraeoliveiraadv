@@ -21,13 +21,13 @@ const contactInfo = [
   {
     icon: MapPin,
     title: 'Endereço',
-    lines: ['Rua Exemplo, 123 - Centro', 'Presidente Prudente - SP', 'CEP 19010-000'],
+    lines: ['R. Francisco Gomes, 75 - Jardim Paulistano', 'Edifício Plaza 14 de Setembro', 'Presidente Prudente - SP', 'CEP 19013-780'],
   },
   {
     icon: Phone,
-    title: 'Telefone',
-    lines: ['(18) 99999-9999', '(18) 3333-3333'],
-    href: 'tel:+5518999999999',
+    title: 'Telefone / WhatsApp',
+    lines: ['(18) 98811-6944'],
+    href: 'tel:+5518988116944',
   },
   {
     icon: Mail,
@@ -38,7 +38,7 @@ const contactInfo = [
   {
     icon: Clock,
     title: 'Horário',
-    lines: ['Seg - Sex: 8h às 18h', 'Sáb: 8h às 12h'],
+    lines: ['Atendimento 24 horas', 'Consulte disponibilidade'],
   },
 ];
 
@@ -132,12 +132,14 @@ export default function ContatoPage() {
                       Nossa Localização
                     </h3>
                     <p className="text-secondary-500 text-sm mb-4">
-                      Rua Exemplo, 123 - Centro
+                      R. Francisco Gomes, 75 - Jardim Paulistano
+                      <br />
+                      Edifício Plaza 14 de Setembro
                       <br />
                       Presidente Prudente - SP
                     </p>
                     <a
-                      href="https://maps.google.com/?q=Presidente+Prudente+SP"
+                      href="https://maps.google.com/?q=R.+Francisco+Gomes,+75+-+Jardim+Paulistano,+Presidente+Prudente+-+SP,+19013-780"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn-primary text-sm"

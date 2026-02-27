@@ -303,7 +303,7 @@ export default function HomePage() {
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
               <a
-                href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP || '5518999999999'}`}
+                href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP || '5518988116944'}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-outline border-primary-300 text-primary-100 hover:bg-primary-100/10 hover:text-white text-base"

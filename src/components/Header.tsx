@@ -45,11 +45,11 @@ export default function Header() {
             OAB/SP 000.000
           </span>
           <a
-            href="tel:+5518999999999"
+            href="tel:+5518988116944"
             className="flex items-center gap-1 hover:text-gold-400 transition-colors"
           >
             <Phone className="w-3 h-3" />
-            (18) 99999-9999
+            (18) 98811-6944
           </a>
         </div>
         <div className="border-b border-primary-700/30" />
