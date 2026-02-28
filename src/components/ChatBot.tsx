@@ -761,7 +761,36 @@ ${linha}
 _Enviado via Assistente Virtual do site_`.trim();
   };
 
+  const enviarTriagemAPI = async () => {
+    try {
+      const detalhesObj: Record<string, string> = {};
+      dados.detalhes.forEach((item, idx) => {
+        const parts = item.split('\n→ ');
+        if (parts.length === 2) {
+          detalhesObj[parts[0]] = parts[1];
+        } else {
+          detalhesObj[`Detalhe ${idx + 1}`] = item;
+        }
+      });
+      await fetch('/api/triagem', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome: dados.nome,
+          telefone: dados.telefone,
+          area: dados.area,
+          subarea: dados.subarea,
+          urgencia: dados.urgencia === 'URGENTE' ? 'alta' : dados.urgencia === 'MODERADO' ? 'media' : 'baixa',
+          detalhes: JSON.stringify(detalhesObj),
+        }),
+      });
+    } catch {
+      // Silencioso — não impede o fluxo do WhatsApp
+    }
+  };
+
   const abrirWhatsApp = () => {
+    enviarTriagemAPI();
     const msg = encodeURIComponent(gerarMensagemWhatsApp());
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
   };

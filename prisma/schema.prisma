@@ -1,0 +1,220 @@
+// ============================================================
+// SCHEMA DO BANCO DE DADOS — SISTEMA DE GESTÃO JURÍDICA
+// Cerbelera & Oliveira Advogados Associados
+// ============================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// USUÁRIOS DO SISTEMA (advogados, secretária, admin)
+// ============================================================
+model User {
+  id        String   @id @default(uuid())
+  nome      String
+  email     String   @unique
+  senha     String
+  role      String   @default("advogado") // admin, advogado, secretaria
+  ativo     Boolean  @default(true)
+  criadoEm  DateTime @default(now())
+
+  clientes  Cliente[]
+  processos Processo[]
+}
+
+// ============================================================
+// CLIENTES
+// ============================================================
+model Cliente {
+  id           String   @id @default(uuid())
+  nome         String
+  cpfCnpj      String?
+  rg           String?
+  email        String?
+  telefone     String
+  whatsapp     String?
+  dataNascimento DateTime?
+  profissao    String?
+  estadoCivil  String?
+  endereco     String?
+  bairro       String?
+  cidade       String?
+  estado       String?
+  cep          String?
+  observacoes  String?
+  origem       String   @default("manual") // manual, chatbot, indicacao, site
+  status       String   @default("ativo") // ativo, inativo, prospecto
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  advogadoId   String?
+  advogado     User?    @relation(fields: [advogadoId], references: [id])
+
+  processos    Processo[]
+  agendamentos Agendamento[]
+  pagamentos   Pagamento[]
+  documentos   Documento[]
+}
+
+// ============================================================
+// PROCESSOS JUDICIAIS
+// ============================================================
+model Processo {
+  id               String    @id @default(uuid())
+  numero           String?
+  tipo             String    // area do direito
+  assunto          String
+  descricao        String?
+  status           String    @default("em_andamento") // em_andamento, concluido, arquivado, suspenso
+  vara             String?
+  comarca          String?
+  foro             String?
+  valorCausa       Float?
+  parteContraria   String?
+  advContrario     String?
+  dataDistribuicao DateTime?
+  dataConclusao    DateTime?
+  observacoes      String?
+  criadoEm         DateTime  @default(now())
+  atualizadoEm     DateTime  @updatedAt
+
+  clienteId  String
+  cliente    Cliente  @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+  advogadoId String?
+  advogado   User?    @relation(fields: [advogadoId], references: [id])
+
+  prazos     Prazo[]
+  andamentos Andamento[]
+  documentos Documento[]
+  pagamentos Pagamento[]
+}
+
+// ============================================================
+// PRAZOS PROCESSUAIS
+// ============================================================
+model Prazo {
+  id            String   @id @default(uuid())
+  titulo        String
+  descricao     String?
+  dataLimite    DateTime
+  tipo          String   // recurso, manifestacao, audiencia, diligencia, outro
+  status        String   @default("pendente") // pendente, cumprido, expirado
+  prioridade    String   @default("normal") // baixa, normal, alta, urgente
+  alertaEnviado Boolean  @default(false)
+  criadoEm      DateTime @default(now())
+
+  processoId String
+  processo   Processo @relation(fields: [processoId], references: [id], onDelete: Cascade)
+}
+
+// ============================================================
+// ANDAMENTOS PROCESSUAIS
+// ============================================================
+model Andamento {
+  id        String   @id @default(uuid())
+  descricao String
+  data      DateTime @default(now())
+  tipo      String   // despacho, sentenca, peticao, audiencia, diligencia, publicacao, outro
+
+  processoId String
+  processo   Processo @relation(fields: [processoId], references: [id], onDelete: Cascade)
+}
+
+// ============================================================
+// AGENDA / COMPROMISSOS
+// ============================================================
+model Agendamento {
+  id            String   @id @default(uuid())
+  titulo        String
+  descricao     String?
+  dataHora      DateTime
+  duracao       Int      @default(60) // minutos
+  tipo          String   // consulta, reuniao, audiencia, prazo, retorno
+  status        String   @default("agendado") // agendado, confirmado, realizado, cancelado, remarcado
+  local         String?
+  googleEventId String?
+  observacoes   String?
+  criadoEm      DateTime @default(now())
+
+  clienteId String?
+  cliente   Cliente? @relation(fields: [clienteId], references: [id], onDelete: SetNull)
+}
+
+// ============================================================
+// PAGAMENTOS
+// ============================================================
+model Pagamento {
+  id             String   @id @default(uuid())
+  descricao      String
+  valorTotal     Float
+  formaPagamento String?  // avista, parcelado, honorarios_exito, honorarios_fixo
+  status         String   @default("pendente") // pendente, parcial, pago, atrasado, cancelado
+  observacoes    String?
+  criadoEm       DateTime @default(now())
+  atualizadoEm   DateTime @updatedAt
+
+  clienteId  String
+  cliente    Cliente  @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+  processoId String?
+  processo   Processo? @relation(fields: [processoId], references: [id], onDelete: SetNull)
+
+  parcelas Parcela[]
+}
+
+// ============================================================
+// PARCELAS
+// ============================================================
+model Parcela {
+  id             String    @id @default(uuid())
+  numero         Int
+  valor          Float
+  dataVencimento DateTime
+  dataPagamento  DateTime?
+  status         String    @default("pendente") // pendente, pago, atrasado
+  formaPagamento String?   // pix, boleto, cartao, dinheiro, transferencia
+  comprovante    String?
+
+  pagamentoId String
+  pagamento   Pagamento @relation(fields: [pagamentoId], references: [id], onDelete: Cascade)
+}
+
+// ============================================================
+// DOCUMENTOS / ANEXOS
+// ============================================================
+model Documento {
+  id           String   @id @default(uuid())
+  nome         String
+  nomeOriginal String
+  tipo         String   // peticao, contrato, procuracao, comprovante, identidade, outro
+  tamanho      Int
+  caminho      String
+  criadoEm     DateTime @default(now())
+
+  clienteId  String?
+  cliente    Cliente?  @relation(fields: [clienteId], references: [id], onDelete: SetNull)
+  processoId String?
+  processo   Processo? @relation(fields: [processoId], references: [id], onDelete: SetNull)
+}
+
+// ============================================================
+// TRIAGEM DO CHATBOT
+// ============================================================
+model Triagem {
+  id          String   @id @default(uuid())
+  nome        String
+  telefone    String
+  area        String
+  subarea     String
+  urgencia    String
+  detalhes    String   // JSON stringificado
+  status      String   @default("nova") // nova, em_analise, convertida, descartada
+  clienteId   String?  // quando convertida em cliente
+  observacoes String?
+  criadoEm    DateTime @default(now())
+}
