@@ -109,12 +109,16 @@ export default function ClientesPage() {
   }
 
   const excluir = async (id: string, nome: string) => {
-    if (!confirm(`Deseja realmente excluir o cliente "${nome}"?`)) return
+    if (!confirm(`ATENÇÃO: Deseja realmente excluir o cliente "${nome}"?\n\nTodos os processos, prazos, agendamentos e dados financeiros vinculados serão removidos permanentemente.\n\nEsta ação NÃO pode ser desfeita.`)) return
     try {
-      await fetch(`/api/clientes/${id}`, { method: 'DELETE' })
+      const res = await fetch(`/api/clientes/${id}`, { method: 'DELETE' })
+      if (!res.ok) {
+        alert('Erro ao excluir cliente')
+        return
+      }
       carregar()
-    } catch (error) {
-      console.error('Erro ao excluir:', error)
+    } catch {
+      alert('Erro de conexão ao excluir')
     }
   }
 

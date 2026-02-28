@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Sidebar from '@/components/painel/Sidebar'
+import { cookies } from 'next/headers'
 
 export const metadata: Metadata = {
   title: 'Painel de Gestão | Cerbelera & Oliveira Advogados',
@@ -7,7 +8,15 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-export default function PainelLayout({ children }: { children: React.ReactNode }) {
+export default async function PainelLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('painel_token')?.value
+  const isLoginPage = !token
+
+  if (isLoginPage) {
+    return <>{children}</>
+  }
+
   return (
     <div className="min-h-screen bg-[#111] flex">
       <Sidebar />

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { hashPassword, verifyPassword, createToken, setSessionCookie, clearSessionCookie, getSession } from '@/lib/auth'
+import { verifyPassword, createToken, setSessionCookie } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
   try {
@@ -37,7 +37,6 @@ export async function POST(request: NextRequest) {
         email: user.email,
         role: user.role,
       },
-      token,
     })
   } catch (error) {
     console.error('Erro no login:', error)

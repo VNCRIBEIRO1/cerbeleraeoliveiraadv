@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 import { jwtVerify } from 'jose'
 
 const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'fallback-secret-change-in-production'
+  process.env.JWT_SECRET || ''
 )
 
 export async function middleware(request: NextRequest) {
@@ -25,8 +25,13 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Proteger APIs do painel (exceto login)
-  if (pathname.startsWith('/api/') && !pathname.startsWith('/api/auth/') && !pathname.startsWith('/api/triagem')) {
+  // Proteger APIs do painel (exceto auth e POST /api/triagem)
+  if (pathname.startsWith('/api/') && !pathname.startsWith('/api/auth/')) {
+    // POST para /api/triagem é público (recebe dados do chatbot)
+    if (pathname === '/api/triagem' && request.method === 'POST') {
+      return NextResponse.next()
+    }
+
     const token = request.cookies.get('painel_token')?.value
     
     if (!token) {
@@ -45,5 +50,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/painel/:path*', '/api/clientes/:path*', '/api/processos/:path*', '/api/agenda/:path*', '/api/financeiro/:path*', '/api/prazos/:path*', '/api/documentos/:path*', '/api/exportar/:path*', '/api/backup/:path*', '/api/dashboard/:path*']
+  matcher: ['/painel/:path*', '/api/clientes/:path*', '/api/processos/:path*', '/api/agenda/:path*', '/api/financeiro/:path*', '/api/prazos/:path*', '/api/triagem/:path*', '/api/dashboard/:path*', '/api/exportar/:path*']
 }

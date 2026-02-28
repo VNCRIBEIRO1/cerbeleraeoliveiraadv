@@ -23,7 +23,8 @@ export default function TriagemPage() {
     setLoading(true)
     try {
       const res = await fetch('/api/triagem')
-      setTriagens(await res.json())
+      const data = await res.json()
+      setTriagens(data.triagens || [])
     } finally { setLoading(false) }
   }
 
@@ -43,19 +44,7 @@ export default function TriagemPage() {
       const res = await fetch(`/api/triagem/${modalConversao.id}`, {
         method: 'PUT', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          status: 'convertida',
-          converterCliente: true,
-          dadosCliente: {
-            nome: modalConversao.nome,
-            telefone: modalConversao.telefone,
-            email: formConversao.email,
-            cpfCnpj: formConversao.cpfCnpj,
-            endereco: formConversao.endereco,
-            cidade: formConversao.cidade,
-            estado: formConversao.estado,
-            observacoes: formConversao.observacoes || `Origem: chatbot | Área: ${modalConversao.area} - ${modalConversao.subarea}`,
-            origem: 'chatbot',
-          }
+          converter: true,
         }),
       })
       if (res.ok) {

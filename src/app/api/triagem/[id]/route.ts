@@ -21,9 +21,14 @@ export async function PUT(
           nome: triagem.nome,
           telefone: triagem.telefone,
           whatsapp: triagem.telefone,
+          email: dados.email || null,
+          cpfCnpj: dados.cpfCnpj || null,
+          endereco: dados.endereco || null,
+          cidade: dados.cidade || null,
+          estado: dados.estado || null,
           origem: 'chatbot',
           status: 'ativo',
-          observacoes: `Convertido da triagem - Área: ${triagem.area} | Subárea: ${triagem.subarea} | Urgência: ${triagem.urgencia}`,
+          observacoes: dados.observacoes || `Convertido da triagem - Área: ${triagem.area} | Subárea: ${triagem.subarea} | Urgência: ${triagem.urgencia}`,
         },
       })
 

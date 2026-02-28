@@ -7,8 +7,13 @@ export async function POST(request: NextRequest) {
     const { nome, email, senha, role, chaveAdmin } = await request.json()
 
     // Chave de segurança para criar primeiro usuário
-    if (chaveAdmin !== 'cerbelera2025') {
+    const chaveCorreta = process.env.ADMIN_KEY || 'cerbelera2025'
+    if (!chaveAdmin || chaveAdmin !== chaveCorreta) {
       return NextResponse.json({ error: 'Chave de administrador inválida' }, { status: 403 })
+    }
+
+    if (senha.length < 6) {
+      return NextResponse.json({ error: 'A senha deve ter pelo menos 6 caracteres' }, { status: 400 })
     }
 
     if (!nome || !email || !senha) {

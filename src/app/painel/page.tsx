@@ -48,12 +48,16 @@ interface DashboardData {
 export default function DashboardPage() {
   const [data, setData] = useState<DashboardData | null>(null)
   const [loading, setLoading] = useState(true)
+  const [erro, setErro] = useState('')
 
   useEffect(() => {
     fetch('/api/dashboard')
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error('Falha ao carregar')
+        return r.json()
+      })
       .then(setData)
-      .catch(console.error)
+      .catch(() => setErro('Erro ao carregar dados do dashboard'))
       .finally(() => setLoading(false))
   }, [])
 
@@ -91,7 +95,18 @@ export default function DashboardPage() {
     )
   }
 
-  if (!data) return null
+  if (!data) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="text-center">
+          <p className="text-red-400 mb-2">{erro || 'Erro ao carregar dashboard'}</p>
+          <button onClick={() => window.location.reload()} className="px-4 py-2 text-sm bg-[#1a2e1f] text-[#c9a84c] rounded-lg border border-[#2a3f2e] hover:border-[#c9a84c]/30">
+            Tentar novamente
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   const { stats } = data
 

@@ -63,11 +63,15 @@ export default function LoginPage() {
       // Após registro, fazer login automático
       setModoRegistro(false)
       setErro('')
-      await fetch('/api/auth/login', {
+      const loginRes = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, senha }),
       })
+      if (!loginRes.ok) {
+        setErro('Conta criada. Faça login manualmente.')
+        return
+      }
       router.push('/painel')
       router.refresh()
     } catch {

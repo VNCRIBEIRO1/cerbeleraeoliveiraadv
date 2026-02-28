@@ -2,9 +2,11 @@ import { SignJWT, jwtVerify } from 'jose'
 import { hash, compare } from 'bcryptjs'
 import { cookies } from 'next/headers'
 
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'fallback-secret-change-in-production'
-)
+if (!process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET não configurado. Defina a variável de ambiente JWT_SECRET.')
+}
+
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET)
 
 const COOKIE_NAME = 'painel_token'
 const TOKEN_EXPIRY = '7d'

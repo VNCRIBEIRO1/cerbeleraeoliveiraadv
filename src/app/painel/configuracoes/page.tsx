@@ -21,8 +21,9 @@ export default function ConfiguracoesPage() {
     try {
       const res = await fetch('/api/auth/me')
       if (res.ok) {
-        const me = await res.json()
-        setUsuarios([me])
+        const data = await res.json()
+        const u = data.user || data
+        setUsuarios([{ id: u.userId || u.id || '', nome: u.nome || '', email: u.email || '', role: u.role || '', ativo: true, criadoEm: '' }])
       }
     } finally { setLoading(false) }
   }
@@ -41,10 +42,21 @@ export default function ConfiguracoesPage() {
     }
     setSalvando(true)
     try {
-      // This would require an API endpoint for password change
+      const res = await fetch('/api/auth/senha', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ senhaAtual: senhaForm.senhaAtual, novaSenha: senhaForm.novaSenha }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setMsg({ tipo: 'erro', texto: data.error || 'Erro ao alterar senha' })
+        return
+      }
       setMsg({ tipo: 'sucesso', texto: 'Senha alterada com sucesso' })
       setModalSenha(false)
       setSenhaForm({ senhaAtual: '', novaSenha: '', confirmar: '' })
+    } catch {
+      setMsg({ tipo: 'erro', texto: 'Erro de conexão' })
     } finally { setSalvando(false) }
   }
 
