@@ -25,6 +25,13 @@ model User {
   ativo     Boolean  @default(true)
   criadoEm  DateTime @default(now())
 
+  // Google Calendar OAuth
+  googleAccessToken  String?
+  googleRefreshToken String?
+  googleTokenExpiry  DateTime?
+  googleCalendarId   String?  @default("primary")
+  googleSyncAtivo    Boolean  @default(false)
+
   clientes  Cliente[]
   processos Processo[]
 }

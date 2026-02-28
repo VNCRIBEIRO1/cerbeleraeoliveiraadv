@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { getSession } from '@/lib/auth'
+import { criarEventoGoogle } from '@/lib/google-calendar'
 
 export async function GET(request: NextRequest) {
   try {
@@ -53,6 +55,36 @@ export async function POST(request: NextRequest) {
         cliente: { select: { id: true, nome: true, telefone: true } },
       },
     })
+
+    // Sincronizar com Google Calendar se o usuário tiver vinculado
+    try {
+      const session = await getSession()
+      if (session) {
+        const user = await prisma.user.findUnique({
+          where: { id: session.userId },
+          select: { googleSyncAtivo: true, googleRefreshToken: true },
+        })
+        if (user?.googleSyncAtivo && user.googleRefreshToken) {
+          const googleEventId = await criarEventoGoogle(session.userId, {
+            titulo: agendamento.titulo,
+            descricao: agendamento.descricao,
+            dataHora: agendamento.dataHora,
+            duracao: agendamento.duracao,
+            local: agendamento.local,
+            tipo: agendamento.tipo,
+            clienteNome: agendamento.cliente?.nome,
+          })
+          if (googleEventId) {
+            await prisma.agendamento.update({
+              where: { id: agendamento.id },
+              data: { googleEventId },
+            })
+          }
+        }
+      }
+    } catch (syncError) {
+      console.error('Erro ao sincronizar com Google (não bloqueia):', syncError)
+    }
 
     return NextResponse.json(agendamento, { status: 201 })
   } catch (error) {

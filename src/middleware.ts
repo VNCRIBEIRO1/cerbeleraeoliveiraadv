@@ -25,10 +25,15 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Proteger APIs do painel (exceto auth e POST /api/triagem)
-  if (pathname.startsWith('/api/') && !pathname.startsWith('/api/auth/')) {
+  // Proteger APIs do painel (exceto auth, health e callback Google)
+  if (pathname.startsWith('/api/') && !pathname.startsWith('/api/auth/') && !pathname.startsWith('/api/health')) {
     // POST para /api/triagem é público (recebe dados do chatbot)
     if (pathname === '/api/triagem' && request.method === 'POST') {
+      return NextResponse.next()
+    }
+
+    // Callback do Google OAuth é público (recebe redirecionamento do Google)
+    if (pathname === '/api/google/callback') {
       return NextResponse.next()
     }
 
@@ -50,5 +55,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/painel/:path*', '/api/clientes/:path*', '/api/processos/:path*', '/api/agenda/:path*', '/api/financeiro/:path*', '/api/prazos/:path*', '/api/triagem/:path*', '/api/dashboard/:path*', '/api/exportar/:path*']
+  matcher: ['/painel/:path*', '/api/clientes/:path*', '/api/processos/:path*', '/api/agenda/:path*', '/api/financeiro/:path*', '/api/prazos/:path*', '/api/triagem/:path*', '/api/dashboard/:path*', '/api/exportar/:path*', '/api/google/:path*']
 }

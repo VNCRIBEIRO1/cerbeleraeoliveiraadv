@@ -7,7 +7,7 @@ import Modal, { FormField, FormInput, FormSelect, FormTextarea, FormButton } fro
 interface Agendamento {
   id: string; titulo: string; descricao: string | null; dataHora: string
   duracao: number; tipo: string; status: string; local: string | null
-  observacoes: string | null
+  googleEventId: string | null; observacoes: string | null
   cliente: { id: string; nome: string; telefone: string; whatsapp: string | null } | null
 }
 
@@ -20,6 +20,9 @@ export default function AgendaPage() {
   const [modalAberto, setModalAberto] = useState(false)
   const [clientes, setClientes] = useState<{ id: string; nome: string }[]>([])
   const [salvando, setSalvando] = useState(false)
+  const [googleConectado, setGoogleConectado] = useState(false)
+  const [sincronizando, setSincronizando] = useState(false)
+  const [syncMsg, setSyncMsg] = useState<string | null>(null)
   const [form, setForm] = useState({
     titulo: '', descricao: '', dataHora: '', duracao: '60', tipo: 'consulta', local: '', clienteId: '', observacoes: '',
   })
@@ -32,6 +35,13 @@ export default function AgendaPage() {
       .catch(console.error)
       .finally(() => setLoading(false))
   }, [mesAtual, anoAtual])
+
+  useEffect(() => {
+    fetch('/api/google/sync')
+      .then(r => r.json())
+      .then(data => setGoogleConectado(!!data.conectado))
+      .catch(() => setGoogleConectado(false))
+  }, [])
 
   const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
 
@@ -75,6 +85,31 @@ export default function AgendaPage() {
     setAgendamentos(data)
   }
 
+  const sincronizarGoogle = async () => {
+    setSincronizando(true)
+    setSyncMsg(null)
+    try {
+      const res = await fetch('/api/google/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mes: mesAtual, ano: anoAtual, direcao: 'ambos' }),
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setSyncMsg(`Sync concluido: ${data.envio.criados} enviado(s), ${data.importacao.importados} importado(s)`)
+        const agData = await fetch(`/api/agenda?mes=${mesAtual}&ano=${anoAtual}`).then(r => r.json())
+        setAgendamentos(agData)
+      } else {
+        setSyncMsg(`Erro: ${data.error}`)
+      }
+    } catch {
+      setSyncMsg('Erro de conexão ao sincronizar')
+    } finally {
+      setSincronizando(false)
+      setTimeout(() => setSyncMsg(null), 5000)
+    }
+  }
+
   const gerarWhatsAppConfirmacao = (ag: Agendamento) => {
     if (!ag.cliente) return
     const numero = (ag.cliente.whatsapp || ag.cliente.telefone).replace(/\D/g, '')
@@ -85,7 +120,6 @@ export default function AgendaPage() {
     window.open(`https://wa.me/55${numero}?text=${encodeURIComponent(msg)}`, '_blank')
   }
 
-  // Agrupar por dia para visualização lista
   const agrupadoPorDia: Record<string, Agendamento[]> = {}
   agendamentos.forEach(ag => {
     const dia = new Date(ag.dataHora).toLocaleDateString('pt-BR')
@@ -93,7 +127,6 @@ export default function AgendaPage() {
     agrupadoPorDia[dia].push(ag)
   })
 
-  // Gerar dias do calendário
   const gerarCalendario = () => {
     const primeiroDia = new Date(anoAtual, mesAtual - 1, 1)
     const ultimoDia = new Date(anoAtual, mesAtual, 0)
@@ -114,12 +147,38 @@ export default function AgendaPage() {
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white">Agenda</h1>
-          <p className="text-[#6b8a6f] text-sm mt-1">{agendamentos.length} agendamento(s) no mês</p>
+          <div className="flex items-center gap-2 mt-1">
+            <p className="text-[#6b8a6f] text-sm">{agendamentos.length} agendamento(s) no mês</p>
+            {googleConectado && (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-900/20 text-blue-400 border border-blue-700/30">
+                <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/></svg>
+                Google Calendar
+              </span>
+            )}
+          </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          {googleConectado ? (
+            <button onClick={sincronizarGoogle} disabled={sincronizando}
+              className="px-3 py-2 text-xs bg-blue-900/20 border border-blue-700/30 text-blue-400 rounded-lg hover:bg-blue-900/40 disabled:opacity-50 flex items-center gap-1.5">
+              {sincronizando ? (
+                <div className="w-3.5 h-3.5 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
+              ) : (
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+              )}
+              {sincronizando ? 'Sincronizando...' : 'Sync Google'}
+            </button>
+          ) : (
+            <a href="/painel/configuracoes?aba=google"
+              className="px-3 py-2 text-xs bg-[#0e1810] border border-[#2a3f2e] text-[#8a9f8e] rounded-lg hover:border-blue-700/30 hover:text-blue-400 flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/></svg>
+              Conectar Google
+            </a>
+          )}
           <div className="flex bg-[#0e1810] border border-[#2a3f2e] rounded-lg overflow-hidden">
             <button onClick={() => setVisualizacao('lista')}
               className={`px-3 py-2 text-xs ${visualizacao === 'lista' ? 'bg-[#c9a84c]/20 text-[#c9a84c]' : 'text-[#8a9f8e] hover:text-white'}`}>Lista</button>
@@ -130,6 +189,12 @@ export default function AgendaPage() {
             className="px-4 py-2 bg-gradient-to-r from-[#c9a84c] to-[#b8942e] text-white text-sm font-medium rounded-lg hover:from-[#d4b55a] hover:to-[#c9a84c]">+ Novo Agendamento</button>
         </div>
       </div>
+
+      {syncMsg && (
+        <div className={`p-3 rounded-lg text-sm ${syncMsg.startsWith('Erro') ? 'bg-red-900/20 text-red-400 border border-red-700/30' : 'bg-blue-900/20 text-blue-400 border border-blue-700/30'}`}>
+          {syncMsg}
+        </div>
+      )}
 
       {/* Month Navigation */}
       <div className="flex items-center justify-center gap-4">
@@ -161,7 +226,10 @@ export default function AgendaPage() {
                     <>
                       <p className={`text-xs font-medium mb-1 ${isHoje ? 'text-[#c9a84c]' : 'text-[#8a9f8e]'}`}>{dia}</p>
                       {ags.slice(0, 3).map(ag => (
-                        <div key={ag.id} className="text-[10px] px-1 py-0.5 mb-0.5 rounded bg-[#1a2e1f] text-[#b0c4b4] truncate">
+                        <div key={ag.id} className={`text-[10px] px-1 py-0.5 mb-0.5 rounded truncate flex items-center gap-0.5 ${
+                          ag.googleEventId ? 'bg-blue-900/20 text-blue-300' : 'bg-[#1a2e1f] text-[#b0c4b4]'
+                        }`}>
+                          {ag.googleEventId && <svg className="w-2 h-2 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/></svg>}
                           {new Date(ag.dataHora).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })} {ag.titulo}
                         </div>
                       ))}
@@ -183,10 +251,20 @@ export default function AgendaPage() {
                 <h3 className="text-sm font-medium text-[#c9a84c] mb-2">{dia}</h3>
                 <div className="space-y-2">
                   {ags.map(ag => (
-                    <div key={ag.id} className="bg-[#0e1810] border border-[#2a3f2e] rounded-xl p-4 hover:border-[#c9a84c]/30 transition-colors">
+                    <div key={ag.id} className={`bg-[#0e1810] border rounded-xl p-4 hover:border-[#c9a84c]/30 transition-colors ${
+                      ag.googleEventId ? 'border-blue-700/20' : 'border-[#2a3f2e]'
+                    }`}>
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
-                          <p className="text-sm font-medium text-white">{ag.titulo}</p>
+                          <div className="flex items-center gap-2">
+                            <p className="text-sm font-medium text-white">{ag.titulo}</p>
+                            {ag.googleEventId && (
+                              <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] bg-blue-900/20 text-blue-400 border border-blue-700/30">
+                                <svg className="w-2.5 h-2.5" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/></svg>
+                                Google
+                              </span>
+                            )}
+                          </div>
                           <div className="flex items-center gap-3 mt-1 text-xs text-[#6b8a6f]">
                             <span>{new Date(ag.dataHora).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</span>
                             <span>{ag.duracao}min</span>
@@ -220,6 +298,7 @@ export default function AgendaPage() {
         </div>
       )}
 
+      {/* Modal Novo Agendamento */}
       <Modal aberto={modalAberto} onFechar={() => setModalAberto(false)} titulo="Novo Agendamento" tamanho="lg">
         <form onSubmit={salvar} className="space-y-4">
           <FormField label="Título" obrigatorio><FormInput value={form.titulo} onChange={e => setForm({...form, titulo: e.target.value})} required placeholder="Consulta inicial" /></FormField>
@@ -236,11 +315,18 @@ export default function AgendaPage() {
               <FormSelect value={form.tipo} onChange={e => setForm({...form, tipo: e.target.value})}>
                 <option value="consulta">Consulta</option><option value="reuniao">Reunião</option>
                 <option value="audiencia">Audiência</option><option value="prazo">Prazo</option>
+                <option value="retorno">Retorno</option>
               </FormSelect>
             </FormField>
             <FormField label="Local"><FormInput value={form.local} onChange={e => setForm({...form, local: e.target.value})} placeholder="Escritório" /></FormField>
           </div>
           <FormField label="Descrição"><FormTextarea value={form.descricao} onChange={e => setForm({...form, descricao: e.target.value})} rows={2} /></FormField>
+          {googleConectado && (
+            <div className="flex items-center gap-2 p-3 bg-blue-900/10 border border-blue-700/20 rounded-lg">
+              <svg className="w-4 h-4 text-blue-400 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/></svg>
+              <p className="text-xs text-blue-400">Este agendamento será criado automaticamente no seu Google Calendar</p>
+            </div>
+          )}
           <div className="flex justify-end gap-3 pt-4 border-t border-[#2a3f2e]">
             <FormButton variant="secondary" type="button" onClick={() => setModalAberto(false)}>Cancelar</FormButton>
             <FormButton type="submit" disabled={salvando}>{salvando ? 'Salvando...' : 'Agendar'}</FormButton>
