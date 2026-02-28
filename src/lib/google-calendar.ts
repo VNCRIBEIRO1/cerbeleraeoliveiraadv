@@ -7,9 +7,10 @@ import { prisma } from './prisma'
 const SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 function getOAuth2Client() {
-  const clientId = process.env.GOOGLE_CLIENT_ID
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET
-  const redirectUri = `${process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL}/api/google/callback`
+  const clientId = (process.env.GOOGLE_CLIENT_ID || '').trim()
+  const clientSecret = (process.env.GOOGLE_CLIENT_SECRET || '').trim()
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || '').trim()
+  const redirectUri = `${siteUrl}/api/google/callback`
 
   if (!clientId || !clientSecret) {
     throw new Error('GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET não configurados')
