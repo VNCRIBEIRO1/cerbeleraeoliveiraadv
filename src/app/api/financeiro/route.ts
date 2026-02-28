@@ -28,37 +28,27 @@ export async function GET(request: NextRequest) {
       prisma.pagamento.count({ where }),
     ])
 
-    // Calcular resumo financeiro
-    const resumo = await prisma.pagamento.aggregate({
-      _sum: { valorTotal: true },
-    })
-
-    const parcelasAtrasadas = await prisma.parcela.count({
-      where: {
-        status: 'pendente',
-        dataVencimento: { lt: new Date() },
-      },
-    })
-
-    const totalRecebido = await prisma.parcela.aggregate({
-      where: { status: 'pago' },
-      _sum: { valor: true },
-    })
-
-    const totalPendente = await prisma.parcela.aggregate({
-      where: { status: 'pendente' },
-      _sum: { valor: true },
-    })
+    // Calcular resumo financeiro completo
+    const [parcelasAtrasadas, parcelasPendentes, parcelasPagas, totalRecebido, totalPendente, totalAtrasado] = await Promise.all([
+      prisma.parcela.count({ where: { status: 'pendente', dataVencimento: { lt: new Date() } } }),
+      prisma.parcela.count({ where: { status: 'pendente', dataVencimento: { gte: new Date() } } }),
+      prisma.parcela.count({ where: { status: 'pago' } }),
+      prisma.parcela.aggregate({ where: { status: 'pago' }, _sum: { valor: true } }),
+      prisma.parcela.aggregate({ where: { status: 'pendente', dataVencimento: { gte: new Date() } }, _sum: { valor: true } }),
+      prisma.parcela.aggregate({ where: { status: 'pendente', dataVencimento: { lt: new Date() } }, _sum: { valor: true } }),
+    ])
 
     return NextResponse.json({
       pagamentos,
       total,
       paginas: Math.ceil(total / limite),
       resumo: {
-        totalGeral: resumo._sum.valorTotal || 0,
         totalRecebido: totalRecebido._sum.valor || 0,
         totalPendente: totalPendente._sum.valor || 0,
+        totalAtrasado: totalAtrasado._sum.valor || 0,
         parcelasAtrasadas,
+        parcelasPendentes,
+        parcelasPagas,
       },
     })
   } catch (error) {

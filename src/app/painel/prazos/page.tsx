@@ -19,12 +19,13 @@ export default function PrazosPage() {
   const carregar = async () => {
     setLoading(true)
     try {
-      let url = '/api/prazos?'
-      if (filtro === 'hoje') url += 'hoje=true'
-      else if (filtro === 'semana') url += 'semana=true'
-      else if (filtro === 'vencidos') url += 'vencidos=true'
+      let url = '/api/prazos?limite=100'
+      if (filtro === 'hoje') url += '&periodo=hoje'
+      else if (filtro === 'semana') url += '&periodo=semana'
+      else if (filtro === 'vencidos') url += '&periodo=vencidos'
       const res = await fetch(url)
-      setPrazos(await res.json())
+      const data = await res.json()
+      setPrazos(data.prazos || [])
     } finally { setLoading(false) }
   }
 

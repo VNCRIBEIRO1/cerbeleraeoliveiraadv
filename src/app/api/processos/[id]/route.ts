@@ -38,21 +38,27 @@ export async function PUT(
     const { id } = await params
     const dados = await request.json()
 
+    // Monta apenas os campos enviados (partial update)
+    const updateData: Record<string, unknown> = {}
+    if (dados.numero !== undefined) updateData.numero = dados.numero || null
+    if (dados.tipo !== undefined) updateData.tipo = dados.tipo
+    if (dados.assunto !== undefined) updateData.assunto = dados.assunto
+    if (dados.descricao !== undefined) updateData.descricao = dados.descricao || null
+    if (dados.status !== undefined) updateData.status = dados.status
+    if (dados.vara !== undefined) updateData.vara = dados.vara || null
+    if (dados.comarca !== undefined) updateData.comarca = dados.comarca || null
+    if (dados.foro !== undefined) updateData.foro = dados.foro || null
+    if (dados.valorCausa !== undefined) updateData.valorCausa = dados.valorCausa ? parseFloat(dados.valorCausa) : null
+    if (dados.parteContraria !== undefined) updateData.parteContraria = dados.parteContraria || null
+    if (dados.advContrario !== undefined) updateData.advContrario = dados.advContrario || null
+    if (dados.dataDistribuicao !== undefined) updateData.dataDistribuicao = dados.dataDistribuicao ? new Date(dados.dataDistribuicao) : null
+    if (dados.dataConclusao !== undefined) updateData.dataConclusao = dados.dataConclusao ? new Date(dados.dataConclusao) : null
+    if (dados.observacoes !== undefined) updateData.observacoes = dados.observacoes || null
+    if (dados.advogadoId !== undefined) updateData.advogadoId = dados.advogadoId || null
+
     const processo = await prisma.processo.update({
       where: { id },
-      data: {
-        numero: dados.numero,
-        tipo: dados.tipo,
-        assunto: dados.assunto,
-        descricao: dados.descricao,
-        status: dados.status,
-        vara: dados.vara,
-        comarca: dados.comarca,
-        valorCausa: dados.valorCausa ? parseFloat(dados.valorCausa) : null,
-        dataDistribuicao: dados.dataDistribuicao ? new Date(dados.dataDistribuicao) : null,
-        observacoes: dados.observacoes,
-        advogadoId: dados.advogadoId,
-      },
+      data: updateData,
     })
 
     return NextResponse.json(processo)

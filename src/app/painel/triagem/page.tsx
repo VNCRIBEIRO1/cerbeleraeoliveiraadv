@@ -45,6 +45,12 @@ export default function TriagemPage() {
         method: 'PUT', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           converter: true,
+          email: formConversao.email || undefined,
+          cpfCnpj: formConversao.cpfCnpj || undefined,
+          endereco: formConversao.endereco || undefined,
+          cidade: formConversao.cidade || undefined,
+          estado: formConversao.estado || undefined,
+          observacoes: formConversao.observacoes || undefined,
         }),
       })
       if (res.ok) {

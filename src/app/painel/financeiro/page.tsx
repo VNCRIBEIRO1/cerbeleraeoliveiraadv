@@ -42,7 +42,7 @@ export default function FinanceiroPage() {
   const pagarParcela = async (pagamentoId: string, parcelaId: string) => {
     await fetch(`/api/financeiro/${pagamentoId}`, {
       method: 'PUT', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ parcelaId, dataPagamento: new Date().toISOString() }),
+      body: JSON.stringify({ parcelaId, parcelaStatus: 'pago' }),
     })
     carregar()
   }

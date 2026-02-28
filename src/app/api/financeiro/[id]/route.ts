@@ -11,11 +11,13 @@ export async function PUT(
 
     // Atualizar parcela específica
     if (dados.parcelaId) {
+      const novoStatus = dados.parcelaStatus || 'pago'
       const parcela = await prisma.parcela.update({
         where: { id: dados.parcelaId },
         data: {
-          status: dados.parcelaStatus || 'pago',
-          dataPagamento: dados.parcelaStatus === 'pago' ? new Date() : null,
+          status: novoStatus,
+          dataPagamento: novoStatus === 'pago' ? new Date() : null,
+          formaPagamento: dados.formaPagamento || null,
         },
       })
 
