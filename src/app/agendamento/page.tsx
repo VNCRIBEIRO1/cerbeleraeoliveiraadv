@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
-import { Calendar, Phone, MessageCircle, CheckCircle2, Clock, MapPin, Mail, Scale } from 'lucide-react';
+import { Calendar, Phone, MessageCircle, CheckCircle2, Clock, MapPin, Mail, Scale, Bot, ArrowRight, Star } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
-import SectionHeader from '@/components/SectionHeader';
 import AgendamentoClient from './AgendamentoClient';
 import EmailFormClient from './EmailFormClient';
 
@@ -29,88 +28,127 @@ export default function AgendamentoPage() {
               Agende sua <span className="text-gold-400">Consulta</span>
             </h1>
             <p className="text-primary-200 text-lg max-w-2xl mx-auto">
-              Escolha a forma mais prática para você agendar. Nosso atendimento é humanizado e personalizado.
+              Escolha a forma mais prática para você. Nosso atendimento é humanizado e personalizado.
             </p>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* Cards */}
+      {/* Cards de Opções */}
       <section className="py-20 bg-white">
         <div className="container-custom">
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
-            {/* Card 1 - Agendamento Online */}
+          {/* 3 Cards: Agendamento Online, Assistente Virtual, Ligar/WhatsApp */}
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-16">
+
+            {/* Card 1 — Agendamento Online (Recomendado) */}
             <AnimatedSection>
-              <div className="relative card p-8 h-full border-2 border-gold-200 hover:border-gold-400 transition-all duration-300 hover:shadow-xl">
-                <div className="absolute -top-3 left-6">
-                  <span className="bg-gradient-to-r from-gold-500 to-gold-600 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
-                    ⭐ Recomendado
+              <div className="relative card pt-10 pb-8 px-6 h-full border-2 border-gold-200 hover:border-gold-400 transition-all duration-300 hover:shadow-xl overflow-visible">
+                <div className="absolute -top-3.5 left-6 z-10">
+                  <span className="bg-gradient-to-r from-gold-500 to-gold-600 text-white text-xs font-bold px-4 py-1.5 rounded-full inline-flex items-center gap-1.5 shadow-lg shadow-gold-500/30">
+                    <Star className="w-3.5 h-3.5" />
+                    Recomendado
                   </span>
                 </div>
-                <div className="w-14 h-14 bg-gold-50 rounded-xl flex items-center justify-center mb-6">
+                <div className="w-14 h-14 bg-gold-50 rounded-xl flex items-center justify-center mb-5">
                   <Calendar className="w-7 h-7 text-gold-500" />
                 </div>
-                <h2 className="text-xl font-serif font-bold text-primary-500 mb-3">
-                  Agendar pelo Assistente Virtual
+                <h2 className="text-lg font-serif font-bold text-primary-500 mb-2">
+                  Agendar Online
                 </h2>
-                <p className="text-secondary-600 text-sm mb-6">
-                  Use nosso assistente inteligente para escolher a data, horário e tipo de consulta. Veja em tempo real os horários disponíveis e confirme pelo WhatsApp.
+                <p className="text-secondary-600 text-sm mb-5 leading-relaxed">
+                  Escolha data, horário e tipo de consulta. Veja horários disponíveis em tempo real.
                 </p>
-                <div className="space-y-3 mb-8">
+                <div className="space-y-2.5 mb-6">
                   {[
-                    'Escolha tipo de consulta',
+                    'Escolha o tipo de consulta',
                     'Calendário com datas disponíveis',
                     'Horários livres em tempo real',
                     'Confirmação via WhatsApp',
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-gold-500 flex-shrink-0" />
-                      <span className="text-sm text-secondary-700">{item}</span>
+                      <span className="text-xs text-secondary-700">{item}</span>
                     </div>
                   ))}
                 </div>
                 <a href="#agendar-online"
-                  className="btn-gold w-full text-center flex items-center justify-center gap-2">
-                  <Calendar className="w-5 h-5" />
-                  Iniciar Agendamento Online
+                  className="btn-gold w-full text-center flex items-center justify-center gap-2 text-sm">
+                  <Calendar className="w-4 h-4" />
+                  Iniciar Agendamento
+                  <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
             </AnimatedSection>
 
-            {/* Card 2 - Ligar/WhatsApp */}
-            <AnimatedSection delay={0.15}>
-              <div className="card p-8 h-full border border-secondary-200 hover:border-primary-300 transition-all duration-300 hover:shadow-xl">
-                <div className="w-14 h-14 bg-primary-50 rounded-xl flex items-center justify-center mb-6">
-                  <Phone className="w-7 h-7 text-primary-500" />
+            {/* Card 2 — Assistente Virtual (ChatBot) */}
+            <AnimatedSection delay={0.1}>
+              <div className="card pt-8 pb-8 px-6 h-full border border-secondary-200 hover:border-gold-300 transition-all duration-300 hover:shadow-xl">
+                <div className="w-14 h-14 bg-gradient-to-br from-[#1a2e1f] to-[#2d4a35] rounded-xl flex items-center justify-center mb-5">
+                  <Bot className="w-7 h-7 text-gold-400" />
                 </div>
-                <h2 className="text-xl font-serif font-bold text-primary-500 mb-3">
+                <h2 className="text-lg font-serif font-bold text-primary-500 mb-2">
+                  Assistente Virtual
+                </h2>
+                <p className="text-secondary-600 text-sm mb-5 leading-relaxed">
+                  Nosso assistente faz a triagem do seu caso e direciona para o advogado especialista.
+                </p>
+                <div className="space-y-2.5 mb-6">
+                  {[
+                    'Triagem inteligente do caso',
+                    'Identifica área do Direito',
+                    'Avalia urgência da situação',
+                    'Encaminha para WhatsApp',
+                  ].map((item) => (
+                    <div key={item} className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-primary-400 flex-shrink-0" />
+                      <span className="text-xs text-secondary-700">{item}</span>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  id="btn-abrir-chatbot"
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-[#1a2e1f] to-[#2d4a35] hover:from-[#243a28] hover:to-[#3a5e40] text-white rounded-xl font-medium transition-all text-sm shadow-lg shadow-primary-900/20 abrir-chatbot-btn">
+                  <Bot className="w-4 h-4 text-gold-400" />
+                  Falar com Assistente
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </AnimatedSection>
+
+            {/* Card 3 — Ligar / WhatsApp */}
+            <AnimatedSection delay={0.2}>
+              <div className="card pt-8 pb-8 px-6 h-full border border-secondary-200 hover:border-green-300 transition-all duration-300 hover:shadow-xl">
+                <div className="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center mb-5">
+                  <Phone className="w-7 h-7 text-green-600" />
+                </div>
+                <h2 className="text-lg font-serif font-bold text-primary-500 mb-2">
                   Ligar ou WhatsApp
                 </h2>
-                <p className="text-secondary-600 text-sm mb-6">
-                  Prefere falar diretamente? Ligue ou envie mensagem pelo WhatsApp para nossa secretária. Atendimento rápido e carinhoso.
+                <p className="text-secondary-600 text-sm mb-5 leading-relaxed">
+                  Prefere falar diretamente? Ligue ou envie mensagem pelo WhatsApp. Atendimento rápido e humano.
                 </p>
-                <div className="space-y-3 mb-8">
+                <div className="space-y-2.5 mb-6">
                   {[
-                    'Atendimento humano',
+                    'Atendimento humano direto',
                     'Tira dúvidas na hora',
                     'Horário comercial',
                   ].map((item) => (
                     <div key={item} className="flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
-                      <span className="text-sm text-secondary-700">{item}</span>
+                      <span className="text-xs text-secondary-700">{item}</span>
                     </div>
                   ))}
                 </div>
-                <div className="space-y-3">
+                <div className="space-y-2.5">
                   <a href="https://wa.me/5518996101884?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta."
                     target="_blank" rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl font-medium transition-colors">
-                    <MessageCircle className="w-5 h-5" />
+                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl font-medium transition-colors text-sm">
+                    <MessageCircle className="w-4 h-4" />
                     WhatsApp
                   </a>
                   <a href="tel:+5518996101884"
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3 border-2 border-secondary-200 text-secondary-700 rounded-xl font-medium hover:border-primary-300 hover:text-primary-500 transition-colors">
-                    <Phone className="w-5 h-5" />
+                    className="w-full flex items-center justify-center gap-2 px-6 py-2.5 border-2 border-secondary-200 text-secondary-600 rounded-xl font-medium hover:border-primary-300 hover:text-primary-500 transition-colors text-sm">
+                    <Phone className="w-4 h-4" />
                     (18) 99610-1884
                   </a>
                 </div>

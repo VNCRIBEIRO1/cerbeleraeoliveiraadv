@@ -595,6 +595,27 @@ export default function ChatBot() {
     }
   }, [aberto, mensagens.length, iniciar]);
 
+  // Listener para abrir chatbot via evento customizado ou botão na página
+  useEffect(() => {
+    const handleAbrirChatbot = () => setAberto(true);
+    window.addEventListener('abrir-chatbot', handleAbrirChatbot);
+
+    // Também escutar cliques nos botões com classe .abrir-chatbot-btn
+    const handleClick = (e: Event) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('.abrir-chatbot-btn')) {
+        e.preventDefault();
+        setAberto(true);
+      }
+    };
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      window.removeEventListener('abrir-chatbot', handleAbrirChatbot);
+      document.removeEventListener('click', handleClick);
+    };
+  }, []);
+
   // Adicionar mensagem do bot com delay de digitação
   const addBotMsg = (texto: string, opcoes?: Opcao[]) => {
     setDigitando(true);
@@ -956,9 +977,16 @@ _Enviado via Assistente Virtual do site_`.trim();
                         Enviar para o Advogado
                         <ExternalLink className="w-3.5 h-3.5" />
                       </button>
+                      <a
+                        href="/agendamento#agendar-online"
+                        className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#c9a84c] to-[#b8942e] hover:from-[#d4b55a] hover:to-[#c9a84c] text-white font-semibold text-sm py-2.5 rounded-lg transition-colors shadow"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" strokeWidth={2}/><line x1="16" y1="2" x2="16" y2="6" strokeWidth={2}/><line x1="8" y1="2" x2="8" y2="6" strokeWidth={2}/><line x1="3" y1="10" x2="21" y2="10" strokeWidth={2}/></svg>
+                        Agendar Consulta Online
+                      </a>
                       <p className="text-[10px] text-secondary-400 text-center flex items-center justify-center gap-1">
                         <ShieldCheck className="w-3 h-3" />
-                        Ao clicar, você será redirecionado ao WhatsApp
+                        Escolha WhatsApp ou agende com data e horário
                       </p>
                     </div>
                   ) : msg.tipo === 'bot' ? (

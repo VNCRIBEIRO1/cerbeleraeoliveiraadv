@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
         titulo: dados.titulo,
         descricao: dados.descricao || null,
         dataHora: new Date(dados.dataHora),
-        duracao: dados.duracao || 60,
+        duracao: parseInt(String(dados.duracao)) || 60,
         tipo: dados.tipo || 'consulta',
         status: dados.status || 'agendado',
         local: dados.local || null,

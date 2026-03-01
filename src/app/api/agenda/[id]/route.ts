@@ -11,19 +11,20 @@ export async function PUT(
     const { id } = await params
     const dados = await request.json()
 
+    const updateData: Record<string, unknown> = {}
+    if (dados.titulo !== undefined) updateData.titulo = dados.titulo
+    if (dados.descricao !== undefined) updateData.descricao = dados.descricao || null
+    if (dados.dataHora) updateData.dataHora = new Date(dados.dataHora)
+    if (dados.duracao !== undefined) updateData.duracao = parseInt(String(dados.duracao)) || 60
+    if (dados.tipo !== undefined) updateData.tipo = dados.tipo
+    if (dados.status !== undefined) updateData.status = dados.status
+    if (dados.local !== undefined) updateData.local = dados.local || null
+    if (dados.observacoes !== undefined) updateData.observacoes = dados.observacoes || null
+    if (dados.clienteId !== undefined) updateData.clienteId = dados.clienteId || null
+
     const agendamento = await prisma.agendamento.update({
       where: { id },
-      data: {
-        titulo: dados.titulo,
-        descricao: dados.descricao,
-        dataHora: dados.dataHora ? new Date(dados.dataHora) : undefined,
-        duracao: dados.duracao,
-        tipo: dados.tipo,
-        status: dados.status,
-        local: dados.local,
-        observacoes: dados.observacoes,
-        clienteId: dados.clienteId,
-      },
+      data: updateData,
     })
 
     // Sincronizar atualização com Google Calendar
@@ -37,11 +38,11 @@ export async function PUT(
           })
           if (user?.googleSyncAtivo && user.googleRefreshToken) {
             await atualizarEventoGoogle(session.userId, agendamento.googleEventId, {
-              titulo: dados.titulo,
-              descricao: dados.descricao,
-              dataHora: dados.dataHora ? new Date(dados.dataHora) : undefined,
-              duracao: dados.duracao,
-              local: dados.local,
+              titulo: updateData.titulo as string | undefined,
+              descricao: updateData.descricao as string | undefined,
+              dataHora: updateData.dataHora as Date | undefined,
+              duracao: updateData.duracao as number | undefined,
+              local: updateData.local as string | undefined,
             })
           }
         }
