@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
         subarea: 'Agendamento Online',
         urgencia: 'media',
         detalhes: descricao || `Agendamento online - ${tipoParaArea[tipo] || tipo}`,
-        status: 'pendente',
+        status: 'nova',
       },
     });
 

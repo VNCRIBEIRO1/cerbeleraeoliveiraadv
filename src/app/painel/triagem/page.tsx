@@ -75,7 +75,7 @@ export default function TriagemPage() {
 
   const gerarWhatsApp = (t: Triagem) => {
     const numero = t.telefone.replace(/\D/g, '')
-    const msg = `Prezado(a) ${t.nome},\n\nRecebemos sua solicitacao referente a ${t.area} - ${t.subarea}.\n\nGostarıamos de agendar uma consulta para analisar seu caso.\n\nPodemos prosseguir?\n\nCerbelera & Oliveira Advogados\nTel: (18) 99610-1884`
+    const msg = `Prezado(a) ${t.nome},\n\nRecebemos sua solicitação referente a ${t.area} - ${t.subarea}.\n\nGostaríamos de agendar uma consulta para analisar seu caso.\n\nPodemos prosseguir?\n\nCerbelera & Oliveira Advogados\nTel: (18) 99610-1884`
     window.open(`https://wa.me/55${numero}?text=${encodeURIComponent(msg)}`, '_blank')
   }
 

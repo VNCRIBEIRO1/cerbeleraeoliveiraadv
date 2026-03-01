@@ -37,6 +37,18 @@ export async function middleware(request: NextRequest) {
       return NextResponse.next()
     }
 
+    // Agendamento público e horários disponíveis são públicos
+    if (pathname === '/api/agendamento-publico' && request.method === 'POST') {
+      return NextResponse.next()
+    }
+    if (pathname === '/api/horarios-disponiveis' && request.method === 'GET') {
+      return NextResponse.next()
+    }
+    // Contato é público
+    if (pathname === '/api/contato' && request.method === 'POST') {
+      return NextResponse.next()
+    }
+
     const token = request.cookies.get('painel_token')?.value
     
     if (!token) {
@@ -55,5 +67,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/painel/:path*', '/api/clientes/:path*', '/api/processos/:path*', '/api/agenda/:path*', '/api/financeiro/:path*', '/api/prazos/:path*', '/api/triagem/:path*', '/api/dashboard/:path*', '/api/exportar/:path*', '/api/google/:path*']
+  matcher: ['/painel/:path*', '/api/clientes/:path*', '/api/processos/:path*', '/api/agenda/:path*', '/api/financeiro/:path*', '/api/prazos/:path*', '/api/triagem/:path*', '/api/dashboard/:path*', '/api/exportar/:path*', '/api/google/:path*', '/api/agendamento-publico/:path*', '/api/horarios-disponiveis/:path*', '/api/contato/:path*', '/api/bloqueios/:path*']
 }

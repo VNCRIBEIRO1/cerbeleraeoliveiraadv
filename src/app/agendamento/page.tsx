@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { Calendar, Phone, MessageCircle, CheckCircle2, Clock, MapPin, Mail, Scale, Bot, ArrowRight, Star } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import AgendamentoClient from './AgendamentoClient';
@@ -159,7 +160,9 @@ export default function AgendamentoPage() {
           {/* Formulário de Agendamento Online */}
           <div id="agendar-online" className="scroll-mt-24">
             <AnimatedSection>
-              <AgendamentoClient />
+              <Suspense fallback={<div className="flex items-center justify-center py-12"><div className="w-8 h-8 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" /></div>}>
+                <AgendamentoClient />
+              </Suspense>
             </AnimatedSection>
           </div>
         </div>

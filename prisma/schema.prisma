@@ -226,3 +226,20 @@ model Triagem {
   observacoes String?
   criadoEm    DateTime @default(now())
 }
+
+// ============================================================
+// BLOQUEIOS DE HORÁRIO (Gestão de Disponibilidade)
+// ============================================================
+model BloqueioHorario {
+  id         String   @id @default(uuid())
+  tipo       String   // dia_inteiro, periodo, horario_especial
+  dataInicio DateTime
+  dataFim    DateTime?
+  horaInicio String?  // "08:00" - para bloqueios parciais
+  horaFim    String?  // "12:00" - para bloqueios parciais
+  motivo     String?  // férias, audiência externa, viagem, pessoal
+  recorrente Boolean  @default(false)
+  diaSemana  Int?     // 0=Dom, 1=Seg... 6=Sáb (para recorrentes)
+  ativo      Boolean  @default(true)
+  criadoEm   DateTime @default(now())
+}
