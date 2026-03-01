@@ -12,6 +12,7 @@ const navigation = [
   { name: 'Áreas de Atuação', href: '/areas-de-atuacao' },
   { name: 'Blog', href: '/blog' },
   { name: 'Contato', href: '/contato' },
+  { name: 'Agendamento', href: '/agendamento' },
 ];
 
 export default function Header() {
@@ -89,10 +90,10 @@ export default function Header() {
               </Link>
             ))}
             <Link
-              href="/contato"
+              href="/agendamento"
               className="ml-4 inline-flex items-center gap-1.5 text-sm font-semibold px-5 py-2.5 rounded-lg bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600 text-white shadow-lg shadow-gold-500/25 hover:shadow-gold-500/40 hover:from-gold-500 hover:via-gold-400 hover:to-gold-500 transition-all duration-300 hover:-translate-y-0.5"
             >
-              Fale Conosco
+              Agende sua Consulta
               <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
@@ -138,11 +139,11 @@ export default function Header() {
                 </Link>
               ))}
               <Link
-                href="/contato"
+                href="/agendamento"
                 onClick={() => setIsOpen(false)}
                 className="block py-3 px-4 mt-2 bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600 text-white text-center rounded-lg font-semibold text-sm shadow-lg"
               >
-                Fale Conosco
+                Agende sua Consulta
               </Link>
             </div>
           </motion.div>

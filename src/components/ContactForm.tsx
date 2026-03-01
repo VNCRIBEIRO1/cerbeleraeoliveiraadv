@@ -46,12 +46,30 @@ export default function ContactForm() {
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
-    // Simular envio
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log('Form data:', data);
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    reset();
+    try {
+      const res = await fetch('/api/contato', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome: data.name,
+          email: data.email,
+          telefone: data.phone,
+          assunto: data.subject,
+          mensagem: data.message,
+        }),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Erro ao enviar');
+      }
+      setIsSubmitted(true);
+      reset();
+    } catch (err) {
+      console.error('Erro ao enviar formulário:', err);
+      alert('Erro ao enviar mensagem. Tente novamente.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {

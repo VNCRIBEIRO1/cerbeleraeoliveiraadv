@@ -52,7 +52,7 @@ export default function HeroSection() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/contato" className="btn-gold text-base">
+              <Link href="/agendamento" className="btn-gold text-base">
                 Agende uma Consulta
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>

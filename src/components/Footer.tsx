@@ -17,6 +17,7 @@ const links = [
   { name: 'Áreas de Atuação', href: '/areas-de-atuacao' },
   { name: 'Blog', href: '/blog' },
   { name: 'Contato', href: '/contato' },
+  { name: 'Agendamento', href: '/agendamento' },
 ];
 
 export default function Footer() {
