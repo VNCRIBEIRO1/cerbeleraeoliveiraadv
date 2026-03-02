@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
-import { criarEventoGoogle, sincronizarDoGoogle } from '@/lib/google-calendar'
+import { criarEventoGoogle, sincronizarDoGoogle, renovarWebhookSeNecessario } from '@/lib/google-calendar'
 
 export async function GET(request: NextRequest) {
   try {
@@ -21,7 +21,11 @@ export async function GET(request: NextRequest) {
             select: { googleSyncAtivo: true, googleRefreshToken: true },
           })
           if (user?.googleSyncAtivo && user.googleRefreshToken) {
-            await sincronizarDoGoogle(session.userId, parseInt(mes), parseInt(ano))
+            const mesNum = parseInt(mes)
+            const anoNum = parseInt(ano)
+            await sincronizarDoGoogle(session.userId, mesNum, anoNum)
+            // Renovar webhook se necessário (background, não bloqueia)
+            renovarWebhookSeNecessario(session.userId).catch(() => {})
           }
         }
       } catch (syncErr) {

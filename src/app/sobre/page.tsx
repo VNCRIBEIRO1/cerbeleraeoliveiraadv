@@ -58,9 +58,9 @@ const formacao = [
     institution: 'Cerbelera & Oliveira Advogados Associados',
   },
   {
-    year: '2023',
-    title: 'Especialização Continuada',
-    institution: 'Direito Trabalhista e Criminal',
+    year: '2024',
+    title: 'Mestrado em Direito — Me. Diogo Cerbelera',
+    institution: 'Titulação que reforça a autoridade técnica do escritório em casos complexos',
   },
 ];
 
@@ -111,8 +111,8 @@ export default function SobrePage() {
                       <Star key={i} className="w-4 h-4 fill-white text-white" />
                     ))}
                   </div>
-                  <p className="text-sm font-medium">5.0 no Google</p>
-                  <p className="text-xs opacity-80">12+ avaliações</p>
+                  <p className="text-sm font-medium">4.9 no Google</p>
+                  <p className="text-xs opacity-80">38 avaliações</p>
                 </div>
               </div>
             </AnimatedSection>
@@ -123,9 +123,14 @@ export default function SobrePage() {
                 <p>
                   O escritório Cerbelera & Oliveira Advogados Associados nasceu
                   da união de dois profissionais apaixonados pelo Direito —
-                  <strong> Diogo Ramos Cerbelera Neto</strong> e
+                  <strong> Me. Diogo Ramos Cerbelera Neto</strong>, Mestre em Direito, e
                   <strong> Luã Carlos de Oliveira</strong> — comprometidos com a
                   justiça e a defesa dos direitos dos cidadãos.
+                </p>
+                <p>
+                  A titulação de Mestre do sócio Diogo Cerbelera reforça a
+                  autoridade técnica do escritório na análise e condução de
+                  casos complexos, unindo rigor acadêmico à prática advocatícia.
                 </p>
                 <p>
                   Ao longo de mais de 5 anos de atuação, construímos uma

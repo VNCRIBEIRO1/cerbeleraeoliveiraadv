@@ -1,8 +1,10 @@
 // ============================================================
 // INTEGRAÇÃO GOOGLE CALENDAR — Cerbelera & Oliveira Advogados
+// Sync bidirecional completo: CMS ↔ Google Calendar
 // ============================================================
-import { google } from 'googleapis'
+import { google, calendar_v3 } from 'googleapis'
 import { prisma } from './prisma'
+import { v4 as uuidv4 } from 'uuid'
 
 const SCOPES = ['https://www.googleapis.com/auth/calendar']
 
@@ -26,7 +28,7 @@ export function getAuthUrl(userId: string): string {
     access_type: 'offline',
     scope: SCOPES,
     prompt: 'consent',
-    state: userId, // identificar qual usuário está conectando
+    state: userId,
   })
 }
 
@@ -121,7 +123,7 @@ export async function criarEventoGoogle(userId: string, evento: EventoData): Pro
           useDefault: false,
           overrides: [
             { method: 'popup', minutes: 30 },
-            { method: 'popup', minutes: 60 * 24 }, // 1 dia antes
+            { method: 'popup', minutes: 60 * 24 },
           ],
         },
         colorId: getTipoColorId(evento.tipo),
@@ -184,26 +186,40 @@ export async function deletarEventoGoogle(userId: string, googleEventId: string)
   }
 }
 
-// Buscar eventos do Google Calendar em um período
+// Buscar eventos do Google Calendar em um período (com suporte a showDeleted)
 export async function buscarEventosGoogle(
   userId: string,
   inicio: Date,
-  fim: Date
+  fim: Date,
+  opcoes?: { showDeleted?: boolean }
 ) {
   try {
     const { client, calendarId } = await getAuthenticatedClient(userId)
     const calendar = google.calendar({ version: 'v3', auth: client })
 
-    const res = await calendar.events.list({
-      calendarId,
-      timeMin: inicio.toISOString(),
-      timeMax: fim.toISOString(),
-      singleEvents: true,
-      orderBy: 'startTime',
-      maxResults: 250,
-    })
+    const allEvents: calendar_v3.Schema$Event[] = []
+    let pageToken: string | undefined = undefined
 
-    return res.data.items || []
+    do {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const res: any = await calendar.events.list({
+        calendarId,
+        timeMin: inicio.toISOString(),
+        timeMax: fim.toISOString(),
+        singleEvents: true,
+        orderBy: 'startTime',
+        maxResults: 250,
+        showDeleted: opcoes?.showDeleted || false,
+        pageToken,
+      })
+
+      if (res.data.items) {
+        allEvents.push(...res.data.items)
+      }
+      pageToken = res.data.nextPageToken || undefined
+    } while (pageToken)
+
+    return allEvents
   } catch (error) {
     console.error('Erro ao buscar eventos Google:', error)
     return []
@@ -215,11 +231,11 @@ export async function sincronizarParaGoogle(userId: string, mes: number, ano: nu
   const inicio = new Date(ano, mes - 1, 1)
   const fim = new Date(ano, mes, 0, 23, 59, 59)
 
-  // Buscar agendamentos sem googleEventId
   const agendamentos = await prisma.agendamento.findMany({
     where: {
       googleEventId: null,
       dataHora: { gte: inicio, lte: fim },
+      status: { not: 'cancelado' },
     },
     include: {
       cliente: { select: { nome: true } },
@@ -250,25 +266,102 @@ export async function sincronizarParaGoogle(userId: string, mes: number, ano: nu
   return { criados, total: agendamentos.length }
 }
 
-// Sincronizar: importar eventos do Google → sistema local
+// ============================================================
+// SINCRONIZAÇÃO BIDIRECIONAL COMPLETA: Google → Local
+// Detecta: novos eventos, modificações, cancelamentos, deleções
+// ============================================================
 export async function sincronizarDoGoogle(userId: string, mes: number, ano: number) {
   const inicio = new Date(ano, mes - 1, 1)
   const fim = new Date(ano, mes, 0, 23, 59, 59)
 
-  const eventosGoogle = await buscarEventosGoogle(userId, inicio, fim)
+  // Buscar eventos incluindo deletados/cancelados
+  const eventosGoogle = await buscarEventosGoogle(userId, inicio, fim, { showDeleted: true })
 
-  // IDs de eventos Google já vinculados
-  const jaVinculados = await prisma.agendamento.findMany({
-    where: { googleEventId: { not: null } },
-    select: { googleEventId: true },
+  // Buscar TODOS agendamentos locais do período que têm googleEventId
+  const agendamentosLocais = await prisma.agendamento.findMany({
+    where: {
+      googleEventId: { not: null },
+      dataHora: { gte: inicio, lte: fim },
+    },
+    select: {
+      id: true,
+      googleEventId: true,
+      titulo: true,
+      descricao: true,
+      dataHora: true,
+      duracao: true,
+      local: true,
+      status: true,
+      tipo: true,
+    },
   })
-  const idsExistentes = new Set(jaVinculados.map(a => a.googleEventId))
+
+  // Criar mapa de agendamentos locais por googleEventId
+  const mapaLocal = new Map(agendamentosLocais.map(a => [a.googleEventId!, a]))
+
+  // Todos os googleEventIds que existem no Google (incluindo cancelados)
+  const idsNoGoogle = new Set<string>()
 
   let importados = 0
-  for (const evento of eventosGoogle) {
-    if (!evento.id || idsExistentes.has(evento.id)) continue
-    if (evento.status === 'cancelled') continue
+  let atualizados = 0
+  let cancelados = 0
 
+  for (const evento of eventosGoogle) {
+    if (!evento.id) continue
+    idsNoGoogle.add(evento.id)
+
+    const agLocal = mapaLocal.get(evento.id)
+
+    // ── CASO 1: Evento cancelado/deletado no Google ──
+    if (evento.status === 'cancelled') {
+      if (agLocal && agLocal.status !== 'cancelado') {
+        await prisma.agendamento.update({
+          where: { id: agLocal.id },
+          data: { status: 'cancelado' },
+        })
+        cancelados++
+      }
+      continue
+    }
+
+    // ── CASO 2: Evento já existe localmente → verificar modificações ──
+    if (agLocal) {
+      const dataInicio = evento.start?.dateTime || evento.start?.date
+      if (!dataInicio) continue
+
+      const dataFim = evento.end?.dateTime || evento.end?.date
+      const googleInicio = new Date(dataInicio)
+      const googleFim = dataFim ? new Date(dataFim) : new Date(googleInicio.getTime() + 3600000)
+      const googleDuracao = Math.round((googleFim.getTime() - googleInicio.getTime()) / 60000)
+
+      // Comparar campos para detectar alterações
+      const tituloMudou = (evento.summary || 'Evento Google') !== agLocal.titulo
+      const dataMudou = Math.abs(googleInicio.getTime() - agLocal.dataHora.getTime()) > 60000 // >1min
+      const duracaoMudou = googleDuracao !== agLocal.duracao
+      const localMudou = (evento.location || null) !== (agLocal.local || null)
+
+      if (tituloMudou || dataMudou || duracaoMudou || localMudou) {
+        const updateData: Record<string, unknown> = {}
+        if (tituloMudou) updateData.titulo = evento.summary || 'Evento Google'
+        if (dataMudou) updateData.dataHora = googleInicio
+        if (duracaoMudou) updateData.duracao = googleDuracao > 0 ? googleDuracao : 60
+        if (localMudou) updateData.local = evento.location || null
+
+        // Reclassificar tipo se título mudou
+        if (tituloMudou) {
+          updateData.tipo = classificarTipoEvento(evento.summary || '')
+        }
+
+        await prisma.agendamento.update({
+          where: { id: agLocal.id },
+          data: updateData,
+        })
+        atualizados++
+      }
+      continue
+    }
+
+    // ── CASO 3: Evento novo no Google → importar ──
     const dataInicio = evento.start?.dateTime || evento.start?.date
     if (!dataInicio) continue
 
@@ -292,7 +385,126 @@ export async function sincronizarDoGoogle(userId: string, mes: number, ano: numb
     importados++
   }
 
-  return { importados }
+  // ── CASO 4: Eventos locais com googleEventId que NÃO existem mais no Google ──
+  // (deletados permanentemente do Google, não apenas cancelados)
+  for (const agLocal of agendamentosLocais) {
+    if (agLocal.googleEventId && !idsNoGoogle.has(agLocal.googleEventId) && agLocal.status !== 'cancelado') {
+      await prisma.agendamento.update({
+        where: { id: agLocal.id },
+        data: { status: 'cancelado' },
+      })
+      cancelados++
+    }
+  }
+
+  return { importados, atualizados, cancelados }
+}
+
+// ============================================================
+// WEBHOOK — Push Notifications do Google Calendar
+// ============================================================
+
+// Registrar canal de webhook para receber notificações em tempo real
+export async function registrarWebhook(userId: string): Promise<boolean> {
+  try {
+    const { client, calendarId } = await getAuthenticatedClient(userId)
+    const calendar = google.calendar({ version: 'v3', auth: client })
+
+    const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || '').trim()
+    if (!siteUrl || siteUrl.includes('localhost')) {
+      console.log('Webhook não registrado: URL não é HTTPS público')
+      return false
+    }
+
+    const channelId = uuidv4()
+    // Expira em 7 dias (máximo recomendado pelo Google)
+    const expiration = Date.now() + 7 * 24 * 60 * 60 * 1000
+
+    const res = await calendar.events.watch({
+      calendarId,
+      requestBody: {
+        id: channelId,
+        type: 'web_hook',
+        address: `${siteUrl}/api/google/webhook`,
+        token: userId, // identificar o usuário
+        expiration: expiration.toString(),
+      },
+    })
+
+    // Salvar dados do canal no banco
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        googleChannelId: channelId,
+        googleResourceId: res.data.resourceId || null,
+        googleChannelExpiry: new Date(expiration),
+      },
+    })
+
+    console.log(`Webhook registrado para usuário ${userId}, canal ${channelId}`)
+    return true
+  } catch (error) {
+    console.error('Erro ao registrar webhook Google:', error)
+    return false
+  }
+}
+
+// Parar canal de webhook
+export async function pararWebhook(userId: string): Promise<boolean> {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { googleChannelId: true, googleResourceId: true },
+    })
+
+    if (!user?.googleChannelId || !user?.googleResourceId) return false
+
+    const { client } = await getAuthenticatedClient(userId)
+    const calendar = google.calendar({ version: 'v3', auth: client })
+
+    await calendar.channels.stop({
+      requestBody: {
+        id: user.googleChannelId,
+        resourceId: user.googleResourceId,
+      },
+    })
+
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        googleChannelId: null,
+        googleResourceId: null,
+        googleChannelExpiry: null,
+      },
+    })
+
+    return true
+  } catch (error) {
+    console.error('Erro ao parar webhook:', error)
+    return false
+  }
+}
+
+// Renovar webhook se estiver próximo da expiração
+export async function renovarWebhookSeNecessario(userId: string): Promise<void> {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { googleChannelExpiry: true, googleSyncAtivo: true },
+  })
+
+  if (!user?.googleSyncAtivo) return
+
+  const agora = new Date()
+  const umDiaAntes = user?.googleChannelExpiry
+    ? new Date(user.googleChannelExpiry.getTime() - 24 * 60 * 60 * 1000)
+    : null
+
+  // Se não tem canal ou está perto de expirar, renovar
+  if (!user?.googleChannelExpiry || (umDiaAntes && agora >= umDiaAntes)) {
+    // Parar canal anterior se existir
+    try { await pararWebhook(userId) } catch { /* silencioso */ }
+    await registrarWebhook(userId)
+  }
 }
 
 // ============================================================
@@ -300,14 +512,13 @@ export async function sincronizarDoGoogle(userId: string, mes: number, ano: numb
 // ============================================================
 
 function getTipoColorId(tipo?: string): string {
-  // Google Calendar color IDs: 1-11
   switch (tipo) {
-    case 'audiencia': return '11'  // vermelho
-    case 'prazo': return '6'       // laranja
-    case 'reuniao': return '7'     // azul
-    case 'consulta': return '2'    // verde
-    case 'retorno': return '5'     // amarelo
-    default: return '1'            // lavanda
+    case 'audiencia': return '11'
+    case 'prazo': return '6'
+    case 'reuniao': return '7'
+    case 'consulta': return '2'
+    case 'retorno': return '5'
+    default: return '1'
   }
 }
 

@@ -5,7 +5,7 @@
 export const SITE_CONFIG = {
   // === DADOS DOS ADVOGADOS / ESCRITÓRIO ===
   nome: 'Cerbelera & Oliveira',
-  nomeCompleto: 'Diogo Ramos Cerbelera Neto & Luã Carlos de Oliveira',
+  nomeCompleto: 'Me. Diogo Ramos Cerbelera Neto & Luã Carlos de Oliveira',
   nomeEscritorio: 'Cerbelera & Oliveira Advogados Associados',
   oab: 'OAB/SP', // Número da OAB precisa ser preenchido
   oabNumero: '', // PREENCHER
@@ -14,7 +14,8 @@ export const SITE_CONFIG = {
   // === SÓCIOS ===
   socios: [
     {
-      nome: 'Diogo Ramos Cerbelera Neto',
+      nome: 'Me. Diogo Ramos Cerbelera Neto',
+      titulo: 'Mestre em Direito',
       oab: '', // PREENCHER
     },
     {
@@ -50,12 +51,18 @@ export const SITE_CONFIG = {
     'Cerbelera & Oliveira Advogados Associados em Presidente Prudente, SP. Atuação estratégica e humanizada em Direito Trabalhista, Criminal, Civil, Empresarial e Administrativo.',
   palavrasChave: [
     'advogado Presidente Prudente',
-    'escritório de advocacia',
+    'advogado em Presidente Prudente',
+    'escritório de advocacia Presidente Prudente',
+    'advogado trabalhista Presidente Prudente',
+    'advogado criminalista Presidente Prudente',
     'direito trabalhista',
     'direito criminal',
     'direito civil',
     'direito empresarial',
     'direito administrativo',
+    'calculadora direitos trabalhistas',
+    'insalubridade periculosidade',
+    'advogado mestre em direito',
     'Cerbelera Oliveira',
     'advogado SP',
   ],
@@ -64,7 +71,7 @@ export const SITE_CONFIG = {
   sobreResumo:
     'Mais de 5 anos de atuação estratégica e humanizada na defesa dos seus direitos em Presidente Prudente e região.',
   sobreHistoria: [
-    'O escritório Cerbelera & Oliveira Advogados Associados nasceu da união de dois profissionais apaixonados pelo Direito e comprometidos com a justiça, oferecendo uma advocacia estratégica, humanizada e acessível.',
+    'O escritório Cerbelera & Oliveira Advogados Associados nasceu da união de dois profissionais apaixonados pelo Direito e comprometidos com a justiça. Liderado pelo Me. Diogo Ramos Cerbelera Neto, Mestre em Direito, o escritório combina rigor acadêmico com atuação estratégica, humanizada e acessível.',
     'Ao longo de mais de 5 anos de atuação, construímos uma trajetória sólida baseada na ética, transparência e compromisso inabalável com cada pessoa que nos procura.',
     'Nossa atuação é pautada pelo Código de Ética e Disciplina da OAB, pelo Provimento 205/2021 e pela convicção de que o acesso à informação jurídica é um direito de todos.',
     'Contamos com estacionamento próprio e ambiente acolhedor para garantir conforto durante todo o atendimento.',
@@ -78,15 +85,25 @@ export const SITE_CONFIG = {
       institution: 'Universidade do Oeste Paulista - UNOESTE',
     },
     {
+      year: '2020',
+      title: 'Aprovação na OAB',
+      institution: 'Ordem dos Advogados do Brasil - Seccional SP',
+    },
+    {
       year: '2021',
       title: 'Fundação do Escritório',
       institution: 'Cerbelera & Oliveira Advogados Associados',
     },
+    {
+      year: '2024',
+      title: 'Mestrado em Direito — Me. Diogo Cerbelera',
+      institution: 'Especialização acadêmica que reforça a autoridade técnica do escritório',
+    },
   ],
 
   // === AVALIAÇÕES (Google) ===
-  avaliacaoGoogle: '5.0',
-  totalAvaliacoes: '12+',
+  avaliacaoGoogle: '4.9',
+  totalAvaliacoes: '38',
 
   // === DEPOIMENTOS ===
   depoimentos: [

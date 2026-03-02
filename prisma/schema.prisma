@@ -31,6 +31,10 @@ model User {
   googleTokenExpiry  DateTime?
   googleCalendarId   String?  @default("primary")
   googleSyncAtivo    Boolean  @default(false)
+  googleSyncToken    String?  // Token para sync incremental
+  googleChannelId    String?  // ID do canal de webhook
+  googleResourceId   String?  // Resource ID do canal de webhook
+  googleChannelExpiry DateTime? // Expiração do canal de webhook
 
   clientes  Cliente[]
   processos Processo[]

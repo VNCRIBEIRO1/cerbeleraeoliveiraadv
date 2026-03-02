@@ -10,9 +10,9 @@ const navigation = [
   { name: 'Início', href: '/' },
   { name: 'Sobre', href: '/sobre' },
   { name: 'Áreas de Atuação', href: '/areas-de-atuacao' },
+  { name: 'Calculadora', href: '/calculadora-de-direitos' },
   { name: 'Blog', href: '/blog' },
   { name: 'Contato', href: '/contato' },
-  { name: 'Agendamento', href: '/agendamento' },
 ];
 
 export default function Header() {

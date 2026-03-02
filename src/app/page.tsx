@@ -10,9 +10,9 @@ import {
 import HeroSection from '@/components/HeroSection';
 import SectionHeader from '@/components/SectionHeader';
 import AreaCard from '@/components/AreaCard';
-import TestimonialCard from '@/components/TestimonialCard';
 import BlogCard from '@/components/BlogCard';
 import AnimatedSection from '@/components/AnimatedSection';
+import GoogleReviewsSlider from '@/components/GoogleReviewsSlider';
 import { IMAGES } from '@/lib/images';
 
 const areas = [
@@ -51,24 +51,6 @@ const areas = [
     title: 'Cálculos Judiciais',
     description:
       'Elaboração e conferência de cálculos judiciais, liquidação de sentenças, atualização de débitos e perícias contábeis.',
-  },
-];
-
-const testimonials = [
-  {
-    text: 'Atendimento excelente, super bem localizado e com estacionamento próprio. Esclareceram todas as minhas dúvidas com muita paciência e profissionalismo.',
-    author: 'Andresa Louzada',
-    role: 'Cliente',
-  },
-  {
-    text: 'Excelência no atendimento, profissionalismo, qualidade e confiança. Altamente recomendado para quem procura serviços jurídicos confiáveis.',
-    author: 'Raquel Martin Louzada',
-    role: 'Cliente',
-  },
-  {
-    text: 'Muito esclarecedor. Prestaram um excelente atendimento e resolveram meu problema por um preço justo. Recomendo a todos.',
-    author: 'Julio Prestes',
-    role: 'Cliente',
   },
 ];
 
@@ -143,6 +125,38 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* CTA Calculadora de Direitos */}
+      <section className="py-16 bg-gradient-to-r from-[#0e1810] via-[#1a2e1f] to-[#0e1810] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gold-500 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold-600 rounded-full blur-3xl" />
+        </div>
+        <div className="container-custom relative z-10">
+          <AnimatedSection>
+            <div className="text-center max-w-2xl mx-auto">
+              <span className="inline-flex items-center gap-2 bg-gold-500/20 text-gold-400 px-4 py-2 rounded-full text-sm font-medium mb-4">
+                🧮 Ferramenta Gratuita
+              </span>
+              <h2 className="text-2xl md:text-3xl font-serif font-bold text-white mb-4">
+                Calculadora de Direitos Trabalhistas
+              </h2>
+              <p className="text-primary-200 mb-8">
+                Descubra em poucos minutos se você tem direito a <strong className="text-gold-400">adicional de insalubridade</strong> ou{' '}
+                <strong className="text-gold-400">periculosidade</strong>. Ferramenta gratuita criada pelo escritório.
+              </p>
+              <Link
+                href="/calculadora-de-direitos"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white font-semibold px-8 py-4 rounded-xl shadow-lg shadow-gold-500/25 hover:shadow-gold-500/40 transition-all hover:-translate-y-0.5 text-lg"
+              >
+                <Scale className="w-5 h-5" />
+                Acessar Calculadora
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* Sobre - Prévia */}
       <section className="py-20 bg-secondary-50">
         <div className="container-custom">
@@ -165,8 +179,8 @@ export default function HomePage() {
                       <Star key={i} className="w-4 h-4 fill-white text-white" />
                     ))}
                   </div>
-                  <p className="text-sm font-medium">5.0 no Google</p>
-                  <p className="text-xs opacity-80">12+ avaliações</p>
+                  <p className="text-sm font-medium">4.9 no Google</p>
+                  <p className="text-xs opacity-80">38 avaliações</p>
                 </div>
               </div>
             </AnimatedSection>
@@ -181,9 +195,10 @@ export default function HomePage() {
               <p className="text-secondary-600 leading-relaxed mb-6">
                 O escritório Cerbelera & Oliveira Advogados Associados atua em
                 Presidente Prudente e região, oferecendo uma advocacia
-                estratégica e humanizada. Nossos sócios, Diogo Ramos Cerbelera
-                Neto e Luã Carlos de Oliveira, unem competência técnica e
-                sensibilidade humana para defender os direitos de cada cliente.
+                estratégica e humanizada. Liderado pelo Me. Diogo Ramos Cerbelera
+                Neto, Mestre em Direito, e Luã Carlos de Oliveira, o escritório
+                une rigor acadêmico e sensibilidade humana para defender os
+                direitos de cada cliente.
               </p>
 
               <ul className="space-y-4 mb-8">
@@ -224,8 +239,8 @@ export default function HomePage() {
         <div className="container-custom relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { number: '5.0', label: 'Avaliação Google', hasStar: true },
-              { number: '12+', label: 'Avaliações de Clientes', hasStar: false },
+              { number: '4.9', label: 'Avaliação Google', hasStar: true },
+              { number: '38', label: 'Avaliações de Clientes', hasStar: false },
               { number: '6', label: 'Áreas de Atuação', hasStar: false },
               { number: '100%', label: 'Compromisso Ético', hasStar: false },
             ].map((stat, index) => (
@@ -249,30 +264,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Depoimentos */}
-      <section className="py-20 bg-white">
-        <div className="container-custom">
-          <AnimatedSection>
-            <SectionHeader
-              badge="Depoimentos"
-              title="O Que Dizem Nossos Clientes"
-              subtitle="A satisfação de quem confiou em nosso trabalho é o que nos motiva a cada dia."
-            />
-          </AnimatedSection>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <TestimonialCard
-                key={testimonial.author}
-                text={testimonial.text}
-                author={testimonial.author}
-                role={testimonial.role}
-                delay={index * 0.1}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Avaliações Google — Slider Real */}
+      <GoogleReviewsSlider />
 
       {/* Blog - Prévia */}
       <section className="py-20 bg-secondary-50">

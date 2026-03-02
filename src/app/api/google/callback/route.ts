@@ -3,7 +3,7 @@
 // ============================================================
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { exchangeCodeForTokens } from '@/lib/google-calendar'
+import { exchangeCodeForTokens, registrarWebhook } from '@/lib/google-calendar'
 
 export async function GET(request: NextRequest) {
   try {
@@ -41,6 +41,13 @@ export async function GET(request: NextRequest) {
         googleSyncAtivo: true,
       },
     })
+
+    // Registrar webhook para notificações em tempo real
+    try {
+      await registrarWebhook(state)
+    } catch (webhookError) {
+      console.error('Erro ao registrar webhook (não crítico):', webhookError)
+    }
 
     return NextResponse.redirect(`${configUrl}?google=sucesso`)
   } catch (error) {

@@ -476,6 +476,7 @@ const AREAS: Opcao[] = [
   { label: '🏢 Direito Empresarial', valor: 'empresarial' },
   { label: '🏛️ Direito Administrativo', valor: 'administrativo' },
   { label: '📊 Cálculos Judiciais', valor: 'calculos' },
+  { label: '🧮 Calculadora de Direitos', valor: 'calculadora' },
 ];
 
 const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP || '5518996101884';
@@ -580,7 +581,7 @@ export default function ChatBot() {
             id: nextId(),
             tipo: 'bot',
             texto:
-              'Olá! 👋 Sou o assistente virtual do escritório *Cerbelera & Oliveira Advogados*.\n\nEstou aqui para entender sua situação e direcionar seu atendimento. Em qual área do Direito posso ajudá-lo(a)?',
+              'Olá! 👋 Sou o assistente virtual do escritório *Cerbelera & Oliveira Advogados*.\n\nEstou aqui para entender sua situação e direcionar seu atendimento.\n\n💡 *Novo:* Use nossa Calculadora de Direitos para verificar insalubridade/periculosidade!\n\nEm qual área posso ajudá-lo(a)?',
             opcoes: AREAS,
             timestamp: new Date(),
           },
@@ -644,6 +645,18 @@ export default function ChatBot() {
 
   // Selecionar área
   const selecionarArea = async (valor: string) => {
+    // Caso especial: Calculadora de Direitos → redirecionar
+    if (valor === 'calculadora') {
+      addUserMsg('🧮 Calculadora de Direitos');
+      await addBotMsg(
+        '✅ Ótimo! Vou te direcionar para nossa *Calculadora de Direitos Trabalhistas*.\n\nLá você poderá verificar se tem direito a adicional de insalubridade ou periculosidade em poucos minutos.\n\n👉 A página será aberta em instantes...'
+      );
+      setTimeout(() => {
+        window.open('/calculadora-de-direitos', '_blank');
+      }, 1500);
+      return;
+    }
+
     const areaLabel = AREAS.find((a) => a.valor === valor)?.label || valor;
     addUserMsg(areaLabel);
 

@@ -27,7 +27,7 @@ export async function PUT(
       data: updateData,
     })
 
-    // Sincronizar atualização com Google Calendar
+    // Sincronizar com Google Calendar
     if (agendamento.googleEventId) {
       try {
         const session = await getSession()
@@ -37,13 +37,24 @@ export async function PUT(
             select: { googleSyncAtivo: true, googleRefreshToken: true },
           })
           if (user?.googleSyncAtivo && user.googleRefreshToken) {
-            await atualizarEventoGoogle(session.userId, agendamento.googleEventId, {
-              titulo: updateData.titulo as string | undefined,
-              descricao: updateData.descricao as string | undefined,
-              dataHora: updateData.dataHora as Date | undefined,
-              duracao: updateData.duracao as number | undefined,
-              local: updateData.local as string | undefined,
-            })
+            // Se o status mudou para cancelado → DELETAR do Google Calendar
+            if (dados.status === 'cancelado') {
+              await deletarEventoGoogle(session.userId, agendamento.googleEventId)
+              // Limpar o googleEventId local após deletar do Google
+              await prisma.agendamento.update({
+                where: { id },
+                data: { googleEventId: null },
+              })
+            } else {
+              // Atualizar evento no Google com os novos dados
+              await atualizarEventoGoogle(session.userId, agendamento.googleEventId, {
+                titulo: updateData.titulo as string | undefined,
+                descricao: updateData.descricao as string | undefined,
+                dataHora: updateData.dataHora as Date | undefined,
+                duracao: updateData.duracao as number | undefined,
+                local: updateData.local as string | undefined,
+              })
+            }
           }
         }
       } catch (syncError) {
