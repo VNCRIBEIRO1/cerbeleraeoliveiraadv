@@ -99,7 +99,7 @@ export default function SobrePage() {
                 <div className="aspect-square rounded-2xl overflow-hidden shadow-2xl relative">
                   <Image
                     src={IMAGES.lawyer}
-                    alt="Sócios Diogo Cerbelera e Luã Oliveira - Advogados"
+                    alt="Sócios Diogo Cerbelera e Dr. Luã Oliveira - Advogados"
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -124,7 +124,7 @@ export default function SobrePage() {
                   O escritório Cerbelera & Oliveira Advogados Associados nasceu
                   da união de dois profissionais apaixonados pelo Direito —
                   <strong> Me. Diogo Ramos Cerbelera Neto</strong>, Mestre em Direito, e
-                  <strong> Luã Carlos de Oliveira</strong> — comprometidos com a
+                  <strong> Dr. Luã Carlos de Oliveira</strong> — comprometidos com a
                   justiça e a defesa dos direitos dos cidadãos.
                 </p>
                 <p>

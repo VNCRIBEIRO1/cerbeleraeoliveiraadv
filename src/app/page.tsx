@@ -125,38 +125,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Calculadora de Direitos */}
-      <section className="py-16 bg-gradient-to-r from-[#0e1810] via-[#1a2e1f] to-[#0e1810] relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gold-500 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold-600 rounded-full blur-3xl" />
-        </div>
-        <div className="container-custom relative z-10">
-          <AnimatedSection>
-            <div className="text-center max-w-2xl mx-auto">
-              <span className="inline-flex items-center gap-2 bg-gold-500/20 text-gold-400 px-4 py-2 rounded-full text-sm font-medium mb-4">
-                🧮 Ferramenta Gratuita
-              </span>
-              <h2 className="text-2xl md:text-3xl font-serif font-bold text-white mb-4">
-                Calculadora de Direitos Trabalhistas
-              </h2>
-              <p className="text-primary-200 mb-8">
-                Descubra em poucos minutos se você tem direito a <strong className="text-gold-400">adicional de insalubridade</strong> ou{' '}
-                <strong className="text-gold-400">periculosidade</strong>. Ferramenta gratuita criada pelo escritório.
-              </p>
-              <Link
-                href="/calculadora-de-direitos"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-white font-semibold px-8 py-4 rounded-xl shadow-lg shadow-gold-500/25 hover:shadow-gold-500/40 transition-all hover:-translate-y-0.5 text-lg"
-              >
-                <Scale className="w-5 h-5" />
-                Acessar Calculadora
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
       {/* Sobre - Prévia */}
       <section className="py-20 bg-secondary-50">
         <div className="container-custom">
@@ -196,7 +164,7 @@ export default function HomePage() {
                 O escritório Cerbelera & Oliveira Advogados Associados atua em
                 Presidente Prudente e região, oferecendo uma advocacia
                 estratégica e humanizada. Liderado pelo Me. Diogo Ramos Cerbelera
-                Neto, Mestre em Direito, e Luã Carlos de Oliveira, o escritório
+                Neto, Mestre em Direito, e Dr. Luã Carlos de Oliveira, o escritório
                 une rigor acadêmico e sensibilidade humana para defender os
                 direitos de cada cliente.
               </p>
