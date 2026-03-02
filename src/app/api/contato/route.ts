@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     const triagem = await prisma.triagem.create({
       data: {
         nome,
-        telefone: telefone?.replace(/\D/g, '') || email,
+        telefone: telefone?.replace(/\D/g, '') || '',
         area: assunto || 'Contato via Site',
         subarea: 'Formulário de Contato',
         urgencia: 'baixa',
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
           `Mensagem:`,
           mensagem,
         ].filter(Boolean).join('\n'),
-        status: 'pendente',
+        status: 'nova',
       },
     });
 

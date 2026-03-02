@@ -130,31 +130,38 @@ export default function ContatoPage() {
             {/* Mapa */}
             <AnimatedSection delay={0.2}>
               <div className="card border border-secondary-100 overflow-hidden h-full">
-                <div className="h-full min-h-[500px] bg-secondary-100 flex items-center justify-center">
-                  <div className="text-center p-8">
-                    <MapPin className="w-16 h-16 text-primary-300 mx-auto mb-4" />
-                    <h3 className="text-lg font-serif font-bold text-primary-500 mb-2">
-                      Nossa Localização
-                    </h3>
-                    <p className="text-secondary-500 text-sm mb-2">
-                      R. Francisco Machado de Campos, 393
-                      <br />
-                      Vila Nova
-                      <br />
-                      Presidente Prudente - SP
-                    </p>
-                    <p className="text-gold-500 text-sm font-medium mb-4">
-                      🅿️ Estacionamento Próprio
-                    </p>
-                    <a
-                      href="https://maps.google.com/?q=R.+Francisco+Machado+de+Campos,+393+-+Vila+Nova,+Presidente+Prudente+-+SP,+19010-300"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-primary text-sm"
-                    >
-                      Abrir no Google Maps
-                    </a>
+                <div className="h-full min-h-[500px]">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3694.55!2d-51.3888!3d-22.1256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDA3JzMyLjIiUyA1McKwMjMnMTkuNyJX!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr&q=R.+Francisco+Machado+de+Campos,+393+-+Vila+Nova,+Presidente+Prudente+-+SP,+19010-300"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0, minHeight: '500px' }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Localização Cerbelera & Oliveira Advogados"
+                    className="w-full h-full"
+                  />
+                </div>
+                {/* Barra inferior com info + botão */}
+                <div className="bg-white border-t border-secondary-100 px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-medium text-primary-500">R. Francisco Machado de Campos, 393</p>
+                      <p className="text-xs text-secondary-500">Vila Nova • Presidente Prudente - SP</p>
+                      <p className="text-xs text-gold-500 font-medium mt-1">🅿️ Estacionamento Próprio</p>
+                    </div>
                   </div>
+                  <a
+                    href="https://maps.google.com/?q=R.+Francisco+Machado+de+Campos,+393+-+Vila+Nova,+Presidente+Prudente+-+SP,+19010-300"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary text-sm flex items-center gap-2"
+                  >
+                    <MapPin className="w-4 h-4" />
+                    Rotas no Google Maps
+                  </a>
                 </div>
               </div>
             </AnimatedSection>

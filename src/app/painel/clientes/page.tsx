@@ -30,6 +30,19 @@ const clienteVazio = {
   origem: 'manual', status: 'ativo', advogadoId: '',
 }
 
+// Input masks
+const maskCpfCnpj = (v: string) => {
+  const d = v.replace(/\D/g, '')
+  if (d.length <= 11) return d.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+  return d.replace(/(\d{2})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1/$2').replace(/(\d{4})(\d{1,2})$/, '$1-$2')
+}
+const maskTelefone = (v: string) => {
+  const d = v.replace(/\D/g, '')
+  if (d.length <= 10) return d.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{4})(\d)/, '$1-$2')
+  return d.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{5})(\d)/, '$1-$2')
+}
+const maskCep = (v: string) => v.replace(/\D/g, '').replace(/(\d{5})(\d)/, '$1-$2')
+
 export default function ClientesPage() {
   const router = useRouter()
   const [clientes, setClientes] = useState<Cliente[]>([])
@@ -42,6 +55,7 @@ export default function ClientesPage() {
   const [form, setForm] = useState(clienteVazio)
   const [editandoId, setEditandoId] = useState<string | null>(null)
   const [salvando, setSalvando] = useState(false)
+  const [confirmExcluir, setConfirmExcluir] = useState<{ id: string; nome: string } | null>(null)
 
   const carregar = useCallback(async () => {
     setLoading(true)
@@ -108,18 +122,13 @@ export default function ClientesPage() {
     }
   }
 
-  const excluir = async (id: string, nome: string) => {
-    if (!confirm(`ATENÇÃO: Deseja realmente excluir o cliente "${nome}"?\n\nTodos os processos, prazos, agendamentos e dados financeiros vinculados serão removidos permanentemente.\n\nEsta ação NÃO pode ser desfeita.`)) return
+  const excluir = async (id: string) => {
     try {
       const res = await fetch(`/api/clientes/${id}`, { method: 'DELETE' })
-      if (!res.ok) {
-        alert('Erro ao excluir cliente')
-        return
-      }
+      if (!res.ok) { alert('Erro ao excluir cliente'); return }
+      setConfirmExcluir(null)
       carregar()
-    } catch {
-      alert('Erro de conexão ao excluir')
-    }
+    } catch { alert('Erro de conexão ao excluir') }
   }
 
   const gerarWhatsApp = (telefone: string, nome: string) => {
@@ -236,7 +245,7 @@ export default function ClientesPage() {
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                         </button>
                         <button
-                          onClick={() => excluir(c.id, c.nome)}
+                          onClick={() => setConfirmExcluir({ id: c.id, nome: c.nome })}
                           className="p-1.5 rounded-lg text-red-400 hover:bg-red-900/30 transition-colors"
                           title="Excluir"
                         >
@@ -273,19 +282,19 @@ export default function ClientesPage() {
               <FormInput value={form.nome} onChange={(e) => setForm({...form, nome: e.target.value})} required placeholder="Nome do cliente" />
             </FormField>
             <FormField label="CPF/CNPJ">
-              <FormInput value={form.cpfCnpj} onChange={(e) => setForm({...form, cpfCnpj: e.target.value})} placeholder="000.000.000-00" />
+              <FormInput value={form.cpfCnpj} onChange={(e) => setForm({...form, cpfCnpj: maskCpfCnpj(e.target.value)})} placeholder="000.000.000-00" maxLength={18} />
             </FormField>
             <FormField label="Telefone" obrigatorio>
-              <FormInput value={form.telefone} onChange={(e) => setForm({...form, telefone: e.target.value})} required placeholder="(00) 00000-0000" />
+              <FormInput value={form.telefone} onChange={(e) => setForm({...form, telefone: maskTelefone(e.target.value)})} required placeholder="(00) 00000-0000" maxLength={15} />
             </FormField>
             <FormField label="WhatsApp">
-              <FormInput value={form.whatsapp} onChange={(e) => setForm({...form, whatsapp: e.target.value})} placeholder="(00) 00000-0000" />
+              <FormInput value={form.whatsapp} onChange={(e) => setForm({...form, whatsapp: maskTelefone(e.target.value)})} placeholder="(00) 00000-0000" maxLength={15} />
             </FormField>
             <FormField label="Email">
               <FormInput type="email" value={form.email} onChange={(e) => setForm({...form, email: e.target.value})} placeholder="email@exemplo.com" />
             </FormField>
             <FormField label="CEP">
-              <FormInput value={form.cep} onChange={(e) => setForm({...form, cep: e.target.value})} placeholder="00000-000" />
+              <FormInput value={form.cep} onChange={(e) => setForm({...form, cep: maskCep(e.target.value)})} placeholder="00000-000" maxLength={9} />
             </FormField>
             <FormField label="Endereço">
               <FormInput value={form.endereco} onChange={(e) => setForm({...form, endereco: e.target.value})} placeholder="Rua, número" />
@@ -324,6 +333,34 @@ export default function ClientesPage() {
             <FormButton type="submit" disabled={salvando}>{salvando ? 'Salvando...' : editandoId ? 'Atualizar' : 'Cadastrar'}</FormButton>
           </div>
         </form>
+      </Modal>
+
+      {/* Modal Confirmar Exclusão */}
+      <Modal aberto={!!confirmExcluir} onFechar={() => setConfirmExcluir(null)} titulo="Confirmar Exclusão" tamanho="sm">
+        <div className="space-y-4">
+          <div className="p-4 bg-red-900/10 border border-red-700/30 rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-red-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-red-400">Ação irreversível</p>
+                <p className="text-xs text-red-400/70 mt-0.5">Todos os dados vinculados serão removidos permanentemente.</p>
+              </div>
+            </div>
+          </div>
+          <p className="text-sm text-[#b0c4b4]">
+            Deseja realmente excluir o cliente <strong className="text-white">&quot;{confirmExcluir?.nome}&quot;</strong>?
+          </p>
+          <p className="text-xs text-[#6b8a6f]">Processos, prazos, agendamentos e dados financeiros vinculados serão removidos.</p>
+          <div className="flex justify-end gap-3 pt-3 border-t border-[#2a3f2e]">
+            <FormButton variant="secondary" type="button" onClick={() => setConfirmExcluir(null)}>Cancelar</FormButton>
+            <button onClick={() => confirmExcluir && excluir(confirmExcluir.id)}
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors">
+              Excluir Permanentemente
+            </button>
+          </div>
+        </div>
       </Modal>
     </div>
   )

@@ -1,8 +1,13 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { getSession } from '@/lib/auth'
 
 export async function GET() {
   try {
+    const session = await getSession()
+    if (!session) {
+      return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
+    }
     const [
       totalClientes,
       totalProcessos,
@@ -77,6 +82,11 @@ export async function GET() {
       }),
     ])
 
+    // Contadores extras para badges
+    const agendamentosPendentes = await prisma.agendamento.count({
+      where: { status: 'pendente' },
+    })
+
     // Próximos prazos
     const proximosPrazos = await prisma.prazo.findMany({
       where: { status: 'pendente' },
@@ -123,6 +133,7 @@ export async function GET() {
         totalRecebido: totalRecebido._sum.valor || 0,
         totalPendente: totalPendente._sum.valor || 0,
         clientesPorMes,
+        agendamentosPendentes,
       },
       proximosPrazos,
       proximosAgendamentos,

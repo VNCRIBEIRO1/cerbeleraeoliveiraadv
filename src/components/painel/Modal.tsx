@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 
 interface ModalProps {
   aberto: boolean
@@ -12,17 +12,49 @@ interface ModalProps {
 
 export default function Modal({ aberto, onFechar, titulo, children, tamanho = 'md' }: ModalProps) {
   const [show, setShow] = useState(false)
+  const modalRef = useRef<HTMLDivElement>(null)
+  const previousFocusRef = useRef<HTMLElement | null>(null)
+
+  const handleEscape = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape') onFechar()
+  }, [onFechar])
 
   useEffect(() => {
     if (aberto) {
+      previousFocusRef.current = document.activeElement as HTMLElement
       setShow(true)
       document.body.style.overflow = 'hidden'
+      document.addEventListener('keydown', handleEscape)
+      // Focus trap: focus the modal after render
+      setTimeout(() => modalRef.current?.focus(), 50)
     } else {
       document.body.style.overflow = ''
+      document.removeEventListener('keydown', handleEscape)
       setTimeout(() => setShow(false), 200)
+      // Restore previous focus
+      previousFocusRef.current?.focus()
     }
-    return () => { document.body.style.overflow = '' }
-  }, [aberto])
+    return () => {
+      document.body.style.overflow = ''
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }, [aberto, handleEscape])
+
+  // Focus trap: keep tab inside the modal
+  const handleTab = (e: React.KeyboardEvent) => {
+    if (e.key !== 'Tab' || !modalRef.current) return
+    const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )
+    if (focusable.length === 0) return
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus()
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus()
+    }
+  }
 
   if (!show && !aberto) return null
 
@@ -34,13 +66,13 @@ export default function Modal({ aberto, onFechar, titulo, children, tamanho = 'm
   }
 
   return (
-    <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-200 ${aberto ? 'opacity-100' : 'opacity-0'}`}>
+    <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-200 ${aberto ? 'opacity-100' : 'opacity-0'}`} role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <div className="absolute inset-0 bg-black/70" onClick={onFechar} />
-      <div className={`relative bg-[#0e1810] border border-[#2a3f2e] rounded-xl w-full ${tamanhos[tamanho]} max-h-[90vh] overflow-y-auto shadow-2xl`}>
+      <div ref={modalRef} onKeyDown={handleTab} tabIndex={-1} className={`relative bg-[#0e1810] border border-[#2a3f2e] rounded-xl w-full ${tamanhos[tamanho]} max-h-[90vh] overflow-y-auto shadow-2xl outline-none`}>
         {/* Header */}
         <div className="sticky top-0 bg-[#0e1810] border-b border-[#2a3f2e] px-6 py-4 flex items-center justify-between z-10">
-          <h2 className="text-lg font-semibold text-white">{titulo}</h2>
-          <button onClick={onFechar} className="p-1 rounded-lg text-[#6b8a6f] hover:text-white hover:bg-[#2a3f2e] transition-colors">
+          <h2 id="modal-title" className="text-lg font-semibold text-white">{titulo}</h2>
+          <button onClick={onFechar} className="p-1 rounded-lg text-[#6b8a6f] hover:text-white hover:bg-[#2a3f2e] transition-colors" aria-label="Fechar modal">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
