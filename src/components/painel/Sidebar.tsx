@@ -72,22 +72,22 @@ export default function Sidebar() {
   const sidebarContent = (
     <>
       {/* Logo / Título */}
-      <div className="p-4 border-b border-[#2a3f2e]">
+      <div className="p-4 border-b border-[#1e3323]">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#c9a84c] to-[#b8942e] flex items-center justify-center flex-shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#c9a84c] to-[#b8942e] flex items-center justify-center flex-shrink-0 shadow-lg shadow-[#c9a84c]/15">
             <span className="text-white font-bold text-lg">C</span>
           </div>
           {!collapsed && (
             <div className="min-w-0">
-              <h1 className="text-white font-semibold text-sm truncate">Cerbelera & Oliveira</h1>
-              <p className="text-[#8a9f8e] text-xs">Painel de Gestão</p>
+              <h1 className="text-white font-semibold text-sm truncate tracking-tight">Cerbelera & Oliveira</h1>
+              <p className="text-[#5a7b5e] text-xs font-medium">Painel de Gestão</p>
             </div>
           )}
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 py-4 px-2 space-y-1 overflow-y-auto">
+      <nav className="flex-1 py-4 px-2.5 space-y-1 overflow-y-auto">
         {menuItems.map((item) => {
           const count = getBadgeCount(item.badgeKey as keyof Badges | null)
           return (
@@ -95,16 +95,16 @@ export default function Sidebar() {
               key={item.href}
               href={item.href}
               onClick={() => setMobileOpen(false)}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 group relative ${
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all duration-200 group relative ${
                 isActive(item.href)
-                  ? 'bg-[#c9a84c]/20 text-[#c9a84c] border-l-2 border-[#c9a84c]'
-                  : 'text-[#b0c4b4] hover:bg-[#2a3f2e] hover:text-white'
+                  ? 'bg-[#c9a84c]/12 text-[#c9a84c] border-l-2 border-[#c9a84c] shadow-sm shadow-[#c9a84c]/5'
+                  : 'text-[#8a9f8e] hover:bg-[#1a2e1f] hover:text-white'
               }`}
             >
-              <svg className={`w-5 h-5 flex-shrink-0 ${isActive(item.href) ? 'text-[#c9a84c]' : 'text-[#6b8a6f] group-hover:text-[#c9a84c]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className={`w-[18px] h-[18px] flex-shrink-0 ${isActive(item.href) ? 'text-[#c9a84c]' : 'text-[#5a7b5e] group-hover:text-[#c9a84c]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={item.icon} />
               </svg>
-              {!collapsed && <span className="truncate flex-1">{item.label}</span>}
+              {!collapsed && <span className="truncate flex-1 font-medium">{item.label}</span>}
               {count > 0 && (
                 <span className={`${collapsed ? 'absolute -top-1 -right-1' : ''} min-w-[20px] h-5 flex items-center justify-center px-1.5 rounded-full text-[10px] font-bold ${
                   item.badgeKey === 'prazosVencidos' ? 'bg-red-500 text-white' :
@@ -120,23 +120,23 @@ export default function Sidebar() {
       </nav>
 
       {/* User + Footer */}
-      <div className="p-4 border-t border-[#2a3f2e] space-y-2">
+      <div className="p-4 border-t border-[#1e3323] space-y-2">
         {/* User info */}
         {userName && !collapsed && (
-          <div className="flex items-center gap-3 px-3 py-2">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#2a3f2e] to-[#1a2e1f] flex items-center justify-center flex-shrink-0 border border-[#2a3f2e]">
+          <div className="flex items-center gap-3 px-3 py-2.5">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#1e3323] to-[#0e1810] flex items-center justify-center flex-shrink-0 border border-[#1e3323] shadow-sm">
               <span className="text-[#c9a84c] text-xs font-bold">{userName.charAt(0).toUpperCase()}</span>
             </div>
             <div className="min-w-0">
-              <p className="text-xs text-white truncate font-medium">{userName}</p>
-              <p className="text-[10px] text-[#6b8a6f]">Administrador</p>
+              <p className="text-xs text-white truncate font-semibold">{userName}</p>
+              <p className="text-[10px] text-[#5a7b5e] font-medium">Administrador</p>
             </div>
           </div>
         )}
 
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-[#b0c4b4] hover:bg-red-900/30 hover:text-red-400 transition-all duration-200"
+          className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-[13px] text-[#8a9f8e] hover:bg-red-950/30 hover:text-red-400 transition-all duration-200 font-medium"
         >
           <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -147,7 +147,7 @@ export default function Sidebar() {
         {/* Collapse toggle - desktop */}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="hidden lg:flex items-center gap-3 w-full px-3 py-2 rounded-lg text-xs text-[#6b8a6f] hover:text-[#b0c4b4] transition-all"
+          className="hidden lg:flex items-center gap-3 w-full px-3 py-2 rounded-xl text-xs text-[#5a7b5e] hover:text-[#8a9f8e] transition-all font-medium"
         >
           <svg className={`w-4 h-4 transition-transform ${collapsed ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
@@ -163,7 +163,7 @@ export default function Sidebar() {
       {/* Mobile toggle button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-[#1a2e1f] border border-[#2a3f2e] text-white shadow-lg"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-[#0e1810] border border-[#1e3323] text-white shadow-xl shadow-black/30"
         aria-label="Menu"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

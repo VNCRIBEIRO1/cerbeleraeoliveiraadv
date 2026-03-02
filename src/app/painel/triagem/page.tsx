@@ -88,7 +88,7 @@ export default function TriagemPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-white">Triagem do ChatBot</h1>
+        <h1 className="text-3xl font-bold text-white tracking-tight">Triagem do ChatBot</h1>
         <p className="text-[#6b8a6f] text-sm mt-1">
           {triagens.length} solicitação(ões) total • {quantidadePorStatus('nova')} nova(s)
         </p>

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/lib/auth'
-import { criarEventoGoogle } from '@/lib/google-calendar'
+import { criarEventoGoogle, sincronizarDoGoogle } from '@/lib/google-calendar'
 
 export async function GET(request: NextRequest) {
   try {
@@ -9,6 +9,25 @@ export async function GET(request: NextRequest) {
     const mes = searchParams.get('mes')
     const ano = searchParams.get('ano')
     const status = searchParams.get('status')
+    const sync = searchParams.get('sync') // se 'true', sincroniza do Google primeiro
+
+    // Auto-sync do Google Calendar (importar eventos criados no celular/web)
+    if (mes && ano && sync !== 'false') {
+      try {
+        const session = await getSession()
+        if (session) {
+          const user = await prisma.user.findUnique({
+            where: { id: session.userId },
+            select: { googleSyncAtivo: true, googleRefreshToken: true },
+          })
+          if (user?.googleSyncAtivo && user.googleRefreshToken) {
+            await sincronizarDoGoogle(session.userId, parseInt(mes), parseInt(ano))
+          }
+        }
+      } catch (syncErr) {
+        console.error('Auto-sync Google falhou (não bloqueia):', syncErr)
+      }
+    }
 
     const where: Record<string, unknown> = {}
 

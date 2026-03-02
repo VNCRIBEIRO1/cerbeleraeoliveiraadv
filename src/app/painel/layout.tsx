@@ -18,10 +18,10 @@ export default async function PainelLayout({ children }: { children: React.React
   }
 
   return (
-    <div className="min-h-screen bg-[#111] flex">
+    <div className="min-h-screen bg-[#0a0f0b] flex">
       <Sidebar />
       <main className="flex-1 lg:ml-0">
-        <div className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
+        <div className="p-4 md:p-6 lg:p-8 max-w-[1400px] mx-auto">
           {children}
         </div>
       </main>

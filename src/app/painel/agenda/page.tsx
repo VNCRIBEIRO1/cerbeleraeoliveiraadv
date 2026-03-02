@@ -319,7 +319,7 @@ export default function AgendaPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Agenda</h1>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Agenda</h1>
           <div className="flex items-center gap-2 mt-1 flex-wrap">
             <p className="text-[#6b8a6f] text-sm">{stats.total} agendamento(s)</p>
             {stats.pendentes > 0 && <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-yellow-900/20 text-yellow-400 border border-yellow-700/30">⏳ {stats.pendentes} pendente(s)</span>}

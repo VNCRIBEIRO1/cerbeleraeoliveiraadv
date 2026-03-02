@@ -129,8 +129,8 @@ export default function ConfiguracoesPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-white">Configurações</h1>
-        <p className="text-[#6b8a6f] text-sm mt-1">Gerenciar sistema, integrações e conta</p>
+        <h1 className="text-3xl font-bold text-white tracking-tight">Configurações</h1>
+        <p className="text-[#7a9f7e] text-sm mt-1.5 font-medium">Gerenciar sistema, integrações e conta</p>
       </div>
 
       {msg && (

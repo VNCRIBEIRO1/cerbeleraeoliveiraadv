@@ -132,14 +132,14 @@ export default function ContatoPage() {
               <div className="card border border-secondary-100 overflow-hidden h-full">
                 <div className="h-full min-h-[500px]">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3694.55!2d-51.3888!3d-22.1256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDA3JzMyLjIiUyA1McKwMjMnMTkuNyJX!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr&q=R.+Francisco+Machado+de+Campos,+393+-+Vila+Nova,+Presidente+Prudente+-+SP,+19010-300"
+                    src="https://maps.google.com/maps?q=Cerbelera+%26+Oliveira+Advogados+R.+Francisco+Machado+de+Campos+393+Presidente+Prudente+SP&t=&z=17&ie=UTF8&iwloc=&output=embed"
                     width="100%"
                     height="100%"
                     style={{ border: 0, minHeight: '500px' }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Localização Cerbelera & Oliveira Advogados"
+                    title="Localização Cerbelera & Oliveira Advogados - R. Francisco Machado de Campos, 393, Presidente Prudente"
                     className="w-full h-full"
                   />
                 </div>
@@ -154,7 +154,7 @@ export default function ContatoPage() {
                     </div>
                   </div>
                   <a
-                    href="https://maps.google.com/?q=R.+Francisco+Machado+de+Campos,+393+-+Vila+Nova,+Presidente+Prudente+-+SP,+19010-300"
+                    href="https://maps.google.com/?q=Cerbelera+%26+Oliveira+Advogados+R.+Francisco+Machado+de+Campos+393+Vila+Nova+Presidente+Prudente+SP+19010-300"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-primary text-sm flex items-center gap-2"

@@ -55,7 +55,7 @@ export async function GET() {
             gte: new Date(new Date().setHours(0, 0, 0, 0)),
             lt: new Date(new Date().setHours(23, 59, 59, 999)),
           },
-          status: { in: ['agendado', 'confirmado'] },
+          status: { in: ['agendado', 'confirmado', 'pendente'] },
         },
       }),
       prisma.triagem.count({ where: { status: 'nova' } }),
@@ -99,11 +99,11 @@ export async function GET() {
       take: 5,
     })
 
-    // Próximos agendamentos
+    // Próximos agendamentos (incluindo pendentes)
     const proximosAgendamentos = await prisma.agendamento.findMany({
       where: {
         dataHora: { gte: new Date() },
-        status: { in: ['agendado', 'confirmado'] },
+        status: { in: ['agendado', 'confirmado', 'pendente'] },
       },
       include: {
         cliente: { select: { nome: true, telefone: true } },

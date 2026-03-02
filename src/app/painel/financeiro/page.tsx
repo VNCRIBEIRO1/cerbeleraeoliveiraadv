@@ -52,8 +52,8 @@ export default function FinanceiroPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-white">Financeiro</h1>
-        <p className="text-[#6b8a6f] text-sm mt-1">Gestão de pagamentos e parcelas</p>
+        <h1 className="text-3xl font-bold text-white tracking-tight">Financeiro</h1>
+        <p className="text-[#7a9f7e] text-sm mt-1.5 font-medium">Gestão de pagamentos e parcelas</p>
       </div>
 
       {/* Summary Cards */}

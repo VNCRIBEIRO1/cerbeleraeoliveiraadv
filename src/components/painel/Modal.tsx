@@ -68,11 +68,11 @@ export default function Modal({ aberto, onFechar, titulo, children, tamanho = 'm
   return (
     <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-200 ${aberto ? 'opacity-100' : 'opacity-0'}`} role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <div className="absolute inset-0 bg-black/70" onClick={onFechar} />
-      <div ref={modalRef} onKeyDown={handleTab} tabIndex={-1} className={`relative bg-[#0e1810] border border-[#2a3f2e] rounded-xl w-full ${tamanhos[tamanho]} max-h-[90vh] overflow-y-auto shadow-2xl outline-none`}>
+      <div ref={modalRef} onKeyDown={handleTab} tabIndex={-1} className={`relative bg-[#0e1810] border border-[#1e3323] rounded-2xl w-full ${tamanhos[tamanho]} max-h-[90vh] overflow-y-auto shadow-2xl shadow-black/50 outline-none`}>
         {/* Header */}
-        <div className="sticky top-0 bg-[#0e1810] border-b border-[#2a3f2e] px-6 py-4 flex items-center justify-between z-10">
-          <h2 id="modal-title" className="text-lg font-semibold text-white">{titulo}</h2>
-          <button onClick={onFechar} className="p-1 rounded-lg text-[#6b8a6f] hover:text-white hover:bg-[#2a3f2e] transition-colors" aria-label="Fechar modal">
+        <div className="sticky top-0 bg-[#0e1810] border-b border-[#1e3323] px-6 py-4 flex items-center justify-between z-10 rounded-t-2xl">
+          <h2 id="modal-title" className="text-lg font-semibold text-white tracking-tight">{titulo}</h2>
+          <button onClick={onFechar} className="p-1.5 rounded-xl text-[#5a7b5e] hover:text-white hover:bg-[#1a2e1f] transition-colors" aria-label="Fechar modal">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -91,7 +91,7 @@ export default function Modal({ aberto, onFechar, titulo, children, tamanho = 'm
 export function FormField({ label, children, obrigatorio = false }: { label: string; children: React.ReactNode; obrigatorio?: boolean }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-[#b0c4b4] mb-1.5">
+      <label className="block text-sm font-semibold text-[#b0c4b4] mb-1.5">
         {label}
         {obrigatorio && <span className="text-[#c9a84c] ml-1">*</span>}
       </label>
@@ -104,7 +104,7 @@ export function FormInput({ ...props }: React.InputHTMLAttributes<HTMLInputEleme
   return (
     <input
       {...props}
-      className={`w-full px-3 py-2.5 bg-[#1a2e1f] border border-[#2a3f2e] rounded-lg text-white text-sm placeholder-[#6b8a6f] focus:outline-none focus:border-[#c9a84c]/50 ${props.className || ''}`}
+      className={`w-full px-3.5 py-2.5 bg-[#111a13] border border-[#1e3323] rounded-xl text-white text-sm placeholder-[#4a6b4e] focus:outline-none focus:border-[#c9a84c]/50 focus:ring-1 focus:ring-[#c9a84c]/20 transition-all ${props.className || ''}`}
     />
   )
 }
@@ -113,7 +113,7 @@ export function FormSelect({ children, ...props }: React.SelectHTMLAttributes<HT
   return (
     <select
       {...props}
-      className={`w-full px-3 py-2.5 bg-[#1a2e1f] border border-[#2a3f2e] rounded-lg text-white text-sm focus:outline-none focus:border-[#c9a84c]/50 ${props.className || ''}`}
+      className={`w-full px-3.5 py-2.5 bg-[#111a13] border border-[#1e3323] rounded-xl text-white text-sm focus:outline-none focus:border-[#c9a84c]/50 focus:ring-1 focus:ring-[#c9a84c]/20 transition-all ${props.className || ''}`}
     >
       {children}
     </select>
@@ -124,22 +124,22 @@ export function FormTextarea({ ...props }: React.TextareaHTMLAttributes<HTMLText
   return (
     <textarea
       {...props}
-      className={`w-full px-3 py-2.5 bg-[#1a2e1f] border border-[#2a3f2e] rounded-lg text-white text-sm placeholder-[#6b8a6f] focus:outline-none focus:border-[#c9a84c]/50 resize-none ${props.className || ''}`}
+      className={`w-full px-3.5 py-2.5 bg-[#111a13] border border-[#1e3323] rounded-xl text-white text-sm placeholder-[#4a6b4e] focus:outline-none focus:border-[#c9a84c]/50 focus:ring-1 focus:ring-[#c9a84c]/20 resize-none transition-all ${props.className || ''}`}
     />
   )
 }
 
 export function FormButton({ variant = 'primary', children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'danger' }) {
   const estilos = {
-    primary: 'bg-gradient-to-r from-[#c9a84c] to-[#b8942e] text-white hover:from-[#d4b55a] hover:to-[#c9a84c]',
-    secondary: 'bg-[#1a2e1f] text-[#b0c4b4] border border-[#2a3f2e] hover:bg-[#2a3f2e]',
-    danger: 'bg-red-900/50 text-red-400 border border-red-800/50 hover:bg-red-900/70',
+    primary: 'bg-gradient-to-r from-[#c9a84c] to-[#b8942e] text-white hover:from-[#d4b55a] hover:to-[#c9a84c] shadow-lg shadow-[#c9a84c]/15',
+    secondary: 'bg-[#111a13] text-[#b0c4b4] border border-[#1e3323] hover:bg-[#1a2e1f]',
+    danger: 'bg-red-950/50 text-red-400 border border-red-800/30 hover:bg-red-950/70',
   }
 
   return (
     <button
       {...props}
-      className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 disabled:opacity-50 ${estilos[variant]} ${props.className || ''}`}
+      className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 disabled:opacity-50 active:scale-[0.98] ${estilos[variant]} ${props.className || ''}`}
     >
       {children}
     </button>

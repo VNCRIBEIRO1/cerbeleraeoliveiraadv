@@ -9,25 +9,26 @@ interface StatsCardProps {
 }
 
 const cores = {
-  gold: 'from-[#c9a84c]/20 to-[#b8942e]/10 border-[#c9a84c]/30 text-[#c9a84c]',
-  green: 'from-emerald-500/20 to-emerald-600/10 border-emerald-500/30 text-emerald-400',
-  red: 'from-red-500/20 to-red-600/10 border-red-500/30 text-red-400',
-  blue: 'from-blue-500/20 to-blue-600/10 border-blue-500/30 text-blue-400',
-  purple: 'from-purple-500/20 to-purple-600/10 border-purple-500/30 text-purple-400',
-  orange: 'from-orange-500/20 to-orange-600/10 border-orange-500/30 text-orange-400',
+  gold: { card: 'from-[#c9a84c]/15 to-[#0e1810] border-[#c9a84c]/25', text: 'text-[#c9a84c]', icon: 'bg-[#c9a84c]/15', glow: 'shadow-[#c9a84c]/5' },
+  green: { card: 'from-emerald-500/15 to-[#0e1810] border-emerald-500/25', text: 'text-emerald-400', icon: 'bg-emerald-500/15', glow: 'shadow-emerald-500/5' },
+  red: { card: 'from-red-500/15 to-[#0e1810] border-red-500/25', text: 'text-red-400', icon: 'bg-red-500/15', glow: 'shadow-red-500/5' },
+  blue: { card: 'from-blue-500/15 to-[#0e1810] border-blue-500/25', text: 'text-blue-400', icon: 'bg-blue-500/15', glow: 'shadow-blue-500/5' },
+  purple: { card: 'from-purple-500/15 to-[#0e1810] border-purple-500/25', text: 'text-purple-400', icon: 'bg-purple-500/15', glow: 'shadow-purple-500/5' },
+  orange: { card: 'from-orange-500/15 to-[#0e1810] border-orange-500/25', text: 'text-orange-400', icon: 'bg-orange-500/15', glow: 'shadow-orange-500/5' },
 }
 
 export default function StatsCard({ titulo, valor, subtitulo, cor = 'gold', icon }: StatsCardProps) {
+  const c = cores[cor]
   return (
-    <div className={`bg-gradient-to-br ${cores[cor]} border rounded-xl p-5`}>
+    <div className={`bg-gradient-to-br ${c.card} border rounded-2xl p-5 shadow-lg ${c.glow} transition-all duration-300 hover:scale-[1.02]`}>
       <div className="flex items-start justify-between">
-        <div>
-          <p className="text-[#8a9f8e] text-sm font-medium">{titulo}</p>
-          <p className="text-2xl font-bold text-white mt-1">{valor}</p>
-          {subtitulo && <p className="text-xs text-[#6b8a6f] mt-1">{subtitulo}</p>}
+        <div className="space-y-1">
+          <p className="text-[#7a9f7e] text-xs font-semibold uppercase tracking-wider">{titulo}</p>
+          <p className="text-[28px] font-bold text-white leading-tight tracking-tight">{valor}</p>
+          {subtitulo && <p className="text-xs text-[#5a7b5e] font-medium">{subtitulo}</p>}
         </div>
-        <div className={`p-2.5 rounded-lg bg-black/20`}>
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className={`p-2.5 rounded-xl ${c.icon}`}>
+          <svg className={`w-6 h-6 ${c.text}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={icon} />
           </svg>
         </div>

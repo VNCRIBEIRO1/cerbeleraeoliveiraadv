@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { criarEventoGoogle } from '@/lib/google-calendar';
 
 // POST /api/agendamento-publico - Agendamento público (sem auth)
 export async function POST(request: NextRequest) {
@@ -85,61 +86,38 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // 3. Tentar sincronizar com Google Calendar (se configurado)
+    // 3. Tentar sincronizar com Google Calendar (usando lib compartilhada)
     try {
-      const user = await prisma.user.findFirst();
-      if (user?.googleAccessToken && user?.googleRefreshToken) {
-        const { google } = await import('googleapis');
-        const oauth2Client = new google.auth.OAuth2(
-          process.env.GOOGLE_CLIENT_ID,
-          process.env.GOOGLE_CLIENT_SECRET,
-          process.env.GOOGLE_REDIRECT_URI
-        );
-
-        oauth2Client.setCredentials({
-          access_token: user.googleAccessToken,
-          refresh_token: user.googleRefreshToken,
+      const user = await prisma.user.findFirst({
+        where: { googleSyncAtivo: true, googleRefreshToken: { not: null } },
+        select: { id: true },
+      });
+      if (user) {
+        const googleEventId = await criarEventoGoogle(user.id, {
+          titulo: `📅 Consulta - ${nome}`,
+          descricao: [
+            `Cliente: ${nome}`,
+            `Telefone: ${telefone}`,
+            `Área: ${tipoParaArea[tipo] || tipo}`,
+            descricao ? `Descrição: ${descricao}` : '',
+            `\nAgendado via site | Triagem #${triagem.id}`,
+          ].filter(Boolean).join('\n'),
+          dataHora: dataAgendamento,
+          duracao: 30,
+          local: 'Escritório',
+          tipo: 'consulta',
+          clienteNome: nome,
         });
 
-        const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
-
-        const endTime = new Date(dataAgendamento);
-        endTime.setMinutes(endTime.getMinutes() + 30);
-
-        const event = await calendar.events.insert({
-          calendarId: 'primary',
-          requestBody: {
-            summary: `📅 Consulta - ${nome}`,
-            description: [
-              `Cliente: ${nome}`,
-              `Telefone: ${telefone}`,
-              `Área: ${tipoParaArea[tipo] || tipo}`,
-              descricao ? `Descrição: ${descricao}` : '',
-              `\nAgendado via site | Triagem #${triagem.id}`,
-            ].filter(Boolean).join('\n'),
-            start: {
-              dateTime: dataAgendamento.toISOString(),
-              timeZone: 'America/Sao_Paulo',
-            },
-            end: {
-              dateTime: endTime.toISOString(),
-              timeZone: 'America/Sao_Paulo',
-            },
-            colorId: '5', // amarelo (banana)
-          },
-        });
-
-        // Salvar ID do Google Calendar no agendamento
-        if (event.data.id) {
+        if (googleEventId) {
           await prisma.agendamento.update({
             where: { id: agendamento.id },
-            data: { googleEventId: event.data.id },
+            data: { googleEventId },
           });
         }
       }
     } catch (googleError) {
       console.error('Erro ao sincronizar com Google Calendar (não crítico):', googleError);
-      // Não falha o agendamento se Google Calendar não funcionar
     }
 
     return NextResponse.json({

@@ -69,8 +69,8 @@ export default function ProcessosPage() {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Processos</h1>
-          <p className="text-[#6b8a6f] text-sm mt-1">{total} processo(s)</p>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Processos</h1>
+          <p className="text-[#7a9f7e] text-sm mt-1.5 font-medium">{total} processo(s)</p>
         </div>
         <div className="flex gap-2">
           <button onClick={() => window.open('/api/exportar?tipo=processos&formato=csv', '_blank')}
