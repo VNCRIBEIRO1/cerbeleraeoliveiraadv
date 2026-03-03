@@ -98,11 +98,12 @@ export default function SobrePage() {
               <div className="relative">
                 <div className="aspect-square rounded-2xl overflow-hidden shadow-2xl relative">
                   <Image
-                    src={IMAGES.lawyer}
+                    src={IMAGES.lawyerSquare}
                     alt="Sócios Diogo Cerbelera e Dr. Luã Oliveira - Advogados"
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority
                   />
                 </div>
                 <div className="absolute -bottom-6 -right-6 bg-gold-500 text-white p-6 rounded-xl shadow-xl">

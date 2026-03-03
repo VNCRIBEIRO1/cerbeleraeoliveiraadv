@@ -138,6 +138,7 @@ export default function HomePage() {
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority
                   />
                 </div>
                 {/* Decorative badge */}

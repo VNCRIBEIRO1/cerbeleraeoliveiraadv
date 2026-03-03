@@ -132,15 +132,15 @@ export const SITE_CONFIG = {
     youtube: '',
   },
 
-  // === IMAGENS ===
+  // === IMAGENS (Cloudinary CDN) ===
   imagens: {
-    advogado: '/images/cerbelera_oliveira_team_photo.jpg',
+    advogado: 'https://res.cloudinary.com/dwyrt2g1k/image/upload/f_auto,q_auto:best,w_800,h_1000,c_fill,g_faces/cerbelera-oliveira/team-photo',
     hero: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1920&q=80',
     escritorio:
       'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80',
-    logo: '/images/cerbelera_oliveira_logo_cover.webp',
-    logoAlt: '/images/cerbelera_oliveira_profile_photo.webp',
-    logoMini: '/images/cerbelera_oliveira_logo_cover.webp',
+    logo: 'https://res.cloudinary.com/dwyrt2g1k/image/upload/f_auto,q_auto:best/cerbelera-oliveira/logo-cover',
+    logoAlt: 'https://res.cloudinary.com/dwyrt2g1k/image/upload/f_auto,q_auto:best/cerbelera-oliveira/profile-photo',
+    logoMini: 'https://res.cloudinary.com/dwyrt2g1k/image/upload/f_auto,q_auto,w_200/cerbelera-oliveira/logo-cover',
   },
 
   // === GOOGLE MAPS ===

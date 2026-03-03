@@ -1,9 +1,14 @@
 // Mapeamento central de imagens
-// Imagens do escritório e Unsplash (uso gratuito)
+// Usa Cloudinary para otimização automática + Unsplash para stock
+
+import { CLOUDINARY_IMAGES } from './cloudinary'
 
 export const IMAGES = {
-  // Foto dos sócios
-  lawyer: '/images/cerbelera_oliveira_team_photo.jpg',
+  // Foto dos sócios — Cloudinary otimizada com foco em rostos
+  lawyer: CLOUDINARY_IMAGES.teamPhoto.hero,
+  lawyerSquare: CLOUDINARY_IMAGES.teamPhoto.square,
+  lawyerThumb: CLOUDINARY_IMAGES.teamPhoto.thumb,
+  lawyerOg: CLOUDINARY_IMAGES.teamPhoto.og,
 
   // Hero background - Estátua da Justiça
   hero: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1920&q=80',
@@ -12,10 +17,15 @@ export const IMAGES = {
   office:
     'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80',
 
-  // Logotipo
-  logo: '/images/cerbelera_oliveira_logo_cover.webp',
-  logoAlt: '/images/cerbelera_oliveira_profile_photo.webp',
-  logoMini: '/images/cerbelera_oliveira_logo_cover.webp',
+  // Logotipo — Cloudinary otimizado
+  logo: CLOUDINARY_IMAGES.logo.full,
+  logoHeader: CLOUDINARY_IMAGES.logo.header,
+  logoFooter: CLOUDINARY_IMAGES.logo.footer,
+  logoAlt: CLOUDINARY_IMAGES.profile.full,
+  logoMini: CLOUDINARY_IMAGES.logo.header,
+
+  // OG Image
+  ogImage: CLOUDINARY_IMAGES.ogImage,
 } as const;
 
 // Imagens por área de atuação (cada uma única, sem repetição)

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, Phone, ChevronRight } from 'lucide-react';
 import CanvasLogo from './CanvasLogo';
+import { IMAGES } from '@/lib/images';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navigation = [
@@ -64,7 +65,7 @@ export default function Header() {
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative h-14 w-auto">
               <CanvasLogo
-                src="/images/cerbelera_oliveira_logo_cover.webp"
+                src={IMAGES.logoHeader}
                 alt="Cerbelera & Oliveira Advogados"
                 width={200}
                 height={56}
