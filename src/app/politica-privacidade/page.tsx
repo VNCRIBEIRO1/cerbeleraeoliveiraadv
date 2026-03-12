@@ -129,7 +129,43 @@ export default function PoliticaPrivacidadePage() {
               </ul>
 
               <h2 className="text-2xl font-serif font-bold text-primary-800 mb-4 mt-10">
-                8. Contato
+                8. Encarregado de Dados (DPO)
+              </h2>
+              <p className="text-secondary-600 mb-4">
+                Em conformidade com o Art. 41 da LGPD (Lei nº 13.709/2018), o
+                escritório Cerbelera & Oliveira Advogados Associados designa
+                como Encarregado pelo tratamento de dados pessoais (DPO):
+              </p>
+              <ul className="list-none text-secondary-600 mb-6 space-y-2">
+                <li>
+                  <strong>Encarregado (DPO):</strong> Me. Diogo Ramos Cerbelera Neto
+                </li>
+                <li>
+                  <strong>E-mail do DPO:</strong>{' '}
+                  <a
+                    href="mailto:privacidade@cerbeleraoliveira.adv.br"
+                    className="text-primary-600 underline hover:text-primary-800"
+                  >
+                    privacidade@cerbeleraoliveira.adv.br
+                  </a>
+                </li>
+                <li>
+                  <strong>Telefone:</strong> (18) 99610-1884
+                </li>
+              </ul>
+              <p className="text-secondary-600 mb-6">
+                O Encarregado de Dados é responsável por aceitar reclamações e
+                comunicações dos titulares, prestar esclarecimentos e adotar
+                providências; receber comunicações da Autoridade Nacional de
+                Proteção de Dados (ANPD) e adotar providências; orientar os
+                funcionários e os contratados da entidade a respeito das
+                práticas a serem tomadas em relação à proteção de dados pessoais;
+                e executar as demais atribuições determinadas pelo controlador
+                ou estabelecidas em normas complementares.
+              </p>
+
+              <h2 className="text-2xl font-serif font-bold text-primary-800 mb-4 mt-10">
+                9. Contato
               </h2>
               <p className="text-secondary-600 mb-6">
                 Para exercer seus direitos ou esclarecer dúvidas sobre esta
@@ -148,12 +184,18 @@ export default function PoliticaPrivacidadePage() {
                   <strong>Telefone:</strong> (18) 99610-1884
                 </li>
                 <li>
-                  <strong>E-mail:</strong> contato@cerbeleraoliveira.adv.br
+                  <strong>E-mail:</strong>{' '}
+                  <a
+                    href="mailto:contato@cerbeleraoliveira.adv.br"
+                    className="text-primary-600 underline hover:text-primary-800"
+                  >
+                    contato@cerbeleraoliveira.adv.br
+                  </a>
                 </li>
               </ul>
 
               <h2 className="text-2xl font-serif font-bold text-primary-800 mb-4 mt-10">
-                9. Alterações desta Política
+                10. Alterações desta Política
               </h2>
               <p className="text-secondary-600 mb-6">
                 Reservamo-nos o direito de alterar esta Política de Privacidade a

@@ -165,7 +165,7 @@ export default function HomePage() {
                 O escritório Cerbelera & Oliveira Advogados Associados atua em
                 Presidente Prudente e região, oferecendo uma advocacia
                 estratégica e humanizada. Liderado pelo Me. Diogo Ramos Cerbelera
-                Neto, Mestre em Direito, e Dr. Luã Carlos de Oliveira, o escritório
+                Neto, Mestre em Direito, e Luã Carlos de Oliveira, o escritório
                 une rigor acadêmico e sensibilidade humana para defender os
                 direitos de cada cliente.
               </p>
@@ -175,7 +175,7 @@ export default function HomePage() {
                   'Atendimento humanizado e personalizado',
                   'Estacionamento próprio para clientes',
                   'Transparência em todas as orientações',
-                  'Compromisso com resultados e excelência',
+                  'Compromisso com excelência e dedicação',
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-gold-500 flex-shrink-0" />

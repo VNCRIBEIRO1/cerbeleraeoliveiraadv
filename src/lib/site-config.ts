@@ -5,7 +5,7 @@
 export const SITE_CONFIG = {
   // === DADOS DOS ADVOGADOS / ESCRITÓRIO ===
   nome: 'Cerbelera & Oliveira',
-  nomeCompleto: 'Me. Diogo Ramos Cerbelera Neto & Dr. Luã Carlos de Oliveira',
+  nomeCompleto: 'Me. Diogo Ramos Cerbelera Neto & Luã Carlos de Oliveira',
   nomeEscritorio: 'Cerbelera & Oliveira Advogados Associados',
   oab: 'OAB/SP', // Número da OAB precisa ser preenchido
   oabNumero: '', // PREENCHER
@@ -19,7 +19,7 @@ export const SITE_CONFIG = {
       oab: '', // PREENCHER
     },
     {
-      nome: 'Dr. Luã Carlos de Oliveira',
+      nome: 'Luã Carlos de Oliveira',
       oab: '', // PREENCHER
     },
   ],
@@ -28,7 +28,7 @@ export const SITE_CONFIG = {
   telefone: '(18) 99610-1884',
   telefoneLink: '5518996101884',
   whatsapp: '5518996101884',
-  email: '', // PREENCHER - e-mail profissional
+  email: 'contato@cerbeleraoliveira.adv.br',
 
   // === ENDEREÇO ===
   endereco: {
@@ -150,7 +150,7 @@ export const SITE_CONFIG = {
       role: 'Cliente',
     },
     {
-      text: 'Muito esclarecedor. Prestaram um excelente atendimento e resolveram meu problema por um preço justo. Recomendo a todos.',
+      text: 'Muito esclarecedor. Prestaram um excelente atendimento e resolveram meu problema com muita eficiência. Recomendo a todos.',
       author: 'Julio Prestes',
       role: 'Cliente',
     },

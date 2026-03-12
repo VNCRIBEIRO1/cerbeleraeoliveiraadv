@@ -187,7 +187,7 @@ export default function CalculadoraClient() {
         : percentuais[grau],
       detalhes,
       recomendacao:
-        'Para confirmar seu direito e calcular valores precisos, agende uma consulta gratuita com o Me. Diogo Cerbelera, Mestre em Direito Trabalhista.',
+        'Para confirmar seu direito e calcular valores precisos, agende uma consulta com o Me. Diogo Cerbelera, Mestre em Direito Trabalhista.',
     };
   };
 

@@ -292,7 +292,7 @@ export default function RootLayout({
           },
           {
             '@type': 'Person',
-            name: 'Dr. Luã Carlos de Oliveira',
+            name: 'Luã Carlos de Oliveira',
             jobTitle: 'Advogado',
             description: 'Advogado atuante em Presidente Prudente/SP com foco em Direito Empresarial, Administrativo e Cálculos Judiciais.',
             memberOf: { '@type': 'Organization', name: 'OAB — Ordem dos Advogados do Brasil, Seccional SP' },
@@ -335,8 +335,8 @@ export default function RootLayout({
         mainEntity: [
           {
             '@type': 'Question',
-            name: 'Qual o melhor escritório de advocacia em Presidente Prudente?',
-            acceptedAnswer: { '@type': 'Answer', text: 'O escritório Cerbelera & Oliveira Advogados Associados é referência em Presidente Prudente, com avaliação 4.9 no Google e atuação em Direito Trabalhista, Criminal, Civil, Empresarial e Administrativo. Liderado pelo Me. Diogo Cerbelera, Mestre em Direito.' },
+            name: 'O que considerar ao escolher um escritório de advocacia em Presidente Prudente?',
+            acceptedAnswer: { '@type': 'Answer', text: 'Ao escolher um escritório de advocacia, considere a experiência dos profissionais, áreas de atuação, avaliações de clientes e conformidade com a OAB. O escritório Cerbelera & Oliveira atua em Presidente Prudente com Direito Trabalhista, Criminal, Civil, Empresarial e Administrativo, liderado pelo Me. Diogo Cerbelera, Mestre em Direito.' },
           },
           {
             '@type': 'Question',

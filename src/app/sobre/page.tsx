@@ -20,7 +20,7 @@ import { IMAGES } from '@/lib/images';
 export const metadata: Metadata = {
   title: 'Sobre o Escritório | Cerbelera & Oliveira Advogados Associados | Presidente Prudente',
   description:
-    'Conheça o escritório Cerbelera & Oliveira Advogados em Presidente Prudente. Liderado pelo Me. Diogo Ramos Cerbelera Neto, Mestre em Direito, e Dr. Luã Carlos de Oliveira. Advocacia estratégica, ética e humanizada desde 2021.',
+    'Conheça o escritório Cerbelera & Oliveira Advogados em Presidente Prudente. Liderado pelo Me. Diogo Ramos Cerbelera Neto, Mestre em Direito, e Luã Carlos de Oliveira. Advocacia estratégica, ética e humanizada desde 2021.',
   keywords: [
     'sobre escritório advocacia Presidente Prudente',
     'Cerbelera Oliveira advogados história',
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'pt_BR',
     title: 'Sobre | Cerbelera & Oliveira Advogados',
-    description: 'Me. Diogo Cerbelera Neto e Dr. Luã Carlos de Oliveira — advocacia estratégica e humanizada em Presidente Prudente desde 2021.',
+    description: 'Me. Diogo Cerbelera Neto e Luã Carlos de Oliveira — advocacia estratégica e humanizada em Presidente Prudente desde 2021.',
     siteName: 'Cerbelera & Oliveira Advogados',
   },
 };
@@ -124,7 +124,7 @@ export default function SobrePage() {
                 <div className="aspect-square rounded-2xl overflow-hidden shadow-2xl relative">
                   <Image
                     src={IMAGES.lawyerSquare}
-                    alt="Sócios Diogo Cerbelera e Dr. Luã Oliveira - Advogados"
+                    alt="Sócios Diogo Cerbelera e Luã Oliveira - Advogados"
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -150,7 +150,7 @@ export default function SobrePage() {
                   O escritório Cerbelera & Oliveira Advogados Associados nasceu
                   da união de dois profissionais apaixonados pelo Direito —
                   <strong> Me. Diogo Ramos Cerbelera Neto</strong>, Mestre em Direito, e
-                  <strong> Dr. Luã Carlos de Oliveira</strong> — comprometidos com a
+                  <strong> Luã Carlos de Oliveira</strong> — comprometidos com a
                   justiça e a defesa dos direitos dos cidadãos.
                 </p>
                 <p>

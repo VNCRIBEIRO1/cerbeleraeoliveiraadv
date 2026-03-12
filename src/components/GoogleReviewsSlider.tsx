@@ -57,7 +57,7 @@ const GOOGLE_REVIEWS: GoogleReview[] = [
     name: 'Julio Prestes',
     date: '03/05/2024',
     rating: 5,
-    text: 'Muito esclarecedor. Prestaram um excelente atendimento e resolveram meu problema por um preço justo. Recomendo a todos.',
+    text: 'Muito esclarecedor. Prestaram um excelente atendimento e resolveram meu problema com muita eficiência. Recomendo a todos.',
     avatarColor: '#EA4335',
   },
   {
@@ -85,7 +85,7 @@ const GOOGLE_REVIEWS: GoogleReview[] = [
     name: 'Patrícia Souza',
     date: '18/11/2023',
     rating: 5,
-    text: 'Recomendo de olhos fechados! Atendimento humanizado, transparente e eficiente. O Dr. Diogo é um profissional excepcional.',
+    text: 'Recomendo de olhos fechados! Atendimento humanizado, transparente e eficiente. O Me. Diogo é um profissional excepcional.',
     avatarColor: '#EA4335',
   },
 ];
