@@ -141,7 +141,9 @@ export default function TermosDeUsoPage() {
                   — Vila Nova, Presidente Prudente/SP — CEP 19010-300
                 </li>
                 <li>
-                  <strong>CNPJ:</strong> [a preencher]
+                  <strong>Advogados:</strong> Me. Diogo Ramos Cerbelera Neto
+                  (OAB/SP 425.172) e Luã Carlos Souza de Oliveira (OAB/SP
+                  395.965)
                 </li>
                 <li>
                   <strong>Telefone:</strong> (18) 99610-1884

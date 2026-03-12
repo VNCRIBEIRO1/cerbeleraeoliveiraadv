@@ -45,9 +45,10 @@ export default function PoliticaPrivacidadePage() {
               </p>
               <p className="text-secondary-600 mb-6">
                 Esta política se aplica ao site e a todos os serviços prestados
-                pelo escritório Cerbelera & Oliveira Advogados Associados,
-                registrado sob CNPJ nº [a preencher], com sede em Presidente
-                Prudente/SP.
+                pelo escritório Cerbelera & Oliveira Advogados Associados, com
+                sede em Presidente Prudente/SP, integrado pelos advogados
+                Me. Diogo Ramos Cerbelera Neto (OAB/SP 425.172) e Luã Carlos
+                Souza de Oliveira (OAB/SP 395.965).
               </p>
 
               <h2 className="text-2xl font-serif font-bold text-primary-800 mb-4 mt-10">
