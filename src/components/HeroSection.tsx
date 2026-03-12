@@ -90,7 +90,7 @@ export default function HeroSection() {
               {
                 icon: Scale,
                 title: 'Experiência Comprovada',
-                desc: 'Liderado por Me. Diogo Cerbelera, Mestre em Direito, com mais de 5 anos de atuação e 4.9 de avaliação no Google.',
+                desc: 'Liderado por Me. Diogo Cerbelera (OAB/SP 425.172), Mestre em Direito, com mais de 5 anos de atuação comprometida e ética.',
               },
             ].map((item, index) => (
               <motion.div

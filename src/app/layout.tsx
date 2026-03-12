@@ -273,14 +273,6 @@ export default function RootLayout({
           },
         ],
         sameAs: [],
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: '4.9',
-          bestRating: '5',
-          worstRating: '1',
-          ratingCount: '38',
-          reviewCount: '38',
-        },
         member: [
           {
             '@type': 'Person',
@@ -291,7 +283,7 @@ export default function RootLayout({
           },
           {
             '@type': 'Person',
-            name: 'Luã Carlos de Oliveira',
+            name: 'Luã Carlos Souza de Oliveira',
             jobTitle: 'Advogado',
             description: 'Advogado atuante em Presidente Prudente/SP com foco em Direito Empresarial, Administrativo e Cálculos Judiciais.',
             memberOf: { '@type': 'Organization', name: 'OAB — Ordem dos Advogados do Brasil, Seccional SP' },

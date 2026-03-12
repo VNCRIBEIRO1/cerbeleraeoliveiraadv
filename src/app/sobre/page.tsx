@@ -19,7 +19,7 @@ import { IMAGES } from '@/lib/images';
 export const metadata: Metadata = {
   title: 'Sobre o Escritório | Cerbelera & Oliveira Advogados Associados | Presidente Prudente',
   description:
-    'Conheça o escritório Cerbelera & Oliveira Advogados em Presidente Prudente. Liderado pelo Me. Diogo Ramos Cerbelera Neto, Mestre em Direito, e Luã Carlos de Oliveira. Advocacia estratégica, ética e humanizada desde 2021.',
+    'Conheça o escritório Cerbelera & Oliveira Advogados em Presidente Prudente. Liderado pelo Me. Diogo Ramos Cerbelera Neto (OAB/SP 425.172), Mestre em Direito, e Luã Carlos Souza de Oliveira (OAB/SP 395.965). Advocacia ética e humanizada desde 2021.',
   keywords: [
     'sobre escritório advocacia Presidente Prudente',
     'Cerbelera Oliveira advogados história',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'pt_BR',
     title: 'Sobre | Cerbelera & Oliveira Advogados',
-    description: 'Me. Diogo Cerbelera Neto e Luã Carlos de Oliveira — advocacia estratégica e humanizada em Presidente Prudente desde 2021.',
+    description: 'Me. Diogo Cerbelera Neto (OAB/SP 425.172) e Luã Carlos Souza de Oliveira (OAB/SP 395.965) — advocacia ética e humanizada em Presidente Prudente desde 2021.',
     siteName: 'Cerbelera & Oliveira Advogados',
   },
 };
@@ -61,7 +61,7 @@ const valores: { icon: LucideIcon; title: string; desc: string }[] = [
   {
     icon: Award,
     title: 'Excelência',
-    desc: 'Busca constante por atualização e aprimoramento profissional. 4.9 de avaliação no Google.',
+    desc: 'Busca constante por atualização e aprimoramento profissional, pautada pelo Código de Ética da OAB.',
   },
 ];
 
