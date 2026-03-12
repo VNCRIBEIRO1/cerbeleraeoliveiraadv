@@ -8,7 +8,6 @@ import {
   Heart,
   CheckCircle2,
   BookOpen,
-  Star,
   LucideIcon,
 } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
@@ -131,15 +130,7 @@ export default function SobrePage() {
                     priority
                   />
                 </div>
-                <div className="absolute -bottom-6 -right-6 bg-gold-500 text-white p-6 rounded-xl shadow-xl">
-                  <div className="flex items-center gap-1 mb-1">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-white text-white" />
-                    ))}
-                  </div>
-                  <p className="text-sm font-medium">4.9 no Google</p>
-                  <p className="text-xs opacity-80">38 avaliações</p>
-                </div>
+
               </div>
             </AnimatedSection>
 
@@ -150,10 +141,12 @@ export default function SobrePage() {
                   O escritório Cerbelera & Oliveira Advogados Associados nasceu
                   da união de dois profissionais apaixonados pelo Direito —
                   <strong> Me. Diogo Ramos Cerbelera Neto</strong>, Mestre em Direito, e
-                  <strong> Luã Carlos de Oliveira</strong> — comprometidos com a
+                  <strong> Luã Carlos Souza de Oliveira</strong> — comprometidos com a
                   justiça e a defesa dos direitos dos cidadãos.
                 </p>
                 <p>
+                  <strong>Me. Diogo Ramos Cerbelera Neto — OAB/SP 425.172</strong> e
+                  {' '}<strong>Luã Carlos Souza de Oliveira — OAB/SP 395.965</strong>.
                   A titulação de Mestre do sócio Diogo Cerbelera reforça a
                   autoridade técnica do escritório na análise e condução de
                   casos complexos, unindo rigor acadêmico à prática advocatícia.

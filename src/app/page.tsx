@@ -5,14 +5,13 @@ import {
   ArrowRight,
   CheckCircle2,
   MapPin,
-  Star,
 } from 'lucide-react';
 import HeroSection from '@/components/HeroSection';
 import SectionHeader from '@/components/SectionHeader';
 import AreaCard from '@/components/AreaCard';
 import BlogCard from '@/components/BlogCard';
 import AnimatedSection from '@/components/AnimatedSection';
-import GoogleReviewsSlider from '@/components/GoogleReviewsSlider';
+
 import { IMAGES } from '@/lib/images';
 
 const areas = [
@@ -142,14 +141,9 @@ export default function HomePage() {
                   />
                 </div>
                 {/* Decorative badge */}
-                <div className="absolute -bottom-6 -right-6 bg-gold-500 text-white p-6 rounded-xl shadow-xl">
-                  <div className="flex items-center gap-1 mb-1">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-white text-white" />
-                    ))}
-                  </div>
-                  <p className="text-sm font-medium">4.9 no Google</p>
-                  <p className="text-xs opacity-80">38 avaliações</p>
+                <div className="absolute -bottom-6 -right-6 bg-primary-500 text-white p-6 rounded-xl shadow-xl">
+                  <p className="text-sm font-bold">OAB/SP 425.172</p>
+                  <p className="text-xs opacity-80">Me. Diogo Cerbelera Neto</p>
                 </div>
               </div>
             </AnimatedSection>
@@ -165,9 +159,9 @@ export default function HomePage() {
                 O escritório Cerbelera & Oliveira Advogados Associados atua em
                 Presidente Prudente e região, oferecendo uma advocacia
                 estratégica e humanizada. Liderado pelo Me. Diogo Ramos Cerbelera
-                Neto, Mestre em Direito, e Luã Carlos de Oliveira, o escritório
-                une rigor acadêmico e sensibilidade humana para defender os
-                direitos de cada cliente.
+                Neto (OAB/SP 425.172), Mestre em Direito, e Luã Carlos Souza de
+                Oliveira (OAB/SP 395.965), o escritório une rigor acadêmico e
+                sensibilidade humana para defender os direitos de cada cliente.
               </p>
 
               <ul className="space-y-4 mb-8">
@@ -208,10 +202,10 @@ export default function HomePage() {
         <div className="container-custom relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { number: '4.9', label: 'Avaliação Google', hasStar: true },
-              { number: '38', label: 'Avaliações de Clientes', hasStar: false },
-              { number: '6', label: 'Áreas de Atuação', hasStar: false },
-              { number: '100%', label: 'Compromisso Ético', hasStar: false },
+              { number: '+5', label: 'Anos de Atuação' },
+              { number: '2', label: 'Advogados Inscritos OAB/SP' },
+              { number: '6', label: 'Áreas de Atuação' },
+              { number: '100%', label: 'Compromisso Ético' },
             ].map((stat, index) => (
               <AnimatedSection
                 key={stat.label}
@@ -222,9 +216,6 @@ export default function HomePage() {
                   <p className="text-3xl md:text-4xl font-bold text-gold-400">
                     {stat.number}
                   </p>
-                  {stat.hasStar && (
-                    <Star className="w-6 h-6 fill-gold-400 text-gold-400" />
-                  )}
                 </div>
                 <p className="text-primary-200 text-sm">{stat.label}</p>
               </AnimatedSection>
@@ -232,9 +223,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Avaliações Google — Slider Real */}
-      <GoogleReviewsSlider />
 
       {/* Blog - Prévia */}
       <section className="py-20 bg-secondary-50">

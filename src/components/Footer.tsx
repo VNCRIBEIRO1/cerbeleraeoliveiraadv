@@ -51,7 +51,10 @@ export default function Footer() {
               profissional, oferecendo atuação estratégica e humanizada em
               Presidente Prudente e região.
             </p>
-            <p className="text-gold-400 text-sm font-medium">OAB/SP</p>
+            <div className="space-y-1">
+              <p className="text-gold-400 text-xs font-medium">Me. Diogo Ramos Cerbelera Neto — OAB/SP 425.172</p>
+              <p className="text-gold-400 text-xs font-medium">Luã Carlos Souza de Oliveira — OAB/SP 395.965</p>
+            </div>
           </div>
 
           {/* Coluna 2 - Links */}

@@ -5,10 +5,10 @@
 export const SITE_CONFIG = {
   // === DADOS DOS ADVOGADOS / ESCRITÓRIO ===
   nome: 'Cerbelera & Oliveira',
-  nomeCompleto: 'Me. Diogo Ramos Cerbelera Neto & Luã Carlos de Oliveira',
+  nomeCompleto: 'Me. Diogo Ramos Cerbelera Neto & Luã Carlos Souza de Oliveira',
   nomeEscritorio: 'Cerbelera & Oliveira Advogados Associados',
-  oab: 'OAB/SP', // Número da OAB precisa ser preenchido
-  oabNumero: '', // PREENCHER
+  oab: 'OAB/SP',
+  oabNumero: '425172',
   oabEstado: 'SP',
 
   // === SÓCIOS ===
@@ -16,11 +16,11 @@ export const SITE_CONFIG = {
     {
       nome: 'Me. Diogo Ramos Cerbelera Neto',
       titulo: 'Mestre em Direito',
-      oab: '', // PREENCHER
+      oab: 'OAB/SP 425.172',
     },
     {
-      nome: 'Luã Carlos de Oliveira',
-      oab: '', // PREENCHER
+      nome: 'Luã Carlos Souza de Oliveira',
+      oab: 'OAB/SP 395.965',
     },
   ],
 
