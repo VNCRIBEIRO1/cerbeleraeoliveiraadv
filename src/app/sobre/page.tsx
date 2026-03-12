@@ -62,7 +62,7 @@ const valores: { icon: LucideIcon; title: string; desc: string }[] = [
   {
     icon: Award,
     title: 'Excelência',
-    desc: 'Busca constante por atualização e aprimoramento profissional. 5.0 de avaliação no Google.',
+    desc: 'Busca constante por atualização e aprimoramento profissional. 4.9 de avaliação no Google.',
   },
 ];
 

@@ -46,7 +46,7 @@ export default function PoliticaPrivacidadePage() {
               <p className="text-secondary-600 mb-6">
                 Esta política se aplica ao site e a todos os serviços prestados
                 pelo escritório Cerbelera & Oliveira Advogados Associados,
-                registrado sob CNPJ correspondente, com sede em Presidente
+                registrado sob CNPJ nº [a preencher], com sede em Presidente
                 Prudente/SP.
               </p>
 
@@ -67,21 +67,78 @@ export default function PoliticaPrivacidadePage() {
               </ul>
 
               <h2 className="text-2xl font-serif font-bold text-primary-800 mb-4 mt-10">
-                3. Finalidade dos Dados
+                3. Finalidade dos Dados e Bases Legais
               </h2>
               <p className="text-secondary-600 mb-4">
-                Os dados coletados são utilizados para:
+                Os dados coletados são utilizados para as seguintes finalidades,
+                com as respectivas bases legais previstas no Art. 7º da LGPD:
               </p>
               <ul className="list-disc list-inside text-secondary-600 mb-6 space-y-2">
-                <li>Responder solicitações de contato</li>
-                <li>Agendar consultas e atendimentos</li>
-                <li>Melhorar a experiência de navegação no site</li>
-                <li>Enviar comunicações relevantes (mediante consentimento)</li>
-                <li>Cumprir obrigações legais e regulatórias</li>
+                <li>
+                  <strong>Responder solicitações de contato</strong> — Base
+                  legal: execução de procedimentos preliminares relacionados a
+                  contrato (Art. 7º, V)
+                </li>
+                <li>
+                  <strong>Agendar consultas e atendimentos</strong> — Base
+                  legal: execução de contrato ou de procedimentos preliminares
+                  (Art. 7º, V)
+                </li>
+                <li>
+                  <strong>Melhorar a experiência de navegação</strong> — Base
+                  legal: legítimo interesse do controlador (Art. 7º, IX)
+                </li>
+                <li>
+                  <strong>
+                    Enviar comunicações relevantes
+                  </strong>{' '}
+                  — Base legal: consentimento do titular (Art. 7º, I)
+                </li>
+                <li>
+                  <strong>
+                    Cumprir obrigações legais e regulatórias
+                  </strong>{' '}
+                  — Base legal: cumprimento de obrigação legal (Art. 7º, II)
+                </li>
               </ul>
 
               <h2 className="text-2xl font-serif font-bold text-primary-800 mb-4 mt-10">
-                4. Compartilhamento de Dados
+                4. Prazo de Retenção dos Dados
+              </h2>
+              <p className="text-secondary-600 mb-4">
+                Os dados pessoais serão armazenados pelo tempo necessário para
+                cumprir as finalidades para as quais foram coletados, observados
+                os seguintes prazos:
+              </p>
+              <ul className="list-disc list-inside text-secondary-600 mb-6 space-y-2">
+                <li>
+                  <strong>Dados de contato e agendamento:</strong> até 5 anos
+                  após o último contato, ou enquanto houver relação contratual
+                  ativa
+                </li>
+                <li>
+                  <strong>Dados processuais e jurídicos:</strong> pelo prazo
+                  prescricional aplicável, conforme a legislação vigente (até 20
+                  anos em ações de reparação civil)
+                </li>
+                <li>
+                  <strong>Dados de navegação (cookies):</strong> até 12 meses
+                  ou até a revogação do consentimento pelo titular
+                </li>
+                <li>
+                  <strong>Comunicações por e-mail:</strong> enquanto houver
+                  consentimento ativo do titular, podendo ser revogado a
+                  qualquer tempo
+                </li>
+              </ul>
+              <p className="text-secondary-600 mb-6">
+                Após o término do prazo de retenção, os dados serão eliminados
+                ou anonimizados, salvo quando a conservação for necessária para
+                cumprimento de obrigação legal ou regulatória (Art. 16, I, LGPD).
+              </p>
+
+              <h2 className="text-2xl font-serif font-bold text-primary-800 mb-4 mt-10">
+                5. Compartilhamento de Dados
               </h2>
               <p className="text-secondary-600 mb-6">
                 O escritório <strong>não compartilha, vende ou aluga</strong>{' '}
@@ -91,7 +148,7 @@ export default function PoliticaPrivacidadePage() {
               </p>
 
               <h2 className="text-2xl font-serif font-bold text-primary-800 mb-4 mt-10">
-                5. Segurança dos Dados
+                6. Segurança dos Dados
               </h2>
               <p className="text-secondary-600 mb-6">
                 Adotamos medidas de segurança técnicas e administrativas aptas a
@@ -102,18 +159,39 @@ export default function PoliticaPrivacidadePage() {
               </p>
 
               <h2 className="text-2xl font-serif font-bold text-primary-800 mb-4 mt-10">
-                6. Cookies
+                7. Cookies
               </h2>
-              <p className="text-secondary-600 mb-6">
+              <p className="text-secondary-600 mb-4">
                 Este site utiliza cookies para melhorar a experiência de
                 navegação. Os cookies são pequenos arquivos armazenados no
                 dispositivo do usuário que permitem personalizar o conteúdo e
-                analisar o tráfego do site. O usuário pode gerenciar ou
-                desativar os cookies nas configurações do seu navegador.
+                analisar o tráfego do site.
+              </p>
+              <p className="text-secondary-600 mb-4">
+                Ao acessar o site pela primeira vez, um banner de consentimento
+                é exibido ao usuário, que pode optar por:
+              </p>
+              <ul className="list-disc list-inside text-secondary-600 mb-4 space-y-2">
+                <li>
+                  <strong>Aceitar Todos:</strong> permite o uso de cookies de
+                  análise (Vercel Analytics e Speed Insights) para melhoria do
+                  site
+                </li>
+                <li>
+                  <strong>Apenas Essenciais:</strong> desativa cookies de
+                  análise, mantendo apenas os estritamente necessários para o
+                  funcionamento do site
+                </li>
+              </ul>
+              <p className="text-secondary-600 mb-6">
+                A escolha do usuário é armazenada localmente e pode ser alterada
+                a qualquer momento nas configurações do navegador. Ferramentas de
+                análise somente são carregadas após o consentimento expresso do
+                usuário.
               </p>
 
               <h2 className="text-2xl font-serif font-bold text-primary-800 mb-4 mt-10">
-                7. Direitos do Titular (LGPD)
+                8. Direitos do Titular (LGPD)
               </h2>
               <p className="text-secondary-600 mb-4">
                 Em conformidade com a Lei Geral de Proteção de Dados (Lei nº
@@ -129,7 +207,7 @@ export default function PoliticaPrivacidadePage() {
               </ul>
 
               <h2 className="text-2xl font-serif font-bold text-primary-800 mb-4 mt-10">
-                8. Encarregado de Dados (DPO)
+                9. Encarregado de Dados (DPO)
               </h2>
               <p className="text-secondary-600 mb-4">
                 Em conformidade com o Art. 41 da LGPD (Lei nº 13.709/2018), o
@@ -165,7 +243,7 @@ export default function PoliticaPrivacidadePage() {
               </p>
 
               <h2 className="text-2xl font-serif font-bold text-primary-800 mb-4 mt-10">
-                9. Contato
+                10. Contato
               </h2>
               <p className="text-secondary-600 mb-6">
                 Para exercer seus direitos ou esclarecer dúvidas sobre esta
@@ -195,7 +273,7 @@ export default function PoliticaPrivacidadePage() {
               </ul>
 
               <h2 className="text-2xl font-serif font-bold text-primary-800 mb-4 mt-10">
-                10. Alterações desta Política
+                11. Alterações desta Política
               </h2>
               <p className="text-secondary-600 mb-6">
                 Reservamo-nos o direito de alterar esta Política de Privacidade a

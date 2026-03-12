@@ -83,8 +83,8 @@ export default function ContactForm() {
             Mensagem Enviada!
           </h3>
           <p className="text-secondary-600 mb-6 max-w-md mx-auto">
-            Agradecemos seu contato. Retornaremos em até 24 horas úteis. Este
-            contato tem caráter informativo.
+            Agradecemos seu contato. Retornaremos em até 24 horas úteis, em
+            horário comercial. Este contato tem caráter informativo.
           </p>
           <button
             onClick={() => setIsSubmitted(false)}

@@ -36,7 +36,7 @@ export async function generateMetadata({
       siteName: 'Cerbelera & Oliveira Advogados',
       publishedTime: seo?.publishedTime,
       modifiedTime: seo?.modifiedTime,
-      authors: ['Cerbelera & Oliveira Advogados Associados'],
+      authors: ['Me. Diogo Ramos Cerbelera Neto', 'Cerbelera & Oliveira Advogados Associados'],
       section: article.category,
       tags: seo?.keywords || [],
       images: [
@@ -89,11 +89,22 @@ export default async function BlogPostPage({
     image: ogImage,
     datePublished: seo?.publishedTime || '2026-01-01',
     dateModified: seo?.modifiedTime || seo?.publishedTime || '2026-01-01',
-    author: {
-      '@type': 'Organization',
-      name: 'Cerbelera & Oliveira Advogados Associados',
-      url: siteUrl,
-    },
+    author: [
+      {
+        '@type': 'Organization',
+        name: 'Cerbelera & Oliveira Advogados Associados',
+        url: siteUrl,
+      },
+      {
+        '@type': 'Person',
+        name: 'Me. Diogo Ramos Cerbelera Neto',
+        jobTitle: 'Advogado',
+        worksFor: {
+          '@type': 'Organization',
+          name: 'Cerbelera & Oliveira Advogados Associados',
+        },
+      },
+    ],
     publisher: {
       '@type': 'Organization',
       name: 'Cerbelera & Oliveira Advogados Associados',
@@ -165,7 +176,7 @@ export default async function BlogPostPage({
             <div className="flex flex-wrap items-center gap-6 text-primary-300 text-sm">
               <span className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                Cerbelera & Oliveira Advogados
+                Me. Diogo Ramos Cerbelera Neto &mdash; Cerbelera & Oliveira
               </span>
               <span className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />

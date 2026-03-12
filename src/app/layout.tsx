@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import LayoutContent from '@/components/LayoutContent';
-import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import ConditionalAnalytics from '@/components/ConditionalAnalytics';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -393,8 +392,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen flex flex-col">
         <LayoutContent>{children}</LayoutContent>
-        <Analytics />
-        <SpeedInsights />
+        <ConditionalAnalytics />
       </body>
     </html>
   );

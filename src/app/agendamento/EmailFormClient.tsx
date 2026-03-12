@@ -60,7 +60,7 @@ export default function EmailFormClient() {
         </div>
         <h3 className="text-xl font-serif font-bold text-primary-500 mb-2">Mensagem Enviada!</h3>
         <p className="text-secondary-600 text-sm mb-6">
-          Recebemos sua mensagem e responderemos em até 24 horas úteis.
+          Recebemos sua mensagem e responderemos em até 24 horas úteis, em horário comercial.
         </p>
         <button onClick={() => { setSuccess(false); setForm({ nome: '', email: '', telefone: '', assunto: '', mensagem: '' }); }}
           className="text-gold-500 hover:text-gold-600 font-medium text-sm">

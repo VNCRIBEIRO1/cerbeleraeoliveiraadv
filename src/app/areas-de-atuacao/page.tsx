@@ -83,7 +83,7 @@ const areas = [
     iconName: 'ShieldCheck',
     title: 'Direito Criminal',
     description:
-      'Defesa criminal robusta e estratégica em todas as instâncias. Atuação em inquéritos policiais, audiências de custódia, habeas corpus, recursos e acompanhamento processual completo.',
+      'Defesa criminal em todas as instâncias e fases processuais. Atuação em inquéritos policiais, audiências de custódia, habeas corpus, recursos e acompanhamento processual completo.',
     topics: [
       'Defesa Criminal',
       'Habeas Corpus',

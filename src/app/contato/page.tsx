@@ -133,7 +133,7 @@ export default function ContatoPage() {
                       Envie uma Mensagem
                     </h2>
                     <p className="text-secondary-500 text-sm">
-                      Responderemos em até 24 horas úteis
+                      Resposta em até 24 horas úteis, em horário comercial
                     </p>
                   </div>
                 </div>

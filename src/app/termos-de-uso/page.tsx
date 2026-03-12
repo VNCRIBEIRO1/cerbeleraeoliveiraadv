@@ -141,10 +141,19 @@ export default function TermosDeUsoPage() {
                   — Vila Nova, Presidente Prudente/SP — CEP 19010-300
                 </li>
                 <li>
+                  <strong>CNPJ:</strong> [a preencher]
+                </li>
+                <li>
                   <strong>Telefone:</strong> (18) 99610-1884
                 </li>
                 <li>
-                  <strong>E-mail:</strong> contato@cerbeleraoliveira.adv.br
+                  <strong>E-mail:</strong>{' '}
+                  <a
+                    href="mailto:contato@cerbeleraoliveira.adv.br"
+                    className="text-primary-600 underline hover:text-primary-800"
+                  >
+                    contato@cerbeleraoliveira.adv.br
+                  </a>
                 </li>
               </ul>
             </AnimatedSection>

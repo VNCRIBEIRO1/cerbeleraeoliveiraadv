@@ -103,14 +103,14 @@ export default function AgendamentoPage() {
                   <Bot className="w-7 h-7 text-gold-400" />
                 </div>
                 <h2 className="text-lg font-serif font-bold text-primary-500 mb-2">
-                  Assistente Virtual
+                  Assistente Automatizado
                 </h2>
                 <p className="text-secondary-600 text-sm mb-5 leading-relaxed">
-                  Nosso assistente faz a triagem do seu caso e direciona para o advogado especialista.
+                  Sistema automatizado com perguntas pré-definidas que direciona seu atendimento ao advogado.
                 </p>
                 <div className="space-y-2.5 mb-6">
                   {[
-                    'Triagem inteligente do caso',
+                    'Questionário de direcionamento',
                     'Identifica área do Direito',
                     'Avalia urgência da situação',
                     'Encaminha para WhatsApp',
@@ -196,7 +196,7 @@ export default function AgendamentoPage() {
                 Prefere enviar por <span className="text-gold-500">E-mail</span>?
               </h2>
               <p className="text-secondary-600">
-                Preencha o formulário abaixo e responderemos em até 24 horas úteis.
+                Preencha o formulário abaixo e responderemos em até 24 horas úteis, em horário comercial.
               </p>
             </div>
           </AnimatedSection>

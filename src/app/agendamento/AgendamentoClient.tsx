@@ -6,12 +6,11 @@ import { Calendar, Clock, ChevronLeft, ChevronRight, CheckCircle2, Loader2, Mess
 
 const TIPOS_CONSULTA = [
   { value: 'trabalhista', label: 'Direito Trabalhista', icon: '⚖️' },
-  { value: 'previdenciario', label: 'Direito Previdenciário', icon: '🏛️' },
+  { value: 'criminal', label: 'Direito Criminal', icon: '🛡️' },
   { value: 'civil', label: 'Direito Civil', icon: '📜' },
-  { value: 'familia', label: 'Direito de Família', icon: '👨‍👩‍👧' },
-  { value: 'consumidor', label: 'Direito do Consumidor', icon: '🛒' },
   { value: 'empresarial', label: 'Direito Empresarial', icon: '🏢' },
-  { value: 'imobiliario', label: 'Direito Imobiliário', icon: '🏠' },
+  { value: 'administrativo', label: 'Direito Administrativo', icon: '🏛️' },
+  { value: 'calculos', label: 'Cálculos Judiciais', icon: '🔢' },
   { value: 'outro', label: 'Outro Assunto', icon: '📋' },
 ];
 
@@ -30,14 +29,15 @@ interface HorariosData {
 // Mapear área do chatbot → tipo do agendamento
 const AREA_PARA_TIPO: Record<string, string> = {
   'Direito Trabalhista': 'trabalhista',
-  'Direito Previdenciário': 'previdenciario',
+  'Direito Criminal': 'criminal',
   'Direito Civil': 'civil',
-  'Direito de Família': 'familia',
-  'Direito do Consumidor': 'consumidor',
   'Direito Empresarial': 'empresarial',
-  'Direito Imobiliário': 'imobiliario',
-  'Direito Criminal': 'outro',
-  'Direito Administrativo': 'outro',
+  'Direito Administrativo': 'administrativo',
+  'Cálculos Judiciais': 'calculos',
+  'Direito Previdenciário': 'outro',
+  'Direito de Família': 'outro',
+  'Direito do Consumidor': 'outro',
+  'Direito Imobiliário': 'outro',
 };
 
 export default function AgendamentoClient() {

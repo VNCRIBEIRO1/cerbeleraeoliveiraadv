@@ -581,7 +581,7 @@ export default function ChatBot() {
             id: nextId(),
             tipo: 'bot',
             texto:
-              'Olá! 👋 Sou o assistente virtual do escritório *Cerbelera & Oliveira Advogados*.\n\nEstou aqui para entender sua situação e direcionar seu atendimento.\n\n💡 *Novo:* Use nossa Calculadora de Direitos para verificar insalubridade/periculosidade!\n\nEm qual área posso ajudá-lo(a)?',
+              'Olá! 👋 Sou o assistente virtual do escritório *Cerbelera & Oliveira Advogados*.\n\n⚠️ *Este é um sistema automatizado* — não substitui orientação jurídica profissional.\n\nEstou aqui para entender sua situação e direcionar seu atendimento ao advogado responsável.\n\n💡 *Novo:* Use nossa Calculadora de Direitos para verificar insalubridade/periculosidade!\n\nEm qual área posso ajudá-lo(a)?',
             opcoes: AREAS,
             timestamp: new Date(),
           },
@@ -873,8 +873,8 @@ _Enviado via Assistente Virtual do site_`.trim();
             transition={{ delay: 1.5, type: 'spring', stiffness: 200 }}
             onClick={() => setAberto(true)}
             className="fixed bottom-24 right-6 z-50 w-14 h-14 bg-gradient-to-br from-gold-500 to-gold-700 rounded-full flex items-center justify-center shadow-lg hover:shadow-gold-500/40 transition-shadow group"
-            aria-label="Abrir assistente virtual"
-            title="Assistente Virtual"
+            aria-label="Abrir assistente automatizado"
+            title="Assistente Automatizado"
           >
             <Scale className="w-7 h-7 text-white" />
 
@@ -883,7 +883,7 @@ _Enviado via Assistente Virtual do site_`.trim();
 
             {/* Tooltip */}
             <span className="absolute right-full mr-3 bg-white text-secondary-700 text-sm px-4 py-2 rounded-lg shadow-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-              Assistente Virtual
+              Assistente Automatizado
             </span>
 
             {/* Badge de notificação */}
@@ -1127,8 +1127,9 @@ _Enviado via Assistente Virtual do site_`.trim();
             {/* Rodapé legal */}
             <div className="px-3 pb-2 flex-shrink-0 bg-white">
               <p className="text-[9px] text-secondary-400 text-center leading-tight">
-                Assistente informativo. Não constitui aconselhamento jurídico nem
-                estabelece relação advogado-cliente. Provimento 205/2021 OAB.
+                Sistema automatizado com respostas pré-definidas. Não constitui
+                aconselhamento jurídico nem estabelece relação advogado-cliente.
+                Provimento 205/2021 OAB.
               </p>
             </div>
           </motion.div>
