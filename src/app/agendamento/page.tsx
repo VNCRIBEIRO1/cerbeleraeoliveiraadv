@@ -6,8 +6,23 @@ import AgendamentoClient from './AgendamentoClient';
 import EmailFormClient from './EmailFormClient';
 
 export const metadata: Metadata = {
-  title: 'Agende sua Consulta',
-  description: 'Agende sua consulta com Cerbelera & Oliveira Advogados Associados. Atendimento humanizado e personalizado em Presidente Prudente.',
+  title: 'Agende sua Consulta | Advogado em Presidente Prudente | Cerbelera & Oliveira',
+  description: 'Agende sua consulta com Cerbelera & Oliveira Advogados em Presidente Prudente. Atendimento humanizado e personalizado. WhatsApp (18) 99610-1884. Agendamento online ou por telefone.',
+  keywords: [
+    'agendar consulta advogado Presidente Prudente',
+    'agendamento advogado Presidente Prudente',
+    'consulta advogado online',
+    'agendar advogado trabalhista',
+    'agendar advogado criminalista',
+    'marcar consulta advogado Presidente Prudente',
+    'advogado perto de mim',
+    'consulta jurídica Presidente Prudente',
+    'agendar advogado',
+    'escritório advocacia agendamento',
+  ],
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://cerbeleraeoliveiraadv.vercel.app'}/agendamento`,
+  },
 };
 
 export default function AgendamentoPage() {

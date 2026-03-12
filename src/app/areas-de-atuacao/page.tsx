@@ -1,5 +1,4 @@
-'use client';
-
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -19,6 +18,38 @@ import {
 import AnimatedSection from '@/components/AnimatedSection';
 import SectionHeader from '@/components/SectionHeader';
 import { AREA_IMAGES, DEFAULT_IMAGE } from '@/lib/images';
+
+export const metadata: Metadata = {
+  title: 'Áreas de Atuação | Advogado Trabalhista, Criminalista, Civil, Empresarial | Presidente Prudente',
+  description:
+    'Conheça as áreas de atuação do escritório Cerbelera & Oliveira em Presidente Prudente: Direito Trabalhista, Criminal, Civil, Empresarial, Administrativo e Cálculos Judiciais. Advocacia estratégica e humanizada.',
+  keywords: [
+    'áreas de atuação advogado Presidente Prudente',
+    'advogado trabalhista Presidente Prudente',
+    'advogado criminalista Presidente Prudente',
+    'advogado cível Presidente Prudente',
+    'advogado empresarial Presidente Prudente',
+    'advogado administrativo Presidente Prudente',
+    'cálculos judiciais Presidente Prudente',
+    'escritório advocacia Presidente Prudente áreas',
+    'direito trabalhista',
+    'direito criminal',
+    'direito civil',
+    'direito empresarial',
+    'direito administrativo',
+    'advogado especialista Presidente Prudente',
+  ],
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://cerbeleraeoliveiraadv.vercel.app'}/areas-de-atuacao`,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    title: 'Áreas de Atuação | Cerbelera & Oliveira Advogados',
+    description: 'Direito Trabalhista, Criminal, Civil, Empresarial, Administrativo e Cálculos Judiciais em Presidente Prudente.',
+    siteName: 'Cerbelera & Oliveira Advogados',
+  },
+};
 
 const iconMap: Record<string, LucideIcon> = {
   Briefcase,

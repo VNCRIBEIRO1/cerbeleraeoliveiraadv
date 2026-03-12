@@ -50,21 +50,53 @@ export const SITE_CONFIG = {
   descricaoSite:
     'Cerbelera & Oliveira Advogados Associados em Presidente Prudente, SP. Atuação estratégica e humanizada em Direito Trabalhista, Criminal, Civil, Empresarial e Administrativo.',
   palavrasChave: [
+    // Principal
     'advogado Presidente Prudente',
     'advogado em Presidente Prudente',
+    'advogados Presidente Prudente',
     'escritório de advocacia Presidente Prudente',
+    'escritório advocacia Presidente Prudente',
+    'melhor advogado Presidente Prudente',
+    'adv pres prudente',
+    'advogado pres prudente',
+    // Trabalhista
     'advogado trabalhista Presidente Prudente',
+    'advogado trabalhista pres prudente',
+    'advogado do trabalho Presidente Prudente',
+    'escritório trabalhista Presidente Prudente',
+    'direito trabalhista Presidente Prudente',
+    // Criminal
     'advogado criminalista Presidente Prudente',
-    'direito trabalhista',
-    'direito criminal',
-    'direito civil',
-    'direito empresarial',
-    'direito administrativo',
+    'advogado criminal Presidente Prudente',
+    'advogado penal Presidente Prudente',
+    'escritório criminalista Presidente Prudente',
+    // Civil
+    'advogado cível Presidente Prudente',
+    'advogado civil Presidente Prudente',
+    'advogado danos morais Presidente Prudente',
+    'advogado indenização Presidente Prudente',
+    // Empresarial
+    'advogado empresarial Presidente Prudente',
+    'advogado para empresas Presidente Prudente',
+    'assessoria jurídica empresarial Presidente Prudente',
+    // Administrativo
+    'advogado administrativo Presidente Prudente',
+    'advogado licitação Presidente Prudente',
+    'mandado de segurança Presidente Prudente',
+    // Cálculos
+    'cálculos judiciais Presidente Prudente',
     'calculadora direitos trabalhistas',
     'insalubridade periculosidade',
-    'advogado mestre em direito',
+    // Marca
     'Cerbelera Oliveira',
+    'Cerbelera e Oliveira advogados',
+    'advogado mestre em direito',
     'advogado SP',
+    // Região
+    'advogado oeste paulista',
+    'advogado interior SP',
+    'consultoria jurídica',
+    'assessoria jurídica',
   ],
 
   // === SOBRE O ESCRITÓRIO ===

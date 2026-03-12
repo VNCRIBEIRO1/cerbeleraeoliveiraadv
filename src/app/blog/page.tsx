@@ -4,9 +4,37 @@ import AnimatedSection from '@/components/AnimatedSection';
 import BlogCard from '@/components/BlogCard';
 
 export const metadata: Metadata = {
-  title: 'Blog Jurídico',
+  title: 'Blog Jurídico | Artigos sobre Direito Trabalhista, Criminal, Civil, Empresarial | Advogado Presidente Prudente',
   description:
-    'Artigos informativos sobre Direito Trabalhista, Criminal, Civil, Empresarial e Administrativo. Conteúdo educativo sem caráter de aconselhamento jurídico.',
+    'Blog jurídico do escritório Cerbelera & Oliveira Advogados em Presidente Prudente. Artigos informativos sobre Direito Trabalhista, Criminal, Civil, Empresarial e Administrativo. Conteúdo educativo para esclarecer dúvidas jurídicas.',
+  keywords: [
+    'blog jurídico',
+    'blog direito',
+    'artigos jurídicos',
+    'artigos direito trabalhista',
+    'artigos direito criminal',
+    'artigos direito civil',
+    'artigos direito empresarial',
+    'artigos direito administrativo',
+    'blog advogado Presidente Prudente',
+    'blog advocacia',
+    'informações jurídicas',
+    'dúvidas jurídicas',
+    'direitos do trabalhador',
+    'direitos do consumidor',
+    'advogado Presidente Prudente blog',
+    'escritório advocacia Presidente Prudente blog',
+  ],
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://cerbeleraeoliveiraadv.vercel.app'}/blog`,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    title: 'Blog Jurídico | Cerbelera & Oliveira Advogados',
+    description: 'Artigos informativos sobre Direito Trabalhista, Criminal, Civil, Empresarial e Administrativo.',
+    siteName: 'Cerbelera & Oliveira Advogados',
+  },
 };
 
 const blogPosts = [

@@ -1,74 +1,77 @@
 import { MetadataRoute } from 'next';
-import { articles } from '@/lib/articles';
+import { articles, articleSEO } from '@/lib/articles';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cerbeleraeoliveiraadv.vercel.app';
 
-  // Páginas estáticas
+  // Páginas estáticas — prioridades altas para páginas de conversão
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
+      lastModified: new Date('2026-03-12'),
+      changeFrequency: 'weekly',
+      priority: 1.0,
     },
     {
       url: `${baseUrl}/sobre`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-03-12'),
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/areas-de-atuacao`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-03-12'),
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/blog`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-03-12'),
       changeFrequency: 'weekly',
-      priority: 0.7,
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/contato`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-03-12'),
       changeFrequency: 'monthly',
-      priority: 0.9,
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/agendamento`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-03-12'),
       changeFrequency: 'monthly',
-      priority: 0.9,
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/calculadora-de-direitos`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-03-12'),
       changeFrequency: 'monthly',
       priority: 0.9,
     },
     {
       url: `${baseUrl}/politica-privacidade`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-03-01'),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
       url: `${baseUrl}/termos-de-uso`,
-      lastModified: new Date(),
+      lastModified: new Date('2026-03-01'),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
   ];
 
-  // Páginas de blog dinâmicas
-  const blogPages: MetadataRoute.Sitemap = Object.entries(articles).map(([slug, article]) => ({
-    url: `${baseUrl}/blog/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.6,
-  }));
+  // Páginas de blog — prioridade ALTA para rankear conteúdo
+  const blogPages: MetadataRoute.Sitemap = Object.entries(articles).map(([slug]) => {
+    const seo = articleSEO[slug];
+    return {
+      url: `${baseUrl}/blog/${slug}`,
+      lastModified: seo?.modifiedTime ? new Date(seo.modifiedTime) : new Date('2026-03-01'),
+      changeFrequency: 'weekly' as const,
+      priority: 0.85,
+    };
+  });
 
   return [...staticPages, ...blogPages];
 }

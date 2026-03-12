@@ -12,9 +12,23 @@ import SectionHeader from '@/components/SectionHeader';
 import ContactForm from '@/components/ContactForm';
 
 export const metadata: Metadata = {
-  title: 'Contato',
+  title: 'Contato | Agende Consulta com Advogado em Presidente Prudente',
   description:
-    'Entre em contato com Cerbelera & Oliveira Advogados Associados em Presidente Prudente. Agende uma consulta.',
+    'Entre em contato com Cerbelera & Oliveira Advogados em Presidente Prudente. Agende uma consulta por WhatsApp, telefone ou formulário. Rua Francisco Machado de Campos, 393 — Vila Nova. Atendimento segunda a sexta, 08h às 18h.',
+  keywords: [
+    'contato advogado Presidente Prudente',
+    'agendar consulta advogado',
+    'telefone advogado Presidente Prudente',
+    'whatsapp advogado Presidente Prudente',
+    'endereço escritório advocacia Presidente Prudente',
+    'Cerbelera Oliveira contato',
+    'advogado perto de mim',
+    'marcar consulta advogado',
+    'escritório advocacia Vila Nova Presidente Prudente',
+  ],
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://cerbeleraeoliveiraadv.vercel.app'}/contato`,
+  },
 };
 
 const contactInfo = [

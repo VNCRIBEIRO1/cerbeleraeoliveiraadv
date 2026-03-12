@@ -4,7 +4,10 @@ import Image from 'next/image';
 import { ArrowLeft, Calendar, Clock, Scale, User } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import { getCategoryImage } from '@/lib/images';
-import { articles, defaultArticle } from '@/lib/articles';
+import { articles, defaultArticle, articleSEO } from '@/lib/articles';
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cerbeleraeoliveiraadv.vercel.app';
+const ogImage = 'https://res.cloudinary.com/dwyrt2g1k/image/upload/f_jpg,q_85/cerbelera-oliveira/og-image';
 
 export async function generateMetadata({
   params,
@@ -13,9 +16,55 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const article = articles[slug] || defaultArticle;
+  const seo = articleSEO[slug];
+  const articleUrl = `${siteUrl}/blog/${slug}`;
+  const description = seo?.description || article.content[0].substring(0, 160);
+
   return {
-    title: article.title,
-    description: article.content[0],
+    title: seo?.title || article.title,
+    description,
+    keywords: seo?.keywords || [],
+    alternates: {
+      canonical: articleUrl,
+    },
+    openGraph: {
+      type: 'article',
+      locale: 'pt_BR',
+      url: articleUrl,
+      title: seo?.title || article.title,
+      description,
+      siteName: 'Cerbelera & Oliveira Advogados',
+      publishedTime: seo?.publishedTime,
+      modifiedTime: seo?.modifiedTime,
+      authors: ['Cerbelera & Oliveira Advogados Associados'],
+      section: article.category,
+      tags: seo?.keywords || [],
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: seo?.title || article.title,
+      description,
+      images: [ogImage],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
   };
 }
 
@@ -30,9 +79,60 @@ export default async function BlogPostPage({
 }) {
   const { slug } = await params;
   const article = articles[slug] || defaultArticle;
+  const seo = articleSEO[slug];
+
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: seo?.description || article.content[0].substring(0, 160),
+    image: ogImage,
+    datePublished: seo?.publishedTime || '2026-01-01',
+    dateModified: seo?.modifiedTime || seo?.publishedTime || '2026-01-01',
+    author: {
+      '@type': 'Organization',
+      name: 'Cerbelera & Oliveira Advogados Associados',
+      url: siteUrl,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Cerbelera & Oliveira Advogados Associados',
+      logo: { '@type': 'ImageObject', url: ogImage },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${siteUrl}/blog/${slug}`,
+    },
+    articleSection: article.category,
+    keywords: (seo?.keywords || []).join(', '),
+    inLanguage: 'pt-BR',
+    isAccessibleForFree: true,
+    about: {
+      '@type': 'Thing',
+      name: article.category,
+    },
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Início', item: siteUrl },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${siteUrl}/blog` },
+      { '@type': 'ListItem', position: 3, name: article.title, item: `${siteUrl}/blog/${slug}` },
+    ],
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Hero */}
       <section className="pt-32 pb-16 bg-gradient-to-br from-[#050905] via-[#0e1810] to-[#1a2e1f] relative overflow-hidden">
         <div className="absolute inset-0">
